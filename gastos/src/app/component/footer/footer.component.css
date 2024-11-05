@@ -1,0 +1,44 @@
+.container__footer {
+  border: 1px solid grey; /* Borda cinza */
+  width: 70%;
+  height: 50px;
+  margin: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center; /* Alinha verticalmente os itens ao centro */
+  padding: 10px 0; /* Padding superior e inferior */
+  border-radius: 5px;
+  border-style: dotted;
+}
+
+/* Estilo dos links */
+a {
+  text-decoration: none; /* Remove o sublinhado */
+  padding: 5px;
+  color: var(--primary-text-color); /* Usa a variável para a cor do texto */
+  transition: color 0.3s ease; /* Suaviza a transição de cor */
+}
+
+a:hover .fab {
+  color: var(--hover-color, #2290a1); /* Cor ao passar o mouse */
+}
+
+/* Estilo do texto no footer */
+.botton > p {
+  margin-top: 15px;
+  font-size: 20px; /* Tamanho da fonte */
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; /* Fonte */
+  color: var(--primary-text-color); /* Cor do texto usando variável */
+  opacity: 0.8; /* Ajusta a opacidade para 80% */
+}
+
+/* Estilo para o modo escuro */
+.dark-theme .container__footer {
+  background-color: #1e1e1e; /* Cor de fundo para o modo escuro */
+}
+
+.dark-theme .botton > p {
+  color: white; /* Cor do texto para o modo escuro */
+  opacity: 0.9; /* Aumenta a opacidade no modo escuro para melhor legibilidade */
+}

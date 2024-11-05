@@ -1,0 +1,10 @@
+<div class="header__container">
+  <button (click)="toggleMode()" class="ml-1 mr-3 focus:outline-none m-0">
+    <span *ngIf="isDarkMode; else lightMode" id="darkMode" class="material-icons">dark_mode</span>
+    <ng-template #lightMode>
+      <span id="lightMode" class="material-icons">light_mode</span>
+    </ng-template>
+  </button>
+
+  <p>Aplicativo de controle de despesas</p>
+</div>

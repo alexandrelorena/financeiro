@@ -1,0 +1,59 @@
+<div class="container__month">
+  <p>Total de despesas do mês de {{ getFullMonthName() }}: {{ totalDespesas | currency:'BRL' }}</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Despesa</th>
+        <th>Valor</th>
+        <th>Vencimento</th>
+        <th>Status</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let despesa of despesas; let i = index">
+        <td>{{ i + 1 }}</td>
+
+        <!-- Alterna entre visualização e edição -->
+        <ng-container *ngIf="despesaEditando?.id === despesa.id; else viewMode">
+          <!-- Modo de Edição -->
+          <td *ngIf="despesaEditando">
+            <input [(ngModel)]="despesaEditando.nome" required />
+          </td>
+          <td *ngIf="despesaEditando">
+            <input type="number" [(ngModel)]="despesaEditando.valor" required />
+          </td>
+          <td *ngIf="despesaEditando">
+            <input type="date" [(ngModel)]="despesaEditando.vencimento" [ngModelOptions]="{ updateOn: 'blur' }"
+              required />
+          </td>
+          <td>
+            <span>Gerado automaticamente</span>
+          </td>
+          <td>
+            <button (click)="salvarEdicao()">💾</button>
+            <button (click)="cancelarEdicao()">❌</button>
+          </td>
+        </ng-container>
+
+        <!-- Modo de Visualização -->
+        <ng-template #viewMode>
+          <td>{{ despesa.nome }}</td>
+          <td>{{ despesa.valor | currency:'BRL' }}</td>
+          <td>{{ despesa.vencimento | date: 'dd/MM' }}</td>
+          <td>
+            <span [ngClass]="getStatusClass(despesa)">
+              {{ getStatus(despesa) }}
+            </span>
+          </td>
+          <td>
+            <button (click)="iniciarEdicao(despesa)">✏️</button>
+            <button (click)="removerDespesa(despesa)">❌</button>
+          </td>
+        </ng-template>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,66 @@
+.container__month {
+  height: 676px;
+}
+
+.container__month > p {
+  margin-top: 10px;
+  margin-left: 10px;
+}
+
+p {
+  color: var(
+    --primary-text-color
+  ); /* Texto será preto no tema claro e branco no tema escuro */
+}
+
+.container__month {
+  background-color: transparent;
+  color: #fff;
+  padding: 15px;
+  border-radius: 8px;
+  width: 100%;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead {
+  background-color: #3f51b5;
+  color: white;
+}
+
+th,
+td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #2f3640;
+}
+
+tbody tr:nth-child(odd) {
+  background-color: #353b48;
+}
+
+.status-paid {
+  color: green;
+}
+
+.status-pending {
+  color: yellow;
+}
+
+.status-unpaid {
+  color: red;
+}
+
+button {
+  background: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+}

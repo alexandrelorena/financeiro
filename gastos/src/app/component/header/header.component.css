@@ -1,0 +1,67 @@
+.header__container {
+  width: 70%;
+  height: 50px;
+  margin: auto;
+  margin-top: 60px;
+  border: 1px solid grey;
+  display: flex;
+  flex-direction: row;
+  padding-top: 10px;
+  gap: 1%;
+  color: var(--primary-text-color); /* Usando a variável CSS */
+  border-radius: 5px;
+  border-style: dotted;
+}
+
+.header__container > button {
+  background-color: transparent; /* Remove fundo do botão */
+  border: none; /* Remove borda do botão */
+  padding: 0; /* Remove padding do botão */
+  margin-bottom: 10px;
+  margin-left: 20px;
+  margin-right: 10px;
+  width: 50px;
+  cursor: pointer;
+  display: flex; /* Para centralizar os ícones */
+  justify-content: center;
+  align-items: center;
+  color: var(--primary-text-color);
+}
+
+.header__component-title {
+  align-items: center;
+  color: blue;
+  border: 1px solid purple;
+  width: 100%;
+  /*padding-left: 100px;*/
+}
+
+p {
+  color: var(
+    --primary-text-color
+  ); /* Texto será preto no tema claro e branco no tema escuro */
+  font-size: 20px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Estilos para ícones de toggle */
+#lightMode {
+  color: #ffae00; /* Sol amarelo */
+}
+
+#darkMode {
+  color: white; /* Lua branca */
+}
+
+#lightMode,
+#darkMode {
+  background-color: transparent; /* Remove fundo dos ícones */
+  border: none; /* Remove borda dos ícones */
+  box-shadow: none; /* Remove qualquer sombra */
+  padding: 0; /* Remove padding */
+  margin: 0; /* Remove margens indesejadas */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px; /* Tamanho padrão dos ícones */
+}
