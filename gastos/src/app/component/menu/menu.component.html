@@ -1,0 +1,8 @@
+<div class="menu__container">
+  <div class="month-buttons">
+    <button *ngFor="let month of months" (click)="selectMonth(month)" [class.selected]="month === selectedMonth">
+      <!-- Adiciona a classe 'selected' se for o mês selecionado -->
+      {{ month }}
+    </button>
+  </div>
+</div>

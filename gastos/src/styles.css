@@ -1,0 +1,55 @@
+@import "@angular/material/prebuilt-themes/indigo-pink.css";
+
+* {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  box-sizing: border-box;
+}
+
+/* Estilo padrão (modo claro) */
+body {
+  background-color: white;
+  color: grey;
+}
+
+/* Estilo para o modo escuro */
+.dark-theme {
+  background-color: #121212;
+  color: white;
+}
+
+/* Estilo global para modo claro */
+body.light-theme {
+  --primary-text-color: grey;
+  --icon-color: grey; /* Cor dos ícones no modo claro */
+}
+
+/* Estilo global para modo escuro */
+body.dark-theme {
+  --primary-text-color: white;
+  --icon-color: white; /* Cor dos ícones no modo escuro */
+}
+
+/* Estilo que será aplicado aos componentes */
+/* .component {
+  color: var(--primary-text-color);
+} */
+
+html,
+body {
+  height: 90%;
+}
+body {
+  margin: 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Estilo dos ícones */
+.container__footer i {
+  color: var(--icon-color); /* Usando a variável CSS para a cor dos ícones */
+  transition: color 0.3s; /* Suaviza a transição da cor */
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

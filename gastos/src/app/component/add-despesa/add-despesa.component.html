@@ -1,0 +1,15 @@
+<form (ngSubmit)="adicionarDespesa()" #despesaForm="ngForm">
+  <div>
+    <label for="nome">Nome da Despesa:</label>
+    <input type="text" id="nome" [(ngModel)]="novaDespesa.nome" name="nome" required>
+  </div>
+  <div>
+    <label for="valor">Valor:</label>
+    <input type="number" id="valor" [(ngModel)]="novaDespesa.valor" name="valor" required min="0" step="0.01">
+  </div>
+  <div>
+    <label for="vencimento">Vencimento:</label>
+    <input type="date" id="vencimento" [(ngModel)]="novaDespesa.vencimento" name="vencimento">
+  </div>
+  <button type="submit" [disabled]="!despesaForm.form.valid">Adicionar Despesa</button>
+</form>
