@@ -1,5 +1,5 @@
 import {
-  ChangeDetectorRef,
+  // ChangeDetectorRef,
   Component,
   Input,
   OnInit,
@@ -43,8 +43,7 @@ export class MonthComponent implements OnInit, OnDestroy {
   constructor(
     private dateService: DateService,
     private gastoService: GastoService,
-    private datePipe: DatePipe,
-    private cdr: ChangeDetectorRef
+    private datePipe: DatePipe // private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
@@ -64,12 +63,18 @@ export class MonthComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
+  // mudarMes(novoMes: string) {
+  //   this.selectedMonth = novoMes;
+  //   const monthNumber = this.getMonthNumber(novoMes);
+  //   if (monthNumber !== -1) {
+  //     this.getDespesas(monthNumber);
+  //   }
+  // }
+
   mudarMes(novoMes: string) {
+    if (novoMes === this.selectedMonth) return; // Se o mês for o mesmo, saia
     this.selectedMonth = novoMes;
-    const monthNumber = this.getMonthNumber(novoMes);
-    if (monthNumber !== -1) {
-      this.getDespesas(monthNumber);
-    }
+    this.getDespesas(this.getMonthNumber(novoMes));
   }
 
   getFullMonthName(): string {
@@ -120,7 +125,8 @@ export class MonthComponent implements OnInit, OnDestroy {
         this.calcularTotalDespesas();
       },
       (error: any) => {
-        console.error('Erro ao buscar despesas:', error);
+        console.error('Erro ao buscar despesas:', error.message || error);
+        alert('Falha ao carregar despesas. Tente novamente mais tarde.');
       }
     );
   }
@@ -149,7 +155,6 @@ export class MonthComponent implements OnInit, OnDestroy {
             if (index !== -1) {
               this.despesas[index] = despesaAtualizada;
               this.calcularTotalDespesas();
-              this.cdr.detectChanges();
             }
           },
           error: (error: any) => {
@@ -162,6 +167,19 @@ export class MonthComponent implements OnInit, OnDestroy {
       console.error('Despesa não encontrada');
     }
   }
+
+  // pagar(despesaId: number) {
+  //   this.gastoService.pagarDespesa(despesaId).subscribe(
+  //     (response) => {
+  //       console.log('Despesa atualizada com sucesso:', response);
+  //       // Atualize a lista de despesas localmente, se necessário
+  //       this.despesas = this.despesas.map((despesa) =>
+  //         despesa.id === response.id ? { ...despesa, pago: true } : despesa
+  //       );
+  //     },
+  //     (error) => console.error('Erro ao atualizar a despesa:', error)
+  //   );
+  // }
 
   getStatus(despesa: Gasto): string {
     const hoje = new Date();
@@ -199,7 +217,6 @@ export class MonthComponent implements OnInit, OnDestroy {
             this.despesas[index] = despesaAtualizada;
             this.despesas = [...this.despesas];
             this.calcularTotalDespesas();
-            this.cdr.detectChanges();
           }
         },
         error: (error: any) => {
