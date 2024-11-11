@@ -1,6 +1,8 @@
 export interface Gasto {
-  id?: number; // O ID pode ser opcional na criação
+  id: number;
   nome: string;
   valor: number;
-  vencimento?: string | null; // Pode ser uma string ou nulo
+  vencimento: string | Date; // Aceita tanto uma string quanto um Date
+  status: string;
+  pago: boolean;
 }

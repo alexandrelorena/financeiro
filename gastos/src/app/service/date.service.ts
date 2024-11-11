@@ -32,4 +32,11 @@ export class DateService {
     // Retorna a data formatada como uma string no formato "dd/MM/yyyy"
     return `${day}/${month}/${year}`;
   }
+  // Método para converter uma data no formato "Mon Nov 25 2024 21:00:00 GMT-0300 (Horário Padrão de Brasília)" para yyyy-MM-dd
+  convertToISODate(dateString: string): string {
+    const date = new Date(dateString); // Cria um objeto Date a partir da string fornecida
+
+    // Retorna a data no formato yyyy-MM-dd
+    return date.toISOString().split('T')[0];
+  }
 }

@@ -1,0 +1,176 @@
+.container__month {
+  background-color: transparent;
+  color: #fff;
+  padding: 15px;
+  border-radius: 8px;
+  width: 100%;
+  height: 676px;
+}
+
+.container__month > p {
+  margin-left: 10px;
+}
+
+p {
+  color: var(
+    --primary-text-color
+  ); /* Texto será preto no tema claro e branco no tema escuro */
+}
+
+table {
+  width: 100%;
+  border-collapse: separate;
+  border: 1px solid gray;
+  border-style: dotted;
+  border-radius: 5px;
+  table-layout: fixed; /* Garante que as colunas tenham largura fixa para alinhamento */
+}
+
+thead {
+  background-color: #3f51b5;
+  color: white;
+}
+
+th {
+  padding: 10px;
+  text-align: center; /* Centraliza o texto em cada título da coluna */
+  border-bottom: 1px solid gray;
+  border-style: dotted;
+
+  vertical-align: middle; /* Alinha verticalmente ao centro */
+}
+
+td {
+  padding: 10px;
+  border-bottom: 1px solid gray;
+  border-style: dotted;
+  border-radius: 5px;
+  /* vertical-align: middle; */
+}
+
+th,
+td {
+  padding: 10px;
+  text-align: center;
+  border-bottom: 1px solid gray;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #2f3640;
+}
+
+tbody tr:nth-child(odd) {
+  background-color: #353b48;
+}
+
+/* Largura de cada coluna */
+th:first-child,
+td:first-child {
+  width: 5%; /* Número da linha */
+  text-align: center;
+}
+
+th:nth-child(2),
+td:nth-child(2) {
+  width: 30%; /* Nome da despesa */
+}
+
+th:nth-child(3),
+td:nth-child(3) {
+  width: 20%; /* Valor */
+}
+
+th:nth-child(4),
+td:nth-child(4) {
+  width: 15%; /* Data de vencimento */
+  text-align: center;
+}
+
+th:nth-child(5),
+td:nth-child(5) {
+  width: 10%; /* Status */
+  text-align: center;
+}
+
+th:last-child,
+td:last-child {
+  width: 20%; /* Ações */
+  text-align: center;
+}
+/*
+tbody tr:nth-child(even) {
+  background-color: #2f3640;
+}
+
+tbody tr:nth-child(odd) {
+  background-color: #353b48;
+} */
+
+.status-pago {
+  color: green;
+}
+
+.status-vencido {
+  color: red;
+}
+
+.status-pendente {
+  color: yellow;
+}
+
+/* Estilo para os botões de ação */
+button {
+  background: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  font-size: 18px;
+  transition: transform 0.3s ease;
+  padding: 5px 10px; /* Ajuste de padding nos botões */
+  border-radius: 5px;
+}
+
+/* Estilos específicos para os botões de ação */
+button.pagar {
+  color: green; /* Pagar */
+}
+
+button.editar {
+  color: blue; /* Editar */
+}
+
+button.remover {
+  color: red; /* Remover */
+}
+
+/* Efeito visual nos botões */
+button:hover {
+  transform: scale(1.1);
+}
+
+/* Estilos para alinhar os botões de ação na última coluna */
+td:last-child {
+  gap: 8px;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Exemplo de estilo para controlar a largura dos inputs */
+/* .input-edicao {
+  width: 100px;
+  padding: 5px;
+} */
+/* Classe para o input de nome */
+.input-nome {
+  width: 210px;
+}
+
+/* Classe para o input de valor */
+.input-valor {
+  width: 120px;
+}
+
+/* Classe para o input de vencimento */
+.input-vencimento {
+  width: 100px;
+}

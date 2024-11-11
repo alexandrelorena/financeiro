@@ -6,6 +6,9 @@ import jakarta.validation.constraints.Positive;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 @Entity
 @Table(name = "gastos")
 public class Gasto {
@@ -19,7 +22,18 @@ public class Gasto {
     @NotNull(message = "O valor não pode ser nulo")
     @Positive(message = "O valor deve ser positivo")
     private double valor;
+
+    @JsonFormat(pattern = "yyyy-MM-dd")  // Formato ISO 8601
     private LocalDate vencimento;
+
+    @Column(name = "status")
+    @JsonInclude(JsonInclude.Include.ALWAYS)
+    private String status = "Pendente"; // Valor padrão é "Pendente"
+
+    @Column(name = "pago")
+    @JsonInclude(JsonInclude.Include.ALWAYS)
+    private boolean pago;
+
 
     // Getters e Setters
     public Long getId() {
@@ -52,5 +66,20 @@ public class Gasto {
 
     public void setVencimento(LocalDate vencimento) {
         this.vencimento = vencimento;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+    public boolean isPago() {
+        return pago;
+    }
+
+    public void setPago(boolean pago) {
+        this.pago = pago;
     }
 }
