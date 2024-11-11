@@ -1,15 +1,31 @@
-<form (ngSubmit)="adicionarDespesa()" #despesaForm="ngForm">
-  <div>
-    <label for="nome">Nome da Despesa:</label>
-    <input type="text" id="nome" [(ngModel)]="novaDespesa.nome" name="nome" required>
+<div class="container__add-despesa">
+  <div class="col-md-12 p-3 border">
+    <form [formGroup]="despesaForm" (ngSubmit)="adicionarDespesa()">
+      <div class="form-group">
+        <input type="text" id="nome" class="form-control" formControlName="nome" placeholder="Nome da Despesa" />
+        <div *ngIf="despesaForm.get('nome')?.invalid && despesaForm.get('nome')?.touched" class="text-danger">
+          Nome é obrigatório.
+        </div>
+      </div>
+
+      <div class="form-group">
+        <input type="number" id="valor" class="form-control" formControlName="valor" placeholder="Ex.: 1234567890,99" />
+        <div *ngIf="despesaForm.get('valor')?.invalid && despesaForm.get('valor')?.touched" class="text-danger">
+          Insira um valor válido!
+        </div>
+      </div>
+
+      <div class="form-group">
+        <input type="date" id="vencimento" class="form-control" formControlName="vencimento" placeholder="Vencimento" />
+        <div *ngIf="despesaForm.get('vencimento')?.invalid && despesaForm.get('vencimento')?.touched"
+          class="text-danger">
+          Vencimento é obrigatório.
+        </div>
+      </div>
+
+      <div class="form-group text-center">
+        <button type="submit" class="btn btn-info" [disabled]="despesaForm.invalid">Adicionar Despesa</button>
+      </div>
+    </form>
   </div>
-  <div>
-    <label for="valor">Valor:</label>
-    <input type="number" id="valor" [(ngModel)]="novaDespesa.valor" name="valor" required min="0" step="0.01">
-  </div>
-  <div>
-    <label for="vencimento">Vencimento:</label>
-    <input type="date" id="vencimento" [(ngModel)]="novaDespesa.vencimento" name="vencimento">
-  </div>
-  <button type="submit" [disabled]="!despesaForm.form.valid">Adicionar Despesa</button>
-</form>
+</div>

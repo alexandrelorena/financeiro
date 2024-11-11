@@ -15,22 +15,22 @@
     <tbody>
       <tr *ngFor="let despesa of despesas; let i = index">
         <td>{{ i + 1 }}</td>
-
+        <!-- <p>{{ despesa.nome }} - {{ despesa.valor | currency }}</p> -->
         <!-- Alterna entre visualização e edição -->
         <ng-container *ngIf="despesaEditando?.id === despesa.id; else viewMode">
           <!-- Modo de Edição -->
           <td *ngIf="despesaEditando">
-            <input [(ngModel)]="despesaEditando.nome" required />
+            <input [(ngModel)]="despesaEditando.nome" required class="input-nome" />
           </td>
           <td *ngIf="despesaEditando">
-            <input type="number" [(ngModel)]="despesaEditando.valor" required />
+            <input type="number" [(ngModel)]="despesaEditando.valor" required class="input-valor" />
           </td>
           <td *ngIf="despesaEditando">
-            <input type="date" [(ngModel)]="despesaEditando.vencimento" [ngModelOptions]="{ updateOn: 'blur' }"
-              required />
+            <input type="date" [(ngModel)]="despesaEditando.vencimento" [ngModelOptions]="{ updateOn: 'blur' }" required
+              class="input-vencimento" />
           </td>
           <td>
-            <span>Gerado automaticamente</span>
+            <span>#</span>
           </td>
           <td>
             <button (click)="salvarEdicao()">💾</button>
@@ -48,8 +48,11 @@
               {{ getStatus(despesa) }}
             </span>
           </td>
+
           <td>
-            <button (click)="iniciarEdicao(despesa)">✏️</button>
+            <!-- Exibe o botão "Pagar" caso a despesa esteja pendente ou vencida -->
+            <button (click)="pagarDespesa(despesa.id)">💸</button>
+            <button (click)="iniciarEdicao(despesa)">🖋️</button>
             <button (click)="removerDespesa(despesa)">❌</button>
           </td>
         </ng-template>

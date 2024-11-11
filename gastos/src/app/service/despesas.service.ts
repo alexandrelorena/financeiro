@@ -1,45 +1,52 @@
-// src/app/services/despesas.service.ts
+// despesas.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Despesas } from '../models/despesas.model';
+import { Gasto } from '../models/gasto.model';
+
+interface Despesa {
+  id: number;
+  valor: number;
+  descricao: string;
+  // Adicione outras propriedades conforme necessário
+}
 
 @Injectable({
   providedIn: 'root',
 })
 export class DespesasService {
-  private apiUrl = 'http://localhost:8080/api/despesas'; // URL base da API
-
-  //  Quando for fazer o deploy, lembre-se de alterar essa URL para a URL de produção.
+  private apiUrl = 'http://localhost:8080/api/gastos';
 
   constructor(private http: HttpClient) {}
 
-  getDespesas(month: string): Observable<Despesas[]> {
-    return this.http.get<Despesas[]>(`${this.apiUrl}/mes?month=${month}`);
+  // Busca as despesas de um mês específico
+  getDespesasByMonth(month: number): Observable<Gasto[]> {
+    return this.http.get<Gasto[]>(`${this.apiUrl}/mes?month=${month}`);
   }
 
-  // // Obtém despesas filtradas por mês
-  // getDespesasByMonth(month: string): Observable<Despesas[]> {
-  //   return this.http.get<Despesas[]>(`${this.apiUrl}?month=${month}`);
-  // }
+  // Corrigido: método sem redundância na URL
+  getDespesas(month: number): Observable<Gasto[]> {
+    return this.http.get<Gasto[]>(`${this.apiUrl}?month=${month}`);
+  }
+
   // Obtém todas as despesas
-  getAllDespesas(): Observable<Despesas[]> {
-    return this.http.get<Despesas[]>(this.apiUrl);
+  getAllDespesas(): Observable<Gasto[]> {
+    return this.http.get<Gasto[]>(this.apiUrl);
   }
 
   // Obtém uma despesa pelo ID
-  getDespesaById(id: number): Observable<Despesas> {
-    return this.http.get<Despesas>(`${this.apiUrl}/${id}`);
+  getDespesaById(id: number): Observable<Gasto> {
+    return this.http.get<Gasto>(`${this.apiUrl}/${id}`);
   }
 
   // Cria uma nova despesa
-  createDespesa(despesa: Despesas): Observable<Despesas> {
-    return this.http.post<Despesas>(this.apiUrl, despesa);
+  createDespesa(despesa: Gasto): Observable<Gasto> {
+    return this.http.post<Gasto>(this.apiUrl, despesa);
   }
 
   // Atualiza uma despesa existente
-  updateDespesa(id: number, despesa: Despesas): Observable<Despesas> {
-    return this.http.put<Despesas>(`${this.apiUrl}/${id}`, despesa);
+  updateDespesa(id: number, despesa: Gasto): Observable<Gasto> {
+    return this.http.put<Gasto>(`${this.apiUrl}/${id}`, despesa);
   }
 
   // Deleta uma despesa pelo ID

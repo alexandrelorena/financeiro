@@ -4,7 +4,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './component/header/header.component';
 import { MenuComponent } from './component/menu/menu.component';
-import { MesComponent } from './component/mes/mes.component';
+import { MonthComponent } from './component/mes/month.component';
 import { AddDespesaComponent } from './component/add-despesa/add-despesa.component';
 import { ContentComponent } from './component/content/content.component';
 import { FooterComponent } from './component/footer/footer.component';
@@ -23,7 +23,7 @@ import { DatePipe } from '@angular/common';
     AppComponent,
     HeaderComponent,
     MenuComponent,
-    MesComponent,
+    MonthComponent,
     AddDespesaComponent,
     ContentComponent,
     FooterComponent,
