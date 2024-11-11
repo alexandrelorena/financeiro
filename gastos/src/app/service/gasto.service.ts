@@ -56,6 +56,17 @@ export class GastoService {
     );
   }
 
+  pagarDespesa(despesaId: number): Observable<Gasto> {
+    const url = `${this.apiUrl}/${despesaId}/pagar`; // Endpoint para marcar como pago
+    return this.http.put<Gasto>(url, { pago: true }).pipe(
+      tap((response) => console.log('Despesa paga:', response)),
+      catchError((error) => {
+        console.error('Erro ao pagar a despesa:', error);
+        return throwError(error);
+      })
+    );
+  }
+
   // Deleta uma despesa pelo ID
   deleteDespesa(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);

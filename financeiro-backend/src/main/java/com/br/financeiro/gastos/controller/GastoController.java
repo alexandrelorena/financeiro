@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/gastos")
@@ -69,6 +70,20 @@ public class GastoController {
                 .orElse(ResponseEntity.notFound().build());
     }
     
+    @PutMapping("/api/gastos/{id}/pagar")
+public ResponseEntity<Gasto> pagarDespesa(@PathVariable Long id) {
+    Optional<Gasto> optionalGasto = gastoRepository.findById(id);
+    if (optionalGasto.isPresent()) {
+        Gasto gasto = optionalGasto.get();
+        gasto.setPago(true);  // Define o campo pago como true
+        gastoRepository.save(gasto);
+        return ResponseEntity.ok(gasto);
+    } else {
+        return ResponseEntity.notFound().build();
+    }
+}
+
+
     // Método para deletar uma despesa
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteGasto(@PathVariable Long id) {
