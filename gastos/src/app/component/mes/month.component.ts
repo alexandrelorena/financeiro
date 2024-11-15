@@ -63,14 +63,6 @@ export class MonthComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  // mudarMes(novoMes: string) {
-  //   this.selectedMonth = novoMes;
-  //   const monthNumber = this.getMonthNumber(novoMes);
-  //   if (monthNumber !== -1) {
-  //     this.getDespesas(monthNumber);
-  //   }
-  // }
-
   mudarMes(novoMes: string) {
     if (novoMes === this.selectedMonth) return; // Se o mês for o mesmo, saia
     this.selectedMonth = novoMes;
@@ -138,48 +130,35 @@ export class MonthComponent implements OnInit, OnDestroy {
     );
   }
 
-  pagarDespesa(despesaId: number): void {
-    const despesa = this.despesas.find((d) => d.id === despesaId);
+  pagarDespesa(id: number): void {
+    const despesa = this.despesas.find((d) => d.id === id);
     if (despesa) {
+      // Atualizar o status da despesa imediatamente no frontend
       despesa.pago = true;
       despesa.status = 'Pago';
 
-      this.gastoService
-        .updateDespesa(despesa.id!, despesa)
-        .pipe(take(1))
-        .subscribe({
-          next: (despesaAtualizada: Gasto) => {
-            const index = this.despesas.findIndex(
-              (d) => d.id === despesaAtualizada.id
-            );
-            if (index !== -1) {
-              this.despesas[index] = despesaAtualizada;
-              this.calcularTotalDespesas();
-            }
-          },
-          error: (error: any) => {
-            console.error('Erro ao atualizar o status da despesa:', error);
-            despesa.pago = false;
-            despesa.status = 'Pendente';
-          },
-        });
+      // Atualizar o status no servidor via API
+      this.gastoService.pagarDespesa(id).subscribe(
+        (resposta) => {
+          console.log('Resposta da API:', resposta);
+          // Realiza a atualização do frontend
+          const index = this.despesas.findIndex((d) => d.id === id);
+          if (index !== -1) {
+            this.despesas[index] = { ...despesa }; // Atualiza a despesa com o novo status
+            this.calcularTotalDespesas();
+          }
+        },
+        (erro) => {
+          console.error('Erro ao pagar a despesa:', erro);
+          // Em caso de erro, pode restaurar o estado anterior
+          despesa.pago = false;
+          despesa.status = 'Pendente';
+        }
+      );
     } else {
       console.error('Despesa não encontrada');
     }
   }
-
-  // pagar(despesaId: number) {
-  //   this.gastoService.pagarDespesa(despesaId).subscribe(
-  //     (response) => {
-  //       console.log('Despesa atualizada com sucesso:', response);
-  //       // Atualize a lista de despesas localmente, se necessário
-  //       this.despesas = this.despesas.map((despesa) =>
-  //         despesa.id === response.id ? { ...despesa, pago: true } : despesa
-  //       );
-  //     },
-  //     (error) => console.error('Erro ao atualizar a despesa:', error)
-  //   );
-  // }
 
   getStatus(despesa: Gasto): string {
     const hoje = new Date();
@@ -204,9 +183,9 @@ export class MonthComponent implements OnInit, OnDestroy {
     }
   }
 
-  atualizarStatus(despesaId: number, novoStatus: string): void {
+  updateStatus(id: number, novoStatus: string): void {
     this.gastoService
-      .atualizarStatus(despesaId, novoStatus)
+      .updateStatus(id, novoStatus)
       .pipe(take(1))
       .subscribe({
         next: (despesaAtualizada: Gasto) => {
