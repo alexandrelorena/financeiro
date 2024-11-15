@@ -43,6 +43,11 @@ export class GastoService {
       despesa.vencimento.toString()
     );
 
+    // Se a despesa foi marcada como paga, também atualiza o status
+    if (despesa.pago) {
+      despesa.status = 'Pago';
+    }
+
     return this.http.put<Gasto>(`${this.apiUrl}/${id}`, despesa).pipe(
       map((response: Gasto) => {
         console.log('Resposta recebida:', response);
@@ -56,9 +61,9 @@ export class GastoService {
     );
   }
 
-  pagarDespesa(despesaId: number): Observable<Gasto> {
-    const url = `${this.apiUrl}/${despesaId}/pagar`; // Endpoint para marcar como pago
-    return this.http.put<Gasto>(url, { pago: true }).pipe(
+  pagarDespesa(id: number): Observable<Gasto> {
+    const url = `${this.apiUrl}/${id}/pagar`; // Endpoint para marcar como pago
+    return this.http.put<Gasto>(url, { pago: true, status: 'Pago' }).pipe(
       tap((response) => console.log('Despesa paga:', response)),
       catchError((error) => {
         console.error('Erro ao pagar a despesa:', error);
@@ -73,10 +78,7 @@ export class GastoService {
   }
 
   // Método para atualizar apenas o status de uma despesa
-  atualizarStatus(despesaId: number, novoStatus: string): Observable<Gasto> {
-    return this.http.put<Gasto>(
-      `${this.apiUrl}/${despesaId}/status`,
-      novoStatus
-    );
+  updateStatus(id: number, novoStatus: string): Observable<Gasto> {
+    return this.http.put<Gasto>(`${this.apiUrl}/${id}/status`, novoStatus);
   }
 }

@@ -30,7 +30,7 @@ public class Gasto {
     @JsonInclude(JsonInclude.Include.ALWAYS)
     private String status = "Pendente"; // Valor padrão é "Pendente"
 
-    @Column(name = "pago")
+    @Column(name = "pago", nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
     @JsonInclude(JsonInclude.Include.ALWAYS)
     private boolean pago;
 

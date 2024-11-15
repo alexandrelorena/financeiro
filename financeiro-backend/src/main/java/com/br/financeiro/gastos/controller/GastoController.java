@@ -64,25 +64,26 @@ public class GastoController {
         return gastoRepository.findById(id)
                 .map(gasto -> {
                     gasto.setStatus(novoStatus);  // Atualiza apenas o status da despesa
-                    Gasto updatedGasto = gastoRepository.save(gasto);  // Salva a despesa com o novo status
-                    return ResponseEntity.ok(updatedGasto);
+                    Gasto updateStatus = gastoRepository.save(gasto);  // Salva a despesa com o novo status
+                    return ResponseEntity.ok(updateStatus);
                 })
                 .orElse(ResponseEntity.notFound().build());
     }
     
-    @PutMapping("/api/gastos/{id}/pagar")
-public ResponseEntity<Gasto> pagarDespesa(@PathVariable Long id) {
-    Optional<Gasto> optionalGasto = gastoRepository.findById(id);
-    if (optionalGasto.isPresent()) {
-        Gasto gasto = optionalGasto.get();
-        gasto.setPago(true);  // Define o campo pago como true
-        gastoRepository.save(gasto);
-        return ResponseEntity.ok(gasto);
-    } else {
-        return ResponseEntity.notFound().build();
-    }
-}
-
+    @PutMapping("/{id}/pagar")
+    public ResponseEntity<Gasto> pagarDespesa(@PathVariable Long id) {
+        Optional<Gasto> optionalGasto = gastoRepository.findById(id);
+        if (optionalGasto.isPresent()) {
+            Gasto gasto = optionalGasto.get();
+            gasto.setPago(true);  // Define o campo pago como true
+            gasto.setStatus("Pago");
+            gasto = gastoRepository.save(gasto);  // Salva a atualização e atualiza a instância
+            System.out.println("Despesa atualizada: " + gasto);  // Log para verificar o valor atualizado de 'pago'
+            return ResponseEntity.ok(gasto);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }   
 
     // Método para deletar uma despesa
     @DeleteMapping("/{id}")
