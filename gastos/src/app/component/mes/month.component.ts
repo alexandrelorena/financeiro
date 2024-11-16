@@ -1,15 +1,17 @@
 import {
-  // ChangeDetectorRef,
   Component,
   Input,
   OnInit,
   OnDestroy,
+  ChangeDetectorRef,
 } from '@angular/core';
 import { DateService } from '../../service/date.service';
 import { GastoService } from '../../service/gasto.service';
 import { Gasto } from '../../models/gasto.model';
 import { DatePipe } from '@angular/common';
-import { take, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
+import { take } from 'rxjs/operators';
+import { DespesaService } from '../../service/despesas.service';
 
 @Component({
   selector: 'app-month',
@@ -18,11 +20,13 @@ import { take, Subscription } from 'rxjs';
   providers: [DatePipe],
 })
 export class MonthComponent implements OnInit, OnDestroy {
+  hoje: Date = new Date();
   @Input() selectedMonth: string = '';
   despesas: Gasto[] = [];
   totalDespesas: number = 0;
   despesaEditando: Gasto | null = null;
 
+  // Map de meses com os nomes e números
   monthNames: { [key: string]: [string, number] } = {
     jan: ['January', 1],
     fev: ['February', 2],
@@ -38,15 +42,27 @@ export class MonthComponent implements OnInit, OnDestroy {
     dez: ['December', 12],
   };
 
-  private subscription: Subscription = new Subscription();
+  private subscription = new Subscription();
 
   constructor(
     private dateService: DateService,
     private gastoService: GastoService,
-    private datePipe: DatePipe // private cdr: ChangeDetectorRef
+    private datePipe: DatePipe,
+    private despesaService: DespesaService,
+    private cdr: ChangeDetectorRef
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
+    this.subscribeToDateChanges();
+    this.subscribeToDespesaUpdates();
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+
+  // Inscreve-se para atualizações do mês selecionado
+  private subscribeToDateChanges(): void {
     this.subscription.add(
       this.dateService.selectedMonth$.subscribe((month) => {
         this.selectedMonth = month;
@@ -58,187 +74,131 @@ export class MonthComponent implements OnInit, OnDestroy {
     );
   }
 
-  ngOnDestroy() {
-    // Desinscreve-se de qualquer observable para evitar vazamentos de memória
-    this.subscription.unsubscribe();
-  }
-
-  mudarMes(novoMes: string) {
-    if (novoMes === this.selectedMonth) return; // Se o mês for o mesmo, saia
-    this.selectedMonth = novoMes;
-    this.getDespesas(this.getMonthNumber(novoMes));
-  }
-
-  getFullMonthName(): string {
-    const fullMonthName = this.monthNames[this.selectedMonth]?.[0];
-    if (!fullMonthName) {
-      console.warn(`Mês ${this.selectedMonth} não encontrado no mapeamento.`);
-    }
-    return fullMonthName || this.selectedMonth;
-  }
-
-  onMonthSelected(month: string): void {
-    console.log('Mês selecionado em onMonthSelected:', month); // Verifique a string aqui
-    const monthNumber = this.getMonthNumber(month);
-    console.log('Número do mês em onMonthSelected:', monthNumber); // Verifique o número do mês
-
-    if (monthNumber !== -1) {
-      this.getDespesas(monthNumber);
-    } else {
-      console.error('Mês inválido, não é possível carregar as despesas');
-    }
-  }
-
-  getMonthNumber(month: string): number {
-    // Limpa e converte a string para minúsculas
-    month = month.trim();
-
-    console.log('Mês recebido em getMonthNumber:', month); // Verifique a string
-
-    if (this.monthNames[month]) {
-      console.log('Número do mês:', this.monthNames[month][1]); // Verifique o número do mês
-      return this.monthNames[month][1]; // Retorna o número do mês
-    } else {
-      console.error(`Mês inválido: ${month}`); // Verifique se o mês é inválido
-      return -1;
-    }
-  }
-
-  getDespesas(month: number): void {
-    if (month === -1) {
-      console.error('Mês inválido, não é possível carregar as despesas');
-      return;
-    }
-    console.log('Mês recebido em getDespesas:', month);
-    this.gastoService.getDespesas(month).subscribe(
-      (response: Gasto[]) => {
-        console.log('Despesas recebidas:', response);
-        this.despesas = response;
+  // Inscreve-se para atualizações de despesas
+  private subscribeToDespesaUpdates(): void {
+    this.subscription.add(
+      this.despesaService.despesas$.subscribe((despesas) => {
+        this.despesas = despesas;
         this.calcularTotalDespesas();
-      },
-      (error: any) => {
-        console.error('Erro ao buscar despesas:', error.message || error);
-        alert('Falha ao carregar despesas. Tente novamente mais tarde.');
-      }
+        this.cdr.detectChanges(); // Detectar mudanças após a atualização das despesas
+      })
     );
   }
 
-  calcularTotalDespesas() {
+  // Obtém o número do mês baseado no nome
+  getMonthNumber(month: string): number {
+    const sanitizedMonth = month.trim().toLowerCase();
+    return this.monthNames[sanitizedMonth]?.[1] ?? -1;
+  }
+
+  // Método para obter o nome completo do mês
+  getFullMonthName(): string {
+    return this.monthNames[this.selectedMonth]?.[0] ?? this.selectedMonth;
+  }
+
+  // Busca as despesas para o mês selecionado
+  getDespesas(month: number): void {
+    if (month === -1) return;
+
+    this.gastoService.getDespesas(month).subscribe({
+      next: (response) => {
+        this.despesas = response.map((despesa) => {
+          // Adiciona o status e a classe CSS para cada despesa
+          const { status, cssClass } = this.getDespesaInfo(despesa);
+          despesa.status = status;
+          despesa.cssClass = cssClass; // Adiciona a classe CSS ao objeto despesa
+          return despesa;
+        });
+
+        this.calcularTotalDespesas();
+      },
+      error: (error) =>
+        console.error('Erro ao carregar despesas:', error.message || error),
+    });
+  }
+
+  // Calcula o total de despesas
+  private calcularTotalDespesas(): void {
     this.totalDespesas = this.despesas.reduce(
       (acc, despesa) => acc + despesa.valor,
       0
     );
   }
 
+  // Marca uma despesa como paga
   pagarDespesa(id: number): void {
     const despesa = this.despesas.find((d) => d.id === id);
-    if (despesa) {
-      // Atualizar o status da despesa imediatamente no frontend
-      despesa.pago = true;
-      despesa.status = 'Pago';
+    if (!despesa) return;
 
-      // Atualizar o status no servidor via API
-      this.gastoService.pagarDespesa(id).subscribe(
-        (resposta) => {
-          console.log('Resposta da API:', resposta);
-          // Realiza a atualização do frontend
-          const index = this.despesas.findIndex((d) => d.id === id);
-          if (index !== -1) {
-            this.despesas[index] = { ...despesa }; // Atualiza a despesa com o novo status
-            this.calcularTotalDespesas();
-          }
-        },
-        (erro) => {
-          console.error('Erro ao pagar a despesa:', erro);
-          // Em caso de erro, pode restaurar o estado anterior
-          despesa.pago = false;
-          despesa.status = 'Pendente';
-        }
-      );
+    despesa.pago = true;
+    despesa.status = 'Pago';
+    despesa.cssClass = 'status-pago'; // Atualiza a classe para "status-pago"
+
+    this.gastoService.pagarDespesa(id).subscribe({
+      next: () => this.calcularTotalDespesas(),
+      error: (error) => {
+        despesa.pago = false;
+        despesa.status = 'Pendente';
+        despesa.cssClass = 'status-pendente'; // Retorna para a classe "status-pendente"
+        console.error('Erro ao pagar despesa:', error);
+      },
+    });
+  }
+
+  // Inicia a edição de uma despesa
+  iniciarEdicao(despesa: Gasto): void {
+    // Certifique-se de que a data de vencimento esteja no formato correto
+    if (typeof despesa.vencimento === 'string') {
+      // Se a data de vencimento for uma string, converta-a para Date
+      this.despesaEditando = {
+        ...despesa,
+        vencimento: new Date(despesa.vencimento), // Converte a string para um objeto Date
+      };
     } else {
-      console.error('Despesa não encontrada');
+      // Caso já seja um objeto Date, apenas copie
+      this.despesaEditando = { ...despesa };
     }
   }
 
-  getStatus(despesa: Gasto): string {
-    const hoje = new Date();
-    const dataVencimento = new Date(despesa.vencimento);
-
-    if (despesa.pago) {
-      return 'Pago';
-    } else if (dataVencimento < hoje) {
-      return 'Vencido';
-    } else {
-      return 'Pendente';
-    }
+  // Função para formatar a data no formato 'yyyy-MM-dd'
+  formatDate(date: string | Date): string {
+    const validDate = typeof date === 'string' ? new Date(date) : date; // Garantir que a entrada seja um Date
+    const year = validDate.getFullYear();
+    const month = String(validDate.getMonth() + 1).padStart(2, '0');
+    const day = String(validDate.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
   }
 
-  getStatusClass(despesa: Gasto): string {
-    if (despesa.pago) {
-      return 'Pago';
-    } else {
-      const hoje = new Date();
-      const dataVencimento = new Date(despesa.vencimento);
-      return dataVencimento < hoje ? 'status-vencido' : 'status-pendente';
-    }
-  }
+  // Salva a edição de uma despesa
+  salvarEdicao(): void {
+    if (!this.despesaEditando) return;
 
-  updateStatus(id: number, novoStatus: string): void {
     this.gastoService
-      .updateStatus(id, novoStatus)
+      .updateDespesa(this.despesaEditando.id!, this.despesaEditando)
       .pipe(take(1))
       .subscribe({
-        next: (despesaAtualizada: Gasto) => {
+        next: (updatedDespesa) => {
           const index = this.despesas.findIndex(
-            (d) => d.id === despesaAtualizada.id
+            (d) => d.id === updatedDespesa.id
           );
           if (index !== -1) {
-            this.despesas[index] = despesaAtualizada;
-            this.despesas = [...this.despesas];
+            this.despesas[index] = updatedDespesa;
             this.calcularTotalDespesas();
           }
+          this.despesaEditando = null;
         },
-        error: (error: any) => {
-          console.error('Erro ao atualizar o status da despesa:', error);
-        },
+        error: (error) =>
+          console.error('Erro ao salvar edição:', error.message || error),
       });
   }
 
-  iniciarEdicao(despesa: Gasto) {
-    this.despesaEditando = { ...despesa };
-  }
-
-  salvarEdicao() {
-    if (this.despesaEditando) {
-      const despesaAtualizada: Gasto = {
-        ...this.despesaEditando,
-        vencimento: this.despesaEditando.vencimento,
-      };
-
-      this.gastoService
-        .updateDespesa(despesaAtualizada.id!, despesaAtualizada)
-        .pipe(take(1))
-        .subscribe({
-          next: (despesaAtualizada: Gasto) => {
-            const index = this.despesas.findIndex(
-              (d) => d.id === despesaAtualizada.id
-            );
-            if (index !== -1) {
-              this.despesas[index] = despesaAtualizada;
-              this.calcularTotalDespesas();
-            }
-            this.despesaEditando = null;
-          },
-          error: (error: any) => console.error('Erro ao salvar edição:', error),
-        });
-    }
-  }
-
-  cancelarEdicao() {
+  // Cancela a edição da despesa
+  cancelarEdicao(): void {
     this.despesaEditando = null;
   }
 
-  removerDespesa(despesa: Gasto) {
+  // Remove uma despesa
+  removerDespesa(despesa: Gasto): void {
     this.gastoService
       .deleteDespesa(despesa.id!)
       .pipe(take(1))
@@ -247,7 +207,43 @@ export class MonthComponent implements OnInit, OnDestroy {
           this.despesas = this.despesas.filter((d) => d.id !== despesa.id);
           this.calcularTotalDespesas();
         },
-        error: (error: any) => console.error('Erro ao remover despesa:', error),
+        error: (error) =>
+          console.error('Erro ao remover despesa:', error.message || error),
       });
+  }
+
+  getStatus(despesa: Gasto): string {
+    return despesa.status; // Apenas usa o status enviado pela API
+  }
+
+  // Função unificada para retornar o status e a classe CSS da despesa
+  getDespesaInfo(despesa: Gasto): { status: string; cssClass: string } {
+    const hoje = new Date();
+    let vencimento: Date;
+
+    // Verifica e converte o vencimento se necessário
+    if (typeof despesa.vencimento === 'string') {
+      vencimento = new Date(despesa.vencimento);
+    } else {
+      vencimento = despesa.vencimento;
+    }
+
+    // Caso esteja paga, retorna "Pago" e a classe CSS
+    if (despesa.pago) {
+      return { status: 'Pago', cssClass: 'status-pago' };
+    }
+
+    // Caso o vencimento seja hoje
+    if (vencimento.getTime() === hoje.getTime()) {
+      return { status: 'Vence hoje', cssClass: 'status-vencido' };
+    }
+
+    // Caso o vencimento tenha passado
+    if (vencimento < hoje) {
+      return { status: 'Vencido', cssClass: 'status-vencido' };
+    }
+
+    // Caso contrário, está pendente
+    return { status: 'Pendente', cssClass: 'status-pendente' };
   }
 }

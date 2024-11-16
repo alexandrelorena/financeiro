@@ -16,9 +16,21 @@ export class GastoService {
     private dateService: DateService // Injete o DateService no construtor
   ) {}
 
+  formatarDataVencimento(despesa: Gasto): void {
+    if (despesa.vencimento instanceof Date) {
+      // Usando o DateService para a formatação
+      despesa.vencimento = this.dateService.formatDate(despesa.vencimento); // Método centralizado
+    }
+  }
+
   // Cria uma nova despesa
   criarGasto(gasto: Gasto): Observable<Gasto> {
+    this.formatarDataVencimento(gasto); // Formatar a data antes de enviar
     return this.http.post<Gasto>(this.apiUrl, gasto);
+  }
+
+  addDespesa(despesa: Gasto): Observable<Gasto> {
+    return this.http.post<Gasto>(`${this.apiUrl}/despesas`, despesa);
   }
 
   // Obtém as despesas para um determinado mês
@@ -39,9 +51,9 @@ export class GastoService {
   // Atualiza uma despesa existente
   updateDespesa(id: number, despesa: Gasto): Observable<Gasto> {
     // Antes de enviar para a API, a data pode ser convertida para ISO 8601 (string)
-    despesa.vencimento = this.dateService.convertToISODate(
-      despesa.vencimento.toString()
-    );
+    // despesa.vencimento = this.dateService.convertToISODate(despesa.vencimento);
+    despesa.vencimento = this.dateService.convertToISODate(despesa.vencimento);
+    console.log('Data formatada para envio:', despesa.vencimento);
 
     // Se a despesa foi marcada como paga, também atualiza o status
     if (despesa.pago) {
@@ -52,9 +64,14 @@ export class GastoService {
       map((response: Gasto) => {
         console.log('Resposta recebida:', response);
 
-        // Se a resposta tiver a data como string, converta para Date
+        // Se a resposta tiver a data como string, converta para o formato correto
         if (typeof response.vencimento === 'string') {
-          response.vencimento = new Date(response.vencimento); // Converter para Date
+          const parts = response.vencimento.split('-'); // Quebra no formato yyyy-MM-dd
+          response.vencimento = new Date(
+            parseInt(parts[0], 10), // Ano
+            parseInt(parts[1], 10) - 1, // Mês (0 indexado)
+            parseInt(parts[2], 10) // Dia
+          );
         }
         return response;
       })
@@ -79,6 +96,14 @@ export class GastoService {
 
   // Método para atualizar apenas o status de uma despesa
   updateStatus(id: number, novoStatus: string): Observable<Gasto> {
-    return this.http.put<Gasto>(`${this.apiUrl}/${id}/status`, novoStatus);
+    return this.http
+      .put<Gasto>(`${this.apiUrl}/${id}/status`, { status: novoStatus })
+      .pipe(
+        tap((response) => console.log('Status atualizado:', response)),
+        catchError((error) => {
+          console.error('Erro ao atualizar o status:', error);
+          return throwError(error);
+        })
+      );
   }
 }

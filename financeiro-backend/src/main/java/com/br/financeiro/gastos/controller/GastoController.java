@@ -45,31 +45,38 @@ public class GastoController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    // Método para atualizar uma despesa
-    @PutMapping("/{id}")
-    public ResponseEntity<Gasto> updateGasto(@PathVariable Long id, @RequestBody Gasto gastoDetails) {
-        return gastoRepository.findById(id)
-                .map(gasto -> {
-                    gasto.setNome(gastoDetails.getNome());
-                    gasto.setValor(gastoDetails.getValor());
-                    gasto.setVencimento(gastoDetails.getVencimento());
-                    Gasto updatedGasto = gastoRepository.save(gasto);
-                    return ResponseEntity.ok(updatedGasto);
-                })
-                .orElse(ResponseEntity.notFound().build());
-    }
+@PutMapping("/{id}")
+public ResponseEntity<Gasto> updateGasto(@PathVariable Long id, @RequestBody Gasto gastoAtualizado) {
+    return gastoRepository.findById(id)
+            .map(gastoExistente -> {
+                // Atualiza os campos existentes
+                gastoExistente.setNome(gastoAtualizado.getNome());
+                gastoExistente.setValor(gastoAtualizado.getValor());
+                gastoExistente.setVencimento(gastoAtualizado.getVencimento());
+                gastoExistente.setPago(gastoAtualizado.isPago());
+                gastoExistente.setStatus(gastoAtualizado.getStatus()); // Atualiza o status
+                
+                Gasto gastoSalvo = gastoRepository.save(gastoExistente);
+                return ResponseEntity.ok(gastoSalvo);
+            })
+            .orElse(ResponseEntity.notFound().build());
+}
 
     @PutMapping("/{id}/status")
-    public ResponseEntity<Gasto> updateStatus(@PathVariable Long id, @RequestBody String novoStatus) {
-        return gastoRepository.findById(id)
-                .map(gasto -> {
-                    gasto.setStatus(novoStatus);  // Atualiza apenas o status da despesa
-                    Gasto updateStatus = gastoRepository.save(gasto);  // Salva a despesa com o novo status
-                    return ResponseEntity.ok(updateStatus);
-                })
-                .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<Gasto> updateStatus(@PathVariable Long id, @RequestBody Gasto gasto) {
+        Optional<Gasto> gastoExistente = gastoRepository.findById(id);
+        if (gastoExistente.isPresent()) {
+            Gasto gastoAtualizado = gastoExistente.get();
+            gastoAtualizado.setStatus(gasto.getStatus()); // Isso garante que o status seja atualizado
+            gastoAtualizado.setVencimento(gasto.getVencimento()); // Isso atualiza a data de vencimento
+            gastoAtualizado.updateStatus(); // Atualiza o status baseado na nova data de vencimento
+            Gasto savedGasto = gastoRepository.save(gastoAtualizado);
+            return ResponseEntity.ok(savedGasto);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
-    
+
     @PutMapping("/{id}/pagar")
     public ResponseEntity<Gasto> pagarDespesa(@PathVariable Long id) {
         Optional<Gasto> optionalGasto = gastoRepository.findById(id);

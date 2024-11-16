@@ -5,4 +5,5 @@ export interface Gasto {
   vencimento: string | Date; // Aceita tanto uma string quanto um Date
   status: string;
   pago: boolean;
+  cssClass?: string; // Adicionando a propriedade cssClass
 }

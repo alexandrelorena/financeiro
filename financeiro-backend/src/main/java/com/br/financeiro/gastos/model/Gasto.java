@@ -23,17 +23,21 @@ public class Gasto {
     @Positive(message = "O valor deve ser positivo")
     private double valor;
 
-    @JsonFormat(pattern = "yyyy-MM-dd")  // Formato ISO 8601
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate vencimento;
 
     @Column(name = "status")
     @JsonInclude(JsonInclude.Include.ALWAYS)
-    private String status = "Pendente"; // Valor padrão é "Pendente"
+    private String status; // Valor padrão é "Pendente"
 
     @Column(name = "pago", nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
     @JsonInclude(JsonInclude.Include.ALWAYS)
     private boolean pago;
 
+    public Gasto() {
+        // Definir o status como "Pendente" inicialmente, até que a data de vencimento seja definida
+        this.status = "Pendente";
+    }
 
     // Getters e Setters
     public Long getId() {
@@ -66,6 +70,7 @@ public class Gasto {
 
     public void setVencimento(LocalDate vencimento) {
         this.vencimento = vencimento;
+        updateStatus(); // Atualiza o status sempre que a data de vencimento for alterada
     }
 
     public String getStatus() {
@@ -81,5 +86,22 @@ public class Gasto {
 
     public void setPago(boolean pago) {
         this.pago = pago;
+    }
+
+    /**
+     * Atualiza o status com base na data de vencimento.
+     * O status será "Vencido" se a data já passou, ou "Pendente" caso contrário.
+     */
+    public void updateStatus() {
+        if (vencimento != null) {
+            LocalDate hoje = LocalDate.now();
+            if (vencimento.isBefore(hoje)) {
+                this.status = "Vencido";
+            } else if (vencimento.isEqual(hoje)) {
+                this.status = "Vence Hoje";
+            } else {
+                this.status = "Pendente";
+            }
+        }
     }
 }
