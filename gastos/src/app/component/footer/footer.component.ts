@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { DateService } from '../../service/date.service';
 
 @Component({
   selector: 'app-footer',
@@ -7,10 +6,18 @@ import { DateService } from '../../service/date.service';
   styleUrls: ['./footer.component.css'],
 })
 export class FooterComponent implements OnInit {
-  today: string = '';
+  today: Date = new Date(); // Data atual
+  todayFormatted: string; // Propriedade para armazenar a data formatada
 
-  constructor(private dateService: DateService) {}
-  ngOnInit(): void {
-    this.today = this.dateService.getCurrentDate();
+  constructor() {
+    // Inicializando a data no construtor
+    this.today = new Date();
+    this.todayFormatted = this.today.toLocaleDateString('pt-BR'); // Formata a data
+  }
+
+  ngOnInit() {
+    // Verifica a data no console
+    console.log(this.today);
+    console.log(this.todayFormatted); // Mostra a data formatada
   }
 }

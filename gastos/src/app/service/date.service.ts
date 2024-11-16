@@ -1,42 +1,70 @@
-import { Injectable } from '@angular/core'; // Importa o decorador Injectable do Angular
-import { BehaviorSubject } from 'rxjs'; // Importa BehaviorSubject da biblioteca RxJS
+import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
-// O decorador Injectable permite que a classe DateService seja injetada em outros componentes ou serviços
 @Injectable({
-  providedIn: 'root', // Faz com que o serviço esteja disponível em toda a aplicação
+  providedIn: 'root',
 })
 export class DateService {
-  private selectedMonthSubject = new BehaviorSubject<string>(''); // Inicializa com string vazia
-  selectedMonth$ = this.selectedMonthSubject.asObservable(); // Observável para emitir mudanças
+  // BehaviorSubject para armazenar o mês selecionado
+  private selectedMonthSubject = new BehaviorSubject<string>('');
+  // Observable que emite mudanças no mês selecionado
+  selectedMonth$ = this.selectedMonthSubject.asObservable();
 
-  constructor() {} // Construtor vazio
+  private static readonly INVALID_DATE_ERROR =
+    'A data fornecida é inválida. Use um objeto Date ou uma string ISO.';
 
-  // Método para atualizar o mês selecionado
-  selectMonth(month: string) {
-    this.selectedMonthSubject.next(month); // Atualiza o mês selecionado
+  private static readonly INVALID_STRING_FORMAT_ERROR =
+    'A string fornecida não está no formato esperado.';
+
+  constructor() {}
+
+  /**
+   * Atualiza o mês selecionado.
+   * @param month - Mês no formato string.
+   */
+  selectMonth(month: string): void {
+    this.selectedMonthSubject.next(month);
   }
 
-  // Método que retorna a data atual formatada como uma string no formato dd/MM/yyyy
-  getCurrentDate(): string {
-    const date = new Date(); // Cria um novo objeto Date com a data e hora atuais
-
-    // Obtém o dia do mês e garante que sempre terá dois dígitos (ex: 01, 02, ... 10, 11)
-    const day = String(date.getDate()).padStart(2, '0');
-
-    // Obtém o mês atual (0 a 11) e garante que sempre terá dois dígitos, somando 1 porque os meses começam do 0
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-
-    // Obtém o ano atual (ex: 2024)
-    const year = date.getFullYear();
-
-    // Retorna a data formatada como uma string no formato "dd/MM/yyyy"
-    return `${day}/${month}/${year}`;
+  /**
+   * Retorna a data atual como um objeto Date.
+   * @returns A data atual.
+   */
+  getCurrentDate(): Date {
+    return new Date();
   }
-  // Método para converter uma data no formato "Mon Nov 25 2024 21:00:00 GMT-0300 (Horário Padrão de Brasília)" para yyyy-MM-dd
-  convertToISODate(dateString: string): string {
-    const date = new Date(dateString); // Cria um objeto Date a partir da string fornecida
 
-    // Retorna a data no formato yyyy-MM-dd
+  /**
+   * Converte uma data para o formato ISO (yyyy-MM-dd).
+   * @param date - Objeto Date ou string representando uma data.
+   * @returns A data no formato ISO.
+   * @throws Erro caso a data seja inválida.
+   */
+  convertToISODate(date: Date | string): string {
+    if (!date) {
+      throw new Error(DateService.INVALID_DATE_ERROR);
+    }
+
+    if (typeof date === 'string') {
+      if (!/^\d{4}-\d{2}-\d{2}/.test(date)) {
+        throw new Error(DateService.INVALID_STRING_FORMAT_ERROR);
+      }
+      return date.split('T')[0]; // Retorna apenas a parte da data (yyyy-MM-dd)
+    }
+
+    // Se for um objeto Date, formata para yyyy-MM-dd
     return date.toISOString().split('T')[0];
+  }
+
+  /**
+   * Formata uma data no formato dd/MM/yyyy.
+   * @param date - Objeto Date a ser formatado.
+   * @returns A data formatada como string.
+   */
+  formatDate(date: Date): string {
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
   }
 }
