@@ -10,6 +10,7 @@ import { DateService } from '../service/date.service'; // Importe o DateService
 })
 export class GastoService {
   private apiUrl = 'http://localhost:8080/api/gastos'; // URL da API backend
+  public hoje: Date = new Date();
 
   constructor(
     private http: HttpClient,
@@ -48,6 +49,63 @@ export class GastoService {
     return this.http.get<Gasto>(`${this.apiUrl}/${id}`);
   }
 
+  definirStatusDespesa(despesa: Gasto): string {
+    const vencimentoDate = new Date(despesa.vencimento);
+
+    const hoje = new Date(this.hoje);
+    hoje.setHours(0, 0, 0, 0); // Definindo a hora como 00:00:00
+
+    const vencimento = new Date(vencimentoDate);
+    vencimento.setHours(0, 0, 0, 0); // Definindo a hora como 00:00:00
+
+    // let statusVencimento: string;
+
+    // Verificando o tipo para determinar o status
+    // if (despesa.tipo === 1) {
+    //   statusVencimento = 'pago'; // Tipo 1 significa "Pago"
+    // } else if (vencimento.getTime() === hoje.getTime()) {
+    //   statusVencimento = 'venceHoje'; // Exatamente hoje
+    // } else if (vencimento.getTime() > hoje.getTime()) {
+    //   statusVencimento = 'pendente'; // Data futura
+    // } else {
+    //   statusVencimento = 'vencido'; // Data passada
+    // }
+
+    if (despesa.tipo === 1) {
+      return 'pago';
+    } else if (vencimentoDate < hoje) {
+      return 'vencido';
+    } else if (vencimentoDate.getTime() === hoje.getTime()) {
+      return 'vence hoje';
+    } else {
+      return 'pendente';
+    }
+
+    // if (despesa.tipo === 1) {
+    //   statusVencimento = 'pago'; // Tipo 1 significa "Pago"
+    // } else if (vencimentoDate < hoje) {
+    //   statusVencimento = 'vencido'; // Vencido
+    // } else if (vencimentoDate.toDateString() === hoje.toDateString()) {
+    //   statusVencimento = 'vence hoje'; // Vence hoje
+    // } else {
+    //   statusVencimento = 'pendente'; // Pendente
+    // }
+
+    // Usando switch para retornar o status
+    // switch (statusVencimento) {
+    //   case 'pago':
+    //     return 'pago';
+    //   case 'venceHoje':
+    //     return 'vence hoje';
+    //   case 'pendente':
+    //     return 'pendente';
+    //   case 'vencido':
+    //     return 'vencido';
+    //   default:
+    //     return ''; // Caso nenhuma condição seja atendida
+    // }
+  }
+
   // Atualiza uma despesa existente
   updateDespesa(id: number, despesa: Gasto): Observable<Gasto> {
     // Antes de enviar para a API, a data pode ser convertida para ISO 8601 (string)
@@ -55,10 +113,8 @@ export class GastoService {
     despesa.vencimento = this.dateService.convertToISODate(despesa.vencimento);
     console.log('Data formatada para envio:', despesa.vencimento);
 
-    // Se a despesa foi marcada como paga, também atualiza o status
-    if (despesa.pago) {
-      despesa.status = 'Pago';
-    }
+    // Atualizar status
+    despesa.status = this.definirStatusDespesa(despesa);
 
     return this.http.put<Gasto>(`${this.apiUrl}/${id}`, despesa).pipe(
       map((response: Gasto) => {

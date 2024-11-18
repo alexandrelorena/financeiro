@@ -3,9 +3,7 @@ package com.br.financeiro.gastos.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
-
 import java.time.LocalDate;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
@@ -28,15 +26,19 @@ public class Gasto {
 
     @Column(name = "status")
     @JsonInclude(JsonInclude.Include.ALWAYS)
-    private String status; // Valor padrão é "Pendente"
+    private String status;
 
-    @Column(name = "pago", nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
-    @JsonInclude(JsonInclude.Include.ALWAYS)
-    private boolean pago;
+    // @Column(name = "tipo", nullable = false, columnDefinition = "INTEGER DEFAULT 0")
+    // @JsonInclude(JsonInclude.Include.ALWAYS)
+    // private int tipo;
+    @NotNull
+    @Enumerated(EnumType.STRING) // Armazenar como string (PENDENTE, PAGO, VENCIDO)
+    private TipoGasto tipo;
+   
 
     public Gasto() {
-        // Definir o status como "Pendente" inicialmente, até que a data de vencimento seja definida
-        this.status = "Pendente";
+        this.tipo = TipoGasto.PENDENTE; // Inicialmente como Pendente
+        updateStatusFromTipo();
     }
 
     // Getters e Setters
@@ -80,28 +82,46 @@ public class Gasto {
     public void setStatus(String status) {
         this.status = status;
     }
-    public boolean isPago() {
-        return pago;
+
+    public TipoGasto getTipo() {
+      return tipo;
     }
 
-    public void setPago(boolean pago) {
-        this.pago = pago;
+    public void setTipo(TipoGasto tipo) {
+        this.tipo = tipo;
+        updateStatusFromTipo(); // Atualiza o status com base no tipo
     }
 
-    /**
-     * Atualiza o status com base na data de vencimento.
-     * O status será "Vencido" se a data já passou, ou "Pendente" caso contrário.
-     */
-    public void updateStatus() {
-        if (vencimento != null) {
-            LocalDate hoje = LocalDate.now();
-            if (vencimento.isBefore(hoje)) {
+    public void updateStatusFromTipo() {
+        switch (this.tipo) {
+            case PENDENTE:
+                updateStatus(); // Calcula baseado na data se for Pendente
+                break;
+            case PAGO:
+                this.status = "Pago";
+                break;
+            case VENCIDO:
                 this.status = "Vencido";
-            } else if (vencimento.isEqual(hoje)) {
-                this.status = "Vence Hoje";
-            } else {
-                this.status = "Pendente";
-            }
+                break;
         }
     }
+
+    public void updateStatus() {
+      if (this.tipo == TipoGasto.PENDENTE && vencimento != null) {
+          LocalDate hoje = LocalDate.now();
+  
+          if (vencimento.isBefore(hoje)) {
+              this.status = "Vencido";
+          } else if (vencimento.equals(hoje)) {
+              this.status = "Vence Hoje";
+          } else {
+              this.status = "Pendente";
+          }
+      } else if (this.tipo == TipoGasto.PAGO) {
+          this.status = "Pago";
+      } else if (this.tipo == TipoGasto.VENCIDO) {
+          this.status = "Vencido";
+      }
+  } 
 }
+

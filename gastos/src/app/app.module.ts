@@ -16,6 +16,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
+import { DespesasComponent } from './component/despesas/despesas.component';
 // import { RouterModule } from '@angular/router';
 
 @NgModule({
@@ -27,6 +28,7 @@ import { DatePipe } from '@angular/common';
     AddDespesaComponent,
     ContentComponent,
     FooterComponent,
+    DespesasComponent,
   ],
   imports: [
     BrowserModule,

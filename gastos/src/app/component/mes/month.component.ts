@@ -96,24 +96,11 @@ export class MonthComponent implements OnInit, OnDestroy {
     return this.monthNames[this.selectedMonth]?.[0] ?? this.selectedMonth;
   }
 
-  // Busca as despesas para o mês selecionado
   getDespesas(month: number): void {
     if (month === -1) return;
 
-    this.gastoService.getDespesas(month).subscribe({
-      next: (response) => {
-        this.despesas = response.map((despesa) => {
-          // Adiciona o status e a classe CSS para cada despesa
-          const { status, cssClass } = this.getDespesaInfo(despesa);
-          despesa.status = status;
-          despesa.cssClass = cssClass; // Adiciona a classe CSS ao objeto despesa
-          return despesa;
-        });
-
-        this.calcularTotalDespesas();
-      },
-      error: (error) =>
-        console.error('Erro ao carregar despesas:', error.message || error),
+    this.gastoService.getDespesas(month).subscribe((despesas: Gasto[]) => {
+      this.despesas = despesas; // Não recalcula o status no frontend
     });
   }
 
@@ -130,14 +117,18 @@ export class MonthComponent implements OnInit, OnDestroy {
     const despesa = this.despesas.find((d) => d.id === id);
     if (!despesa) return;
 
-    despesa.pago = true;
+    // Atualiza o tipo e status da despesa para "Pago"
+    despesa.tipo = 1; // Tipo 1 indica que a despesa está paga
     despesa.status = 'Pago';
     despesa.cssClass = 'status-pago'; // Atualiza a classe para "status-pago"
 
     this.gastoService.pagarDespesa(id).subscribe({
-      next: () => this.calcularTotalDespesas(),
+      next: () => {
+        this.calcularTotalDespesas(); // Atualiza o total de despesas
+      },
       error: (error) => {
-        despesa.pago = false;
+        // Se falhar, reverte para o estado anterior
+        despesa.tipo = 0; // Tipo 0 para "Pendente"
         despesa.status = 'Pendente';
         despesa.cssClass = 'status-pendente'; // Retorna para a classe "status-pendente"
         console.error('Erro ao pagar despesa:', error);
@@ -178,13 +169,22 @@ export class MonthComponent implements OnInit, OnDestroy {
       .pipe(take(1))
       .subscribe({
         next: (updatedDespesa) => {
+          // Atualiza o status e a classe CSS após a edição
+          const infoDespesa = this.getDespesaInfo(updatedDespesa);
+
+          // Atribui o status e a classe CSS ao objeto da despesa
+          updatedDespesa.status = infoDespesa.status;
+          updatedDespesa.cssClass = infoDespesa.cssClass;
+
           const index = this.despesas.findIndex(
             (d) => d.id === updatedDespesa.id
           );
           if (index !== -1) {
+            // Atualiza a lista de despesas
             this.despesas[index] = updatedDespesa;
             this.calcularTotalDespesas();
           }
+
           this.despesaEditando = null;
         },
         error: (error) =>
@@ -228,22 +228,26 @@ export class MonthComponent implements OnInit, OnDestroy {
       vencimento = despesa.vencimento;
     }
 
-    // Caso esteja paga, retorna "Pago" e a classe CSS
-    if (despesa.pago) {
-      return { status: 'Pago', cssClass: 'status-pago' };
+    // A lógica para o tipo de despesa: 0 (pendente), 1 (pago), 2 (vencido)
+    if (despesa.tipo === 1) {
+      return { status: 'Pago', cssClass: 'status-pago' }; // Caso o tipo seja 1 (Pago)
     }
 
     // Caso o vencimento seja hoje
-    if (vencimento.getTime() === hoje.getTime()) {
-      return { status: 'Vence hoje', cssClass: 'status-vencido' };
+    if (
+      vencimento.getFullYear() === hoje.getFullYear() &&
+      vencimento.getMonth() === hoje.getMonth() &&
+      vencimento.getDate() === hoje.getDate()
+    ) {
+      return { status: 'Vence hoje', cssClass: 'status-hoje' };
     }
 
     // Caso o vencimento tenha passado
     if (vencimento < hoje) {
-      return { status: 'Vencido', cssClass: 'status-vencido' };
+      return { status: 'Vencido', cssClass: 'status-vencido' }; // Caso o tipo seja 2 (Vencido)
     }
 
-    // Caso contrário, está pendente
-    return { status: 'Pendente', cssClass: 'status-pendente' };
+    // Caso contrário, está pendente (vencimento futuro)
+    return { status: 'Pendente', cssClass: 'status-pendente' }; // Caso o tipo seja 0 (Pendente)
   }
 }
