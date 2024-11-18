@@ -43,15 +43,52 @@ export class AddDespesaComponent implements OnInit {
       return;
     }
 
+    // Obtenha a data atual
+    const dataAtual = new Date();
+    dataAtual.setHours(0, 0, 0, 0); // Definindo a hora como 00:00:00
+
+    const vencimento = new Date(this.despesaForm.value.vencimento);
+    vencimento.setHours(0, 0, 0, 0); // Definindo a hora como 00:00:00
+
+    // Formatar as datas para 'YYYY-MM-DD'
+    const dataAtualFormatada = dataAtual.toISOString().slice(0, 10);
+    const vencimentoFormatado = vencimento.toISOString().slice(0, 10);
+
+    let status = ''; // Status default
+    let tipoGasto: 0 | 1 | 2 = 0; // Valor inicial como Pendente (0)
+
+    // Definir um tipo literal para TIPO_GASTO
+    type TipoGasto = 0 | 1 | 2;
+
+    // const TIPO_GASTO = {
+    //   PENDENTE: 0,
+    //   PAGO: 1,
+    //   VENCIDO: 2,
+    // };
+
+    // Definindo o tipo de gasto com base na data
+    if (vencimentoFormatado < dataAtualFormatada) {
+      status = 'vencido';
+      tipoGasto = 2; // Vencido
+    } else if (vencimentoFormatado === dataAtualFormatada) {
+      status = 'vence hoje';
+      tipoGasto = 1; // Pago
+    } else {
+      status = 'pendente';
+      tipoGasto = 0; // Pendente
+    }
+
+    // Criação do objeto despesa com o status calculado
     const despesa: Gasto = {
       nome: this.despesaForm.value.nome,
       valor: +this.despesaForm.value.valor,
       vencimento: this.despesaForm.value.vencimento,
-      pago: false,
-      status: '',
+      tipo: tipoGasto, // 0 indica que a despesa está pendente
+      status: status, // Status já atribuído
       id: 0,
     };
 
+    // Chama o serviço para criar a despesa
     this.gastoService.criarGasto(despesa).subscribe({
       next: (despesaCriada) => {
         console.log('Despesa criada com sucesso:', despesaCriada);
