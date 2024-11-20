@@ -32,7 +32,7 @@ public class Gasto {
     // @JsonInclude(JsonInclude.Include.ALWAYS)
     // private int tipo;
     @NotNull
-    @Enumerated(EnumType.STRING) // Armazenar como string (PENDENTE, PAGO, VENCIDO)
+    @Enumerated(EnumType.ORDINAL) // Usa os índices do enum
     private TipoGasto tipo;
    
 
