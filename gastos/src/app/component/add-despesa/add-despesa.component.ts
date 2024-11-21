@@ -43,36 +43,58 @@ export class AddDespesaComponent implements OnInit {
       return;
     }
 
+    // // Obtenha a data atual
+    // const dataAtual = new Date();
+    // dataAtual.setHours(0, 0, 0, 0); // Definindo a hora como 00:00:00
+
+    // const vencimento = new Date(this.despesaForm.value.vencimento);
+    // vencimento.setHours(0, 0, 0, 0); // Definindo a hora como 00:00:00
+
     // Obtenha a data atual
     const dataAtual = new Date();
-    dataAtual.setHours(0, 0, 0, 0); // Definindo a hora como 00:00:00
+    const hojeSemHora = new Date(
+      dataAtual.getFullYear(),
+      dataAtual.getMonth(),
+      dataAtual.getDate()
+    );
 
+    // Obtenha o vencimento
     const vencimento = new Date(this.despesaForm.value.vencimento);
-    vencimento.setHours(0, 0, 0, 0); // Definindo a hora como 00:00:00
+    const vencimentoSemHora = new Date(
+      vencimento.getFullYear(),
+      vencimento.getMonth(),
+      vencimento.getDate()
+    );
 
     // Formatar as datas para 'YYYY-MM-DD'
     const dataAtualFormatada = dataAtual.toISOString().slice(0, 10);
     const vencimentoFormatado = vencimento.toISOString().slice(0, 10);
 
     let status = ''; // Status default
-    let tipoGasto: 0 | 1 | 2 = 0; // Valor inicial como Pendente (0)
+    let tipoGasto: 0 | 1 | 2 | 3 = 0; // Valor inicial como Pendente (0)
 
     // Definir um tipo literal para TIPO_GASTO
-    type TipoGasto = 0 | 1 | 2;
+    type TipoGasto = 0 | 1 | 2 | 3;
 
-    // const TIPO_GASTO = {
-    //   PENDENTE: 0,
-    //   PAGO: 1,
-    //   VENCIDO: 2,
-    // };
+    // // Definindo o tipo de gasto com base na data
+    // if (vencimentoFormatado < dataAtualFormatada) {
+    //   status = 'vencido';
+    //   tipoGasto = 2; // Vencido
+    // } else if (vencimentoFormatado === dataAtualFormatada) {
+    //   status = 'vencendo';
+    //   tipoGasto = 3; // Vencendo
+    // } else {
+    //   status = 'pendente';
+    //   tipoGasto = 0; // Pendente
+    // }
 
-    // Definindo o tipo de gasto com base na data
-    if (vencimentoFormatado < dataAtualFormatada) {
+    // Comparação de datas normalizadas
+    if (vencimentoSemHora < hojeSemHora) {
       status = 'vencido';
       tipoGasto = 2; // Vencido
-    } else if (vencimentoFormatado === dataAtualFormatada) {
-      status = 'vence hoje';
-      tipoGasto = 1; // Pago
+    } else if (vencimentoSemHora.getTime() === hojeSemHora.getTime()) {
+      status = 'vencendo';
+      tipoGasto = 3; // Vencendo
     } else {
       status = 'pendente';
       tipoGasto = 0; // Pendente

@@ -170,7 +170,7 @@ export class MonthComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (updatedDespesa) => {
           // Atualiza o status e a classe CSS após a edição
-          const infoDespesa = this.getDespesaInfo(updatedDespesa);
+          const infoDespesa = this.getStatus(updatedDespesa);
 
           // Atribui o status e a classe CSS ao objeto da despesa
           updatedDespesa.status = infoDespesa.status;
@@ -212,12 +212,7 @@ export class MonthComponent implements OnInit, OnDestroy {
       });
   }
 
-  getStatus(despesa: Gasto): string {
-    return despesa.status; // Apenas usa o status enviado pela API
-  }
-
-  // Função unificada para retornar o status e a classe CSS da despesa
-  getDespesaInfo(despesa: Gasto): { status: string; cssClass: string } {
+  getStatus(despesa: Gasto): { status: string; cssClass: string } {
     const hoje = new Date();
     let vencimento: Date;
 
@@ -228,26 +223,34 @@ export class MonthComponent implements OnInit, OnDestroy {
       vencimento = despesa.vencimento;
     }
 
-    // A lógica para o tipo de despesa: 0 (pendente), 1 (pago), 2 (vencido)
+    // Normaliza as datas para comparar apenas ano, mês e dia
+    const hojeSemHora = new Date(
+      hoje.getFullYear(),
+      hoje.getMonth(),
+      hoje.getDate()
+    );
+    const vencimentoSemHora = new Date(
+      vencimento.getFullYear(),
+      vencimento.getMonth(),
+      vencimento.getDate()
+    );
+
+    // Se o tipo for 1 (Pago)
     if (despesa.tipo === 1) {
-      return { status: 'Pago', cssClass: 'status-pago' }; // Caso o tipo seja 1 (Pago)
+      return { status: 'Pago', cssClass: 'status-pago' };
     }
 
-    // Caso o vencimento seja hoje
-    if (
-      vencimento.getFullYear() === hoje.getFullYear() &&
-      vencimento.getMonth() === hoje.getMonth() &&
-      vencimento.getDate() === hoje.getDate()
-    ) {
-      return { status: 'Vence hoje', cssClass: 'status-hoje' };
+    // Se o vencimento for hoje
+    if (vencimentoSemHora.getTime() === hojeSemHora.getTime()) {
+      return { status: 'Vencendo', cssClass: 'status-hoje' };
     }
 
-    // Caso o vencimento tenha passado
-    if (vencimento < hoje) {
-      return { status: 'Vencido', cssClass: 'status-vencido' }; // Caso o tipo seja 2 (Vencido)
+    // Se o vencimento passou
+    if (vencimentoSemHora < hojeSemHora) {
+      return { status: 'Vencido', cssClass: 'status-vencido' };
     }
 
     // Caso contrário, está pendente (vencimento futuro)
-    return { status: 'Pendente', cssClass: 'status-pendente' }; // Caso o tipo seja 0 (Pendente)
+    return { status: 'Pendente', cssClass: 'status-pendente' };
   }
 }

@@ -106,16 +106,44 @@ tbody tr:nth-child(odd) {
   background-color: #353b48;
 } */
 
+/* Status de pagamento */
 .status-pago {
-  color: green;
+  background-color: green;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  text-align: center;
+  font-weight: bold;
 }
 
-.status-vencido {
-  color: red;
-}
-
+/* Status pendente */
 .status-pendente {
-  color: yellow;
+  background-color: yellow;
+  color: black;
+  padding: 5px 10px;
+  border-radius: 5px;
+  text-align: center;
+  font-weight: bold;
+}
+
+/* Status vencido */
+.status-vencido {
+  background-color: red;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  text-align: center;
+  font-weight: bold;
+}
+
+/* Status de hoje */
+.status-hoje {
+  background-color: rgb(21, 12, 63);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  text-align: center;
+  font-weight: bold;
 }
 
 /* Estilo para os botões de ação */
