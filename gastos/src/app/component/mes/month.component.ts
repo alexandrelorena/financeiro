@@ -101,6 +101,7 @@ export class MonthComponent implements OnInit, OnDestroy {
 
     this.gastoService.getDespesas(month).subscribe((despesas: Gasto[]) => {
       this.despesas = despesas; // Não recalcula o status no frontend
+      this.calcularTotalDespesas();
     });
   }
 
