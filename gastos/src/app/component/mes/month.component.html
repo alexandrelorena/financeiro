@@ -48,7 +48,15 @@
               {{ getDespesaInfo(despesa).status }}
             </span>
           </td> -->
-          <td>{{ despesa.status }}</td>
+          <td [ngClass]="{
+            'status-pago': despesa.status === 'Pago',
+            'status-pendente': despesa.status === 'Pendente',
+            'status-vencido': despesa.status === 'Vencido',
+            'status-hoje': despesa.status === 'Vencendo'
+          }">
+            {{ despesa.status }}
+          </td>
+
           <td>
             <!-- Exibe o botão "Pagar" caso a despesa esteja pendente ou vencida -->
             <button (click)="pagarDespesa(despesa.id)">💸</button>

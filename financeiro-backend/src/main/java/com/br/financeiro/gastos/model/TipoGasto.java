@@ -3,7 +3,8 @@ package com.br.financeiro.gastos.model;
 public enum TipoGasto {
     PENDENTE(0),
     PAGO(1),
-    VENCIDO(2);
+    VENCEU(2),
+    VENCENDO(3);
 
     private final int valor;
 

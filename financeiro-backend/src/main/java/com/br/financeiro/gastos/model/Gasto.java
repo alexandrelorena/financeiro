@@ -10,6 +10,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 @Entity
 @Table(name = "gastos")
 public class Gasto {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -22,23 +23,21 @@ public class Gasto {
     private double valor;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    @Temporal(TemporalType.DATE) 
+    @Column(nullable = false)
     private LocalDate vencimento;
 
     @Column(name = "status")
     @JsonInclude(JsonInclude.Include.ALWAYS)
     private String status;
 
-    // @Column(name = "tipo", nullable = false, columnDefinition = "INTEGER DEFAULT 0")
-    // @JsonInclude(JsonInclude.Include.ALWAYS)
-    // private int tipo;
     @NotNull
-    @Enumerated(EnumType.ORDINAL) // Usa os índices do enum
+    @Enumerated(EnumType.ORDINAL)
     private TipoGasto tipo;
-   
 
     public Gasto() {
-        this.tipo = TipoGasto.PENDENTE; // Inicialmente como Pendente
-        updateStatusFromTipo();
+        this.tipo = TipoGasto.PENDENTE;
+        updateStatus(); // Atualiza o status no construtor
     }
 
     // Getters e Setters
@@ -84,44 +83,41 @@ public class Gasto {
     }
 
     public TipoGasto getTipo() {
-      return tipo;
+        return tipo;
     }
 
     public void setTipo(TipoGasto tipo) {
         this.tipo = tipo;
-        updateStatusFromTipo(); // Atualiza o status com base no tipo
+        updateStatus(); // Atualiza o status com base no tipo
     }
 
-    public void updateStatusFromTipo() {
-        switch (this.tipo) {
-            case PENDENTE:
-                updateStatus(); // Calcula baseado na data se for Pendente
-                break;
-            case PAGO:
-                this.status = "Pago";
-                break;
-            case VENCIDO:
+    // Lógica para definir o status
+    public void updateStatus() {
+        if (this.tipo == TipoGasto.PAGO) {
+            this.status = "Pago";
+        } else if (vencimento != null) {
+            LocalDate hoje = LocalDate.now();
+            if (vencimento.isBefore(hoje)) {
                 this.status = "Vencido";
-                break;
+            } else if (vencimento.equals(hoje)) {
+                this.status = "Vencendo";
+            } else {
+                this.status = "Pendente";
+            }
+        } else {
+            this.status = "Status Indefinido";
         }
     }
 
-    public void updateStatus() {
-      if (this.tipo == TipoGasto.PENDENTE && vencimento != null) {
-          LocalDate hoje = LocalDate.now();
-  
-          if (vencimento.isBefore(hoje)) {
-              this.status = "Vencido";
-          } else if (vencimento.equals(hoje)) {
-              this.status = "Vence Hoje";
-          } else {
-              this.status = "Pendente";
-          }
-      } else if (this.tipo == TipoGasto.PAGO) {
-          this.status = "Pago";
-      } else if (this.tipo == TipoGasto.VENCIDO) {
-          this.status = "Vencido";
-      }
-  } 
-}
+    // Método chamado antes de persistir no banco (para inserção)
+    @PrePersist
+    public void beforeInsert() {
+        updateStatus();  // Garante que o status é atualizado antes de inserir
+    }
 
+    // Método chamado antes de atualizar no banco
+    @PreUpdate
+    public void beforeUpdate() {
+        updateStatus();  // Garante que o status é atualizado antes de atualizar
+    }
+}
