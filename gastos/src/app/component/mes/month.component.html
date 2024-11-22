@@ -39,7 +39,7 @@
         </ng-container>
 
         <!-- Modo de Visualização -->
-        <ng-template #viewMode>
+        <ng-template #viewMode class="tabela-despesas">
           <td>{{ despesa.nome }}</td>
           <td>{{ despesa.valor | currency:'BRL' }}</td>
           <td>{{ despesa.vencimento | date: 'dd/MM' }}</td>
