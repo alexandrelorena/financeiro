@@ -67,8 +67,8 @@ export class AddDespesaComponent implements OnInit {
     );
 
     // Formatar as datas para 'YYYY-MM-DD'
-    const dataAtualFormatada = dataAtual.toISOString().slice(0, 10);
-    const vencimentoFormatado = vencimento.toISOString().slice(0, 10);
+    // const dataAtualFormatada = dataAtual.toISOString().slice(0, 10);
+    // const vencimentoFormatado = vencimento.toISOString().slice(0, 10);
 
     let status = ''; // Status default
     let tipoGasto: 0 | 1 | 2 | 3 = 0; // Valor inicial como Pendente (0)
@@ -90,9 +90,11 @@ export class AddDespesaComponent implements OnInit {
 
     // Comparação de datas normalizadas
     if (vencimentoSemHora < hojeSemHora) {
+      // } else if (vencimentoSemHora.getTime() === hojeSemHora.getTime()) {
       status = 'vencido';
       tipoGasto = 2; // Vencido
-    } else if (vencimentoSemHora.getTime() === hojeSemHora.getTime()) {
+    } else if (vencimentoSemHora === hojeSemHora) {
+      // } else if (vencimentoSemHora.getTime() === hojeSemHora.getTime()) {
       status = 'vencendo';
       tipoGasto = 3; // Vencendo
     } else {

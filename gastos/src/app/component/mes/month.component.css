@@ -202,3 +202,37 @@ td:last-child {
 .input-vencimento {
   width: 100px;
 }
+
+/* Contêiner com rolagem */
+.container__month {
+  max-height: 800px; /* Altura máxima */
+  overflow-y: auto; /* Scroll vertical */
+  /* border: 1px solid #ccc; Opcional: borda para destaque */
+}
+
+/* Estilo da tabela */
+.tabela-despesas {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tabela-despesas th,
+.tabela-despesas td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+/* Barra de rolagem personalizada (opcional) */
+.container__month::-webkit-scrollbar {
+  width: 8px;
+}
+
+.container__month::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 4px;
+}
+
+.container__month::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
+}
