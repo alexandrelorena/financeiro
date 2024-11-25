@@ -1,0 +1,7 @@
+<!-- confirmation-dialog.component.html -->
+<h1 mat-dialog-title>Confirmar exclusão</h1>
+<mat-dialog-content [innerHTML]="data.message"></mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="onCancel()">Cancelar</button>
+  <button mat-button (click)="onConfirm()">Confirmar</button>
+</mat-dialog-actions>
