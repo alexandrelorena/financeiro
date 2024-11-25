@@ -31,11 +31,6 @@ body.dark-theme {
   --icon-color: white; /* Cor dos ícones no modo escuro */
 }
 
-/* Estilo que será aplicado aos componentes */
-/* .component {
-  color: var(--primary-text-color);
-} */
-
 html,
 body {
   height: 90%;

@@ -1,0 +1,46 @@
+/* Estilizar o título do diálogo */
+/* * {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  box-sizing: border-box;
+} */
+
+.mat-mdc-dialog-title {
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  background-color: brown;
+  color: white;
+  margin-bottom: 1rem;
+}
+
+/* Estilizar o conteúdo do diálogo */
+.mat-mdc-dialog-content {
+  font-size: 1rem;
+  color: gray;
+  margin-bottom: 1rem;
+}
+
+/* Estilizar os botões das ações */
+.mat-mdc-dialog-actions {
+  display: flex;
+  justify-content: space-evenly;
+  /* gap: 10px; */
+}
+
+.mat-mdc-button {
+  /* color: white; */
+  border-radius: 4px;
+  /* padding: 8px 16px; */
+  transition: background-color 0.3s;
+}
+
+.mat-mdc-button:hover {
+  background-color: green;
+}
+
+.mat-mdc-button:disabled {
+  color: #999;
+  cursor: not-allowed;
+}
