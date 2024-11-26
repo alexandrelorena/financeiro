@@ -21,7 +21,7 @@ public class GastoController {
     @Operation(summary = "Buscar despesas por mês")
     @GetMapping("/mes")
     public List<Gasto> getDespesasByMonth(@RequestParam Integer month) {
-        return gastoRepository.findByVencimentoMonth(month);
+        return gastoRepository.findByVencimentoMonthNative(month);
     }
 
     @GetMapping

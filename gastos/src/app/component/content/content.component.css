@@ -12,21 +12,21 @@
 
 .app-menu {
   flex: 0; /* O menu ocupará 1 parte do layout */
-  border: 1px solid grey;
+  /* border: 1px solid grey;
   border-style: dotted;
-  border-radius: 5px;
+  border-radius: 5px; */
 }
 
 .app-month {
   flex: 7; /* O conteúdo principal ocupará mais espaço (3 partes) */
   border: 1px solid grey;
-  border-style: dotted;
+  border-style: double;
   border-radius: 5px;
 }
 
 .app-add-despesa {
   flex: 3; /* A despesa ocupará 1 parte */
   border: 1px solid grey;
-  border-style: dotted;
+  border-style: double;
   border-radius: 5px;
 }

@@ -1,5 +1,5 @@
 <div class="container__month">
-  <p>Total de despesas do mês de {{ getFullMonthName() }}: {{ totalDespesas | currency:'BRL' }}</p>
+  <!-- <p>Total de despesas do mês de {{ getFullMonthName() }}: {{ totalDespesas | currency:'BRL' }}</p> -->
 
   <table>
     <thead>
@@ -15,7 +15,6 @@
     <tbody>
       <tr *ngFor="let despesa of despesas; let i = index">
         <td>{{ i + 1 }}</td>
-        <!-- <p>{{ despesa.nome }} - {{ despesa.valor | currency }}</p> -->
         <!-- Alterna entre visualização e edição -->
         <ng-container *ngIf="despesaEditando?.id === despesa.id; else viewMode">
           <!-- Modo de Edição -->
@@ -41,13 +40,9 @@
         <!-- Modo de Visualização -->
         <ng-template #viewMode class="tabela-despesas">
           <td>{{ despesa.nome }}</td>
-          <td>{{ despesa.valor | currency:'BRL' }}</td>
+          <td>{{ despesa.valor | currency:'BRL'}}</td>
           <td>{{ despesa.vencimento | date: 'dd/MM' }}</td>
-          <!-- <td>
-            <span [ngClass]="getDespesaInfo(despesa).cssClass">
-              {{ getDespesaInfo(despesa).status }}
-            </span>
-          </td> -->
+
           <td [ngClass]="{
             'status-pago': despesa.status === 'Pago',
             'status-pendente': despesa.status === 'Pendente',
@@ -59,9 +54,14 @@
 
           <td>
             <!-- Exibe o botão "Pagar" caso a despesa esteja pendente ou vencida -->
-            <button class="pagar" (click)="pagarDespesa(despesa.id)">﹩</button>
-            <button (click)="iniciarEdicao(despesa)">🖋️</button>
-            <button (click)="removerDespesa(despesa)">❌</button>
+            <button class="pagar" (click)="pagarDespesa(despesa.id)"
+              [disabled]="despesa.status === 'Pago' || despesa.disableButtons"
+              [class.status-pago]="despesa.status === 'Pago'">﹩</button>
+
+            <!-- Botão de edição, desabilitado se a despesa estiver paga -->
+            <button class="editar" (click)="iniciarEdicao(despesa)" [disabled]="despesa.status === 'Pago'"
+              [class.status-pago]="despesa.status === 'Pago'">↻</button>
+            <button class="remover" (click)="removerDespesa(despesa)">x</button>
           </td>
         </ng-template>
       </tr>

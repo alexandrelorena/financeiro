@@ -9,7 +9,7 @@
   align-items: center; /* Alinha verticalmente os itens ao centro */
   padding: 10px 0; /* Padding superior e inferior */
   border-radius: 5px;
-  border-style: dotted;
+  border-style: double;
 }
 
 /* Estilo dos links */

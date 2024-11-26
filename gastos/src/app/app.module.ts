@@ -17,7 +17,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { DespesasComponent } from './component/despesas/despesas.component';
-// import { RouterModule } from '@angular/router';
+import { MatDialogModule } from '@angular/material/dialog';
+import { ConfirmationDialogComponent } from './../app/component/confirmation-dialog/confirmation-dialog.component';
+import { RepeatComponent } from './component/repeat/repeat.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +31,8 @@ import { DespesasComponent } from './component/despesas/despesas.component';
     ContentComponent,
     FooterComponent,
     DespesasComponent,
+    ConfirmationDialogComponent,
+    RepeatComponent,
   ],
   imports: [
     BrowserModule,
@@ -40,6 +44,7 @@ import { DespesasComponent } from './component/despesas/despesas.component';
     HttpClientModule,
     BrowserAnimationsModule,
     FormsModule,
+    MatDialogModule,
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent],
