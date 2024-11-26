@@ -14,8 +14,9 @@ public interface GastoRepository extends JpaRepository<Gasto, Long> {
     // @Query("SELECT g.id, g.nome, g.valor, g.vencimento, g.status, g.pago FROM Gasto g WHERE MONTH(g.vencimento) = :month")
     // List<Gasto> findByVencimentoMonth(@Param("month") Integer month);
     
-    @Query("SELECT g FROM Gasto g WHERE MONTH(g.vencimento) = :month")
-    List<Gasto> findByVencimentoMonth(@Param("month") int month);
-
+    @Query(value = "SELECT * FROM gastos g WHERE MONTH(g.vencimento) = :month ORDER BY g.vencimento ASC", nativeQuery = true)
+    List<Gasto> findByVencimentoMonthNative(@Param("month") int month);
+    
+    
 
 }

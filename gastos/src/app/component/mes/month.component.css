@@ -1,50 +1,44 @@
+/* -------------------- Contêiner -------------------- */
+
 .container__month {
   background-color: transparent;
-  color: #fff;
+  color: var(--text-light);
   padding: 15px;
   border-radius: 8px;
   width: 100%;
   height: 676px;
+  max-height: 800px;
+  overflow-y: auto;
+}
+
+.container__month::-webkit-scrollbar {
+  width: 8px;
+}
+
+.container__month::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar-color);
+  border-radius: 4px;
+}
+
+.container__month::-webkit-scrollbar-thumb:hover {
+  background-color: var(--scrollbar-hover);
 }
 
 .container__month > p {
   margin-left: 10px;
 }
 
-p {
-  color: var(
-    --primary-text-color
-  ); /* Texto será preto no tema claro e branco no tema escuro */
-}
+/* -------------------- Tabela -------------------- */
 
 table {
   width: 100%;
-  border-collapse: separate;
-  border: 1px solid gray;
-  border-style: dotted;
+  border-collapse: collapse;
   border-radius: 5px;
 }
 
 thead {
-  background-color: #3f51b5;
-  color: white;
-}
-
-th {
-  padding: 10px;
-  text-align: center; /* Centraliza o texto em cada título da coluna */
-  border-bottom: 1px solid gray;
-  border-style: dotted;
-
-  vertical-align: middle; /* Alinha verticalmente ao centro */
-}
-
-td {
-  padding: 10px;
-  border-bottom: 1px solid gray;
-  border-style: dotted;
-  border-radius: 5px;
-  /* vertical-align: middle; */
+  background-color: var(--primary-color);
+  color: var(--text-light);
 }
 
 th,
@@ -52,178 +46,116 @@ td {
   padding: 10px;
   text-align: center;
   border-bottom: 1px solid gray;
-}
-
-tbody tr:nth-child(even) {
-  background-color: #2f3640;
-}
-
-tbody tr:nth-child(odd) {
-  background-color: #353b48;
-}
-
-/* Largura de cada coluna */
-th:first-child,
-td:first-child {
-  width: 5%; /* Número da linha */
-  text-align: center;
-}
-
-th:nth-child(2),
-td:nth-child(2) {
-  width: 30%; /* Nome da despesa */
-}
-
-th:nth-child(3),
-td:nth-child(3) {
-  width: 20%; /* Valor */
-}
-
-th:nth-child(4),
-td:nth-child(4) {
-  width: 15%; /* Data de vencimento */
-  text-align: center;
-}
-
-th:nth-child(5),
-td:nth-child(5) {
-  width: 10%; /* Status */
-  text-align: center;
+  border-right: 1px solid var(--scrollbar-hover); /* Divisória entre colunas */
 }
 
 th:last-child,
 td:last-child {
-  width: 20%; /* Ações */
-  text-align: center;
+  border-right: none; /* Remove a borda da última coluna */
 }
-/*
+
 tbody tr:nth-child(even) {
-  background-color: #2f3640;
+  background-color: var(--background-dark);
 }
 
 tbody tr:nth-child(odd) {
-  background-color: #353b48;
-} */
-
-.status-pago {
-  /* background-color: green; */
-  color: green;
-  padding: 5px 10px;
-  border-radius: 5px;
-  text-align: center;
+  background-color: var(--background-light);
 }
 
-.status-pendente {
-  /* background-color: yellow; */
-  color: white;
-  padding: 5px 10px;
-  border-radius: 5px;
-  text-align: center;
+/* -------------------- Largura de colunas -------------------- */
+
+th:first-child,
+td:first-child {
+  width: 5%;
 }
 
-.status-vencido {
-  /* background-color: red; */
-  color: red;
-  padding: 5px 10px;
-  border-radius: 5px;
-  text-align: center;
+th:nth-child(2),
+td:nth-child(2) {
+  width: 30%;
 }
 
-.status-hoje {
-  /* background-color: rgb(21, 12, 63); */
-  color: rgb(235, 158, 17);
-  padding: 5px 10px;
-  border-radius: 5px;
-  text-align: center;
+th:nth-child(3),
+td:nth-child(3) {
+  width: 20%;
 }
 
-/* Estilo para os botões de ação */
-button {
-  background: none;
-  border: none;
-  color: #fff;
-  cursor: pointer;
-  font-size: 18px;
-  transition: transform 0.3s ease;
-  padding: 5px 10px; /* Ajuste de padding nos botões */
-  border-radius: 5px;
+th:nth-child(4),
+td:nth-child(4) {
+  width: 15%;
 }
 
-/* Estilos específicos para os botões de ação */
-button.pagar {
-  color: rgb(64, 250, 64); /* Pagar */
+th:nth-child(5),
+td:nth-child(5) {
+  width: 10%;
 }
 
-button.editar {
-  color: blue; /* Editar */
-}
-
-button.remover {
-  color: red; /* Remover */
-}
-
-/* Efeito visual nos botões */
-button:hover {
-  transform: scale(1.1);
-}
-
-/* Estilos para alinhar os botões de ação na última coluna */
+th:last-child,
 td:last-child {
-  gap: 8px;
+  width: 20%;
+  text-align: center;
   justify-content: center;
   align-items: center;
 }
 
-/* Exemplo de estilo para controlar a largura dos inputs */
-/* .input-edicao {
-  width: 100px;
-  padding: 5px;
-} */
-/* Classe para o input de nome */
-.input-nome {
-  width: 210px;
+/* -------------------- Status -------------------- */
+
+.status-pago {
+  color: var(--status-paid);
+  font-weight: bold;
+  text-align: center;
 }
 
-/* Classe para o input de valor */
-.input-valor {
-  width: 120px;
+.status-pendente {
+  color: var(--status-pending);
+  font-weight: bold;
+  text-align: center;
 }
 
-/* Classe para o input de vencimento */
-.input-vencimento {
-  width: 100px;
+.status-vencido {
+  color: var(--status-due);
+  font-weight: bold;
+  text-align: center;
 }
 
-/* Contêiner com rolagem */
-.container__month {
-  max-height: 800px; /* Altura máxima */
-  overflow-y: auto; /* Scroll vertical */
-  /* border: 1px solid #ccc; Opcional: borda para destaque */
+.status-hoje {
+  color: var(--status-today);
+  font-weight: bold;
+  text-align: center;
 }
 
-/* Estilo da tabela */
-.tabela-despesas {
-  width: 100%;
-  border-collapse: collapse;
+/* -------------------- Botões -------------------- */
+
+button {
+  background: none;
+  border: none;
+  color: var(--text-light);
+  cursor: pointer;
+  font-size: 18px;
+  transition: transform 0.3s ease;
+  padding: 5px 10px;
+  border-radius: 5px;
 }
 
-.tabela-despesas th,
-.tabela-despesas td {
-  padding: 10px;
-  text-align: left;
-  border-bottom: 1px solid #ddd;
+button:hover {
+  transform: scale(var(--button-hover-scale));
 }
 
-/* Barra de rolagem personalizada (opcional) */
-.container__month::-webkit-scrollbar {
-  width: 8px;
+/* Ações específicas */
+button.pagar {
+  color: var(--status-paid);
 }
 
-.container__month::-webkit-scrollbar-thumb {
-  background-color: #888;
-  border-radius: 4px;
+button.editar {
+  color: rgb(81, 81, 255);
 }
 
-.container__month::-webkit-scrollbar-thumb:hover {
-  background-color: #555;
+button.remover {
+  color: var(--status-due);
+}
+
+/* Botão desabilitado */
+button.status-pago {
+  color: #a9a9a9;
+  cursor: not-allowed;
+  pointer-events: none;
 }

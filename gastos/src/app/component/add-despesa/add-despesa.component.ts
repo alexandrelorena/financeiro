@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Gasto } from '../../models/gasto.model';
 import { GastoService } from '../../service/gasto.service';
-import { DespesaService } from '../../service/despesas.service';
+import { LocalService } from '../../service/local.service';
 
 @Component({
   selector: 'app-add-despesa',
@@ -11,11 +11,12 @@ import { DespesaService } from '../../service/despesas.service';
 })
 export class AddDespesaComponent implements OnInit {
   despesaForm!: FormGroup;
+  currentMonth = new Date().getMonth() + 1;
 
   constructor(
     private formBuilder: FormBuilder,
     private gastoService: GastoService,
-    private despesaService: DespesaService,
+    private localService: LocalService,
     private cdr: ChangeDetectorRef // Importando ChangeDetectorRef
   ) {}
 
@@ -43,13 +44,6 @@ export class AddDespesaComponent implements OnInit {
       return;
     }
 
-    // // Obtenha a data atual
-    // const dataAtual = new Date();
-    // dataAtual.setHours(0, 0, 0, 0); // Definindo a hora como 00:00:00
-
-    // const vencimento = new Date(this.despesaForm.value.vencimento);
-    // vencimento.setHours(0, 0, 0, 0); // Definindo a hora como 00:00:00
-
     // Obtenha a data atual
     const dataAtual = new Date();
     const hojeSemHora = new Date(
@@ -66,27 +60,11 @@ export class AddDespesaComponent implements OnInit {
       vencimento.getDate()
     );
 
-    // Formatar as datas para 'YYYY-MM-DD'
-    // const dataAtualFormatada = dataAtual.toISOString().slice(0, 10);
-    // const vencimentoFormatado = vencimento.toISOString().slice(0, 10);
-
     let status = ''; // Status default
     let tipoGasto: 0 | 1 | 2 | 3 = 0; // Valor inicial como Pendente (0)
 
     // Definir um tipo literal para TIPO_GASTO
-    type TipoGasto = 0 | 1 | 2 | 3;
-
-    // // Definindo o tipo de gasto com base na data
-    // if (vencimentoFormatado < dataAtualFormatada) {
-    //   status = 'vencido';
-    //   tipoGasto = 2; // Vencido
-    // } else if (vencimentoFormatado === dataAtualFormatada) {
-    //   status = 'vencendo';
-    //   tipoGasto = 3; // Vencendo
-    // } else {
-    //   status = 'pendente';
-    //   tipoGasto = 0; // Pendente
-    // }
+    // type TipoGasto = 0 | 1 | 2 | 3;
 
     // Comparação de datas normalizadas
     if (vencimentoSemHora < hojeSemHora) {
@@ -112,11 +90,23 @@ export class AddDespesaComponent implements OnInit {
       id: 0,
     };
 
-    // Chama o serviço para criar a despesa
+    // Cria a despesa
     this.gastoService.criarGasto(despesa).subscribe({
       next: (despesaCriada) => {
         console.log('Despesa criada com sucesso:', despesaCriada);
-        this.despesaService.adicionarDespesa(despesaCriada); // Atualiza a lista no BehaviorSubject
+        this.localService.adicionarDespesa(despesaCriada); // Atualiza a lista de despesas
+
+        // Recarregar as despesas do mês após adicionar
+        this.gastoService.getDespesas(this.currentMonth).subscribe({
+          next: (despesas) => {
+            console.log('Despesas do mês atual recarregadas:', despesas);
+            this.localService.atualizarDespesas(despesas); // Atualiza a lista no BehaviorSubject
+          },
+          error: (error) => {
+            console.error('Erro ao carregar as despesas do mês:', error);
+          },
+        });
+
         this.resetForm();
         this.cdr.detectChanges(); // Força a detecção de mudanças após a atualização
       },

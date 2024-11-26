@@ -10,7 +10,7 @@
   gap: 1%;
   color: var(--primary-text-color); /* Usando a variável CSS */
   border-radius: 5px;
-  border-style: dotted;
+  border-style: double;
 }
 
 .header__container > button {
