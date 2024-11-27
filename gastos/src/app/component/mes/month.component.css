@@ -36,8 +36,16 @@ table {
   border-radius: 5px;
 }
 
+table.month {
+  border-collapse: separate; /* Necessário para bordas arredondadas */
+  border-spacing: 0; /* Remove espaços entre células */
+  border-radius: 8px; /* Define o raio das bordas arredondadas */
+  overflow: hidden; /* Garante que os conteúdos sigam o formato */
+  border: 1px solid grey; /* Bordas da tabela */
+}
+
 thead {
-  background-color: var(--primary-color);
+  background-color: var(--button-menu-selected);
   color: var(--text-light);
 }
 
@@ -46,21 +54,44 @@ td {
   padding: 10px;
   text-align: center;
   border-bottom: 1px solid gray;
-  border-right: 1px solid var(--scrollbar-hover); /* Divisória entre colunas */
+  border-left: 1px solid var(--scrollbar-color);
+  border-right: 1px solid var(--scrollbar-color); /* Divisória entre colunas */
 }
 
 th:last-child,
 td:last-child {
-  border-right: none; /* Remove a borda da última coluna */
+  /* Remove a borda da última coluna */
+  border-right: 1px solid var(--scrollbar-hover);
 }
 
-tbody tr:nth-child(even) {
+/* Estilo para o modo escuro */
+.dark-theme tbody tr:nth-child(even) {
+  background-color: rgb(44, 44, 44);
+  color: white;
+}
+
+.dark-theme tbody tr:nth-child(odd) {
+  background-color: black;
+}
+
+/* Estilo para o modo claro */
+.light-theme tbody tr:nth-child(even) {
+  background-color: rgb(209, 208, 208);
+  color: gray;
+}
+
+.light-theme tbody tr:nth-child(odd) {
+  background-color: white;
+  color: grey;
+}
+
+/* tbody tr:nth-child(even) {
   background-color: var(--background-dark);
 }
 
 tbody tr:nth-child(odd) {
   background-color: var(--background-light);
-}
+} */
 
 /* -------------------- Largura de colunas -------------------- */
 
