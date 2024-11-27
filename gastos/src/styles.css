@@ -68,8 +68,8 @@ body {
   --scrollbar-color: #888;
   --scrollbar-hover: #555;
   --status-paid: rgb(9, 190, 9);
-  --status-pending: white;
+  --status-pending: rgb(1, 114, 180);
   --status-due: red;
-  --status-today: rgb(235, 158, 17);
+  --status-today: rgb(255, 123, 0);
   --button-hover-scale: 1.1;
 }

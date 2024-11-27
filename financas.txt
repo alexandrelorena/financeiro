@@ -1,0 +1,20 @@
+implementações que faltam ser feitas:
+
+BACKUP
+
+- Deixar sem modules no backup.
+
+DESPESAS
+
+- filtro por status | mẽs
+- recorrência de despesa
+- paginação
+- apagar todas
+- não foram encontradas despesas neste mês
+
+RECEITAS
+
+- implementar tudo
+
+
+GRÁFICOS
