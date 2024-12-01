@@ -64,6 +64,43 @@ td:last-child {
   border-right: 1px solid var(--scrollbar-hover);
 }
 
+/* -------------------- Largura de colunas -------------------- */
+
+th:first-child,
+td:first-child {
+  width: 5%;
+}
+
+th:nth-child(2),
+td:nth-child(2) {
+  width: 31%;
+}
+
+th:nth-child(3),
+td:nth-child(3) {
+  width: 20%;
+}
+
+th:nth-child(4),
+td:nth-child(4) {
+  width: 10%;
+}
+
+th:nth-child(5),
+td:nth-child(5) {
+  width: 10%;
+}
+
+th:last-child(6),
+td:last-child(6) {
+  width: 5%;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
+
+/* -------------------- Theme -------------------- */
+
 /* Estilo para o modo escuro */
 .dark-theme tbody tr:nth-child(even) {
   background-color: rgb(44, 44, 44);
@@ -83,49 +120,6 @@ td:last-child {
 .light-theme tbody tr:nth-child(odd) {
   background-color: white;
   color: grey;
-}
-
-/* tbody tr:nth-child(even) {
-  background-color: var(--background-dark);
-}
-
-tbody tr:nth-child(odd) {
-  background-color: var(--background-light);
-} */
-
-/* -------------------- Largura de colunas -------------------- */
-
-th:first-child,
-td:first-child {
-  width: 5%;
-}
-
-th:nth-child(2),
-td:nth-child(2) {
-  width: 30%;
-}
-
-th:nth-child(3),
-td:nth-child(3) {
-  width: 20%;
-}
-
-th:nth-child(4),
-td:nth-child(4) {
-  width: 15%;
-}
-
-th:nth-child(5),
-td:nth-child(5) {
-  width: 10%;
-}
-
-th:last-child,
-td:last-child {
-  width: 20%;
-  text-align: center;
-  justify-content: center;
-  align-items: center;
 }
 
 /* -------------------- Status -------------------- */
@@ -189,4 +183,27 @@ button.status-pago {
   color: #a9a9a9;
   cursor: not-allowed;
   pointer-events: none;
+}
+
+/* -------------------- Filtro -------------------- */
+
+.filter-select {
+  background-color: var(--button-menu-selected); /* Fundo claro */
+  border: none; /* Borda cinza */
+  border-radius: 5px; /* Cantos arredondados */
+  padding: 5px 10px; /* Espaçamento interno */
+  font-size: 14px; /* Tamanho da fonte */
+  font-weight: bold;
+  color: white; /* Cor do texto */
+  cursor: pointer; /* Cursor de seleção */
+  text-align: center;
+}
+
+.filter-select:hover {
+  background-color: var(--button-menu-selected); /* Fundo ao passar o mouse */
+}
+
+.filter-option {
+  background-color: red;
+  color: #000; /* Ajuste conforme o contraste desejado */
 }

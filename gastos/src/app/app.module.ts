@@ -18,8 +18,10 @@ import { FormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { DespesasComponent } from './component/despesas/despesas.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatSelectModule } from '@angular/material/select';
 import { ConfirmationDialogComponent } from './../app/component/confirmation-dialog/confirmation-dialog.component';
 import { RepeatComponent } from './component/repeat/repeat.component';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 @NgModule({
   declarations: [
@@ -45,8 +47,9 @@ import { RepeatComponent } from './component/repeat/repeat.component';
     BrowserAnimationsModule,
     FormsModule,
     MatDialogModule,
+    MatSelectModule,
   ],
-  providers: [DatePipe],
+  providers: [DatePipe, provideAnimationsAsync()],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

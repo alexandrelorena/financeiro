@@ -1,6 +1,7 @@
 package com.br.financeiro.gastos.controller;
 
 import com.br.financeiro.gastos.model.Gasto;
+import com.br.financeiro.gastos.service.GastoService;
 import com.br.financeiro.gastos.model.TipoGasto;
 import com.br.financeiro.gastos.repository.GastoRepository;
 import io.swagger.v3.oas.annotations.Operation;
@@ -14,6 +15,18 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/gastos")
 public class GastoController {
+
+    private final GastoService gastoService;
+
+    @Autowired
+    public GastoController(GastoService gastoService) {
+        this.gastoService = gastoService;
+    }
+
+    @GetMapping("/status/{status}")
+    public List<Gasto> getGastosPorStatus(@PathVariable String status) {
+        return gastoService.filtrarPorStatus(status);
+    }
 
     @Autowired
     private GastoRepository gastoRepository;

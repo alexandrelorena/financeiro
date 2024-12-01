@@ -1,8 +1,5 @@
 implementações que faltam ser feitas:
 
-BACKUP
-
-- Deixar sem modules no backup.
 
 DESPESAS
 
