@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Gasto } from '../../models/gasto.model';
 import { GastoService } from '../../service/gasto.service';
 import { LocalService } from '../../service/local.service';
+import { EventService } from '../../service/event.service';
 
 @Component({
   selector: 'app-add-despesa',
@@ -17,7 +18,8 @@ export class AddDespesaComponent implements OnInit {
     private formBuilder: FormBuilder,
     private gastoService: GastoService,
     private localService: LocalService,
-    private cdr: ChangeDetectorRef // Importando ChangeDetectorRef
+    private cdr: ChangeDetectorRef, // Importando ChangeDetectorRef
+    private eventService: EventService
   ) {}
 
   ngOnInit(): void {
@@ -63,9 +65,6 @@ export class AddDespesaComponent implements OnInit {
     let status = ''; // Status default
     let tipoGasto: 0 | 1 | 2 | 3 = 0; // Valor inicial como Pendente (0)
 
-    // Definir um tipo literal para TIPO_GASTO
-    // type TipoGasto = 0 | 1 | 2 | 3;
-
     // Comparação de datas normalizadas
     if (vencimentoSemHora < hojeSemHora) {
       // } else if (vencimentoSemHora.getTime() === hojeSemHora.getTime()) {
@@ -101,6 +100,8 @@ export class AddDespesaComponent implements OnInit {
           next: (despesas) => {
             console.log('Despesas do mês atual recarregadas:', despesas);
             this.localService.atualizarDespesas(despesas); // Atualiza a lista no BehaviorSubject
+            // Dispara o evento para notificar que o status mudou
+            this.eventService.notifyStatusChange();
           },
           error: (error) => {
             console.error('Erro ao carregar as despesas do mês:', error);

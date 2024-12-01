@@ -1,6 +1,4 @@
 <div class="container__month">
-  <!-- <p>Total de despesas do mês de {{ getFullMonthName() }}: {{ totalDespesas | currency:'BRL' }}</p> -->
-
   <table class="month">
     <thead>
       <tr>
@@ -8,12 +6,22 @@
         <th>Despesa</th>
         <th>Valor</th>
         <th>Vencimento</th>
-        <th>Status</th>
+        <th>
+          <select id="statusFilter" class="filter-select" [(ngModel)]="statusSelecionado" (change)="onStatusChange()">
+            <option value="Todos">Status</option>
+            <option value="Pago">Pago</option>
+            <option value="Pendente">Pendente</option>
+            <option value="Vencido">Vencido</option>
+            <option value="Vencendo">Vencendo</option>
+          </select>
+        </th>
         <th>Ações</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let despesa of despesas; let i = index">
+      <!-- <tr *ngFor="let despesa of despesas; let i = index"> -->
+      <tr *ngFor="let despesa of despesasFiltradas; let i = index">
+
         <td>{{ i + 1 }}</td>
         <!-- Alterna entre visualização e edição -->
         <ng-container *ngIf="despesaEditando?.id === despesa.id; else viewMode">
@@ -57,11 +65,10 @@
             <button class="pagar" (click)="pagarDespesa(despesa.id)"
               [disabled]="despesa.status === 'Pago' || despesa.disableButtons"
               [class.status-pago]="despesa.status === 'Pago'">﹩</button>
-
             <!-- Botão de edição, desabilitado se a despesa estiver paga -->
             <button class="editar" (click)="iniciarEdicao(despesa)" [disabled]="despesa.status === 'Pago'"
               [class.status-pago]="despesa.status === 'Pago'">↻</button>
-            <button class="remover" (click)="removerDespesa(despesa)">x</button>
+            <button class="remover" (click)="removerDespesa(despesa)">&nbsp;x</button>
           </td>
         </ng-template>
       </tr>

@@ -16,6 +16,7 @@ import { LocalService } from '../../service/local.service';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { MonthService } from '../../service/month.service';
+import { EventService } from '../../service/event.service';
 
 @Component({
   selector: 'app-month',
@@ -30,6 +31,8 @@ export class MonthComponent implements OnInit, OnDestroy {
   despesas: Gasto[] = [];
   totalDespesas: number = 0;
   despesaEditando: Gasto | null = null;
+  despesasFiltradas: Gasto[] = []; // Despesas filtradas pelo status
+  statusSelecionado: string = 'Todos'; // Status selecionado para o filtro
 
   // Map de meses com os nomes e números
   monthNames: { [key: string]: [string, number] } = {
@@ -56,7 +59,8 @@ export class MonthComponent implements OnInit, OnDestroy {
     private localService: LocalService,
     private cdr: ChangeDetectorRef,
     private dialog: MatDialog,
-    private monthService: MonthService
+    private monthService: MonthService,
+    private eventService: EventService
   ) {}
 
   ngOnInit(): void {
@@ -66,6 +70,27 @@ export class MonthComponent implements OnInit, OnDestroy {
 
     // Enviar para o HeaderComponent após o valor ser calculado
     this.sendDespesasToHeader();
+    // this.carregarDespesas();
+
+    // Inscreve-se para o evento de mudança de status
+    this.eventService.onStatusChange().subscribe(() => {
+      this.onStatusChange(); // Chama o método quando o evento for disparado
+    });
+  }
+
+  aplicarFiltro(): void {
+    if (this.statusSelecionado === 'Todos') {
+      this.despesasFiltradas = this.despesas; // Mostra todas as despesas
+    } else {
+      this.despesasFiltradas = this.despesas.filter(
+        (despesa) => despesa.status === this.statusSelecionado
+      );
+    }
+  }
+
+  alterarFiltro(status: string): void {
+    this.statusSelecionado = status;
+    this.aplicarFiltro();
   }
 
   // Método auxiliar para formatar o valor como moeda (BRL)
@@ -106,9 +131,7 @@ export class MonthComponent implements OnInit, OnDestroy {
 
   // Método para calcular ou obter o valor total de despesas
   calculateTotalDespesas(): number {
-    // Aqui você pode incluir a lógica real para calcular o total de despesas
-    // Exemplo: recuperar o valor de uma API ou calcular com base em outras variáveis
-    return 1180.59; // Valor de exemplo, pode ser dinâmico
+    return this.despesas.reduce((total, despesa) => total + despesa.valor, 0);
   }
 
   // Método para enviar o valor de despesas para o serviço
@@ -128,6 +151,16 @@ export class MonthComponent implements OnInit, OnDestroy {
     return this.monthNames[this.selectedMonth]?.[0] ?? this.selectedMonth;
   }
 
+  // Adicione este método para filtrar despesas com base no status
+  filtrarDespesas(): void {
+    if (this.statusSelecionado === 'Todos') {
+      this.despesasFiltradas = [...this.despesas];
+    } else {
+      this.despesasFiltradas = this.despesas.filter(
+        (despesa) => despesa.status === this.statusSelecionado
+      );
+    }
+  }
   getDespesas(month: number): void {
     if (month === -1) return;
 
@@ -141,9 +174,14 @@ export class MonthComponent implements OnInit, OnDestroy {
           despesa.disableButtons = true;
         }
       });
+      this.filtrarDespesas(); // Aplica o filtro ao carregar as despesas
     });
   }
 
+  // Atualize o método para recalcular despesas ao alterar o status selecionado
+  onStatusChange(): void {
+    this.filtrarDespesas();
+  }
   // Calcula o total de despesas
   private calcularTotalDespesas(): void {
     this.totalDespesas = this.despesas.reduce(
@@ -230,6 +268,7 @@ export class MonthComponent implements OnInit, OnDestroy {
             // Atualiza a lista de despesas
             this.despesas[index] = updatedDespesa;
             this.calcularTotalDespesas();
+            this.onStatusChange();
           }
 
           this.despesaEditando = null;
@@ -276,6 +315,7 @@ export class MonthComponent implements OnInit, OnDestroy {
             next: () => {
               this.despesas = this.despesas.filter((d) => d.id !== despesa.id);
               this.calcularTotalDespesas();
+              this.onStatusChange();
             },
             error: (error) =>
               console.error('Erro ao remover despesa:', error.message || error),

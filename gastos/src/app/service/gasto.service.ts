@@ -17,6 +17,16 @@ export class GastoService {
     private dateService: DateService // Injete o DateService no construtor
   ) {}
 
+  // Método para filtrar as despesas por status
+  filtrarPorStatus(status: string): Observable<Gasto[]> {
+    return this.http.get<Gasto[]>(`${this.apiUrl}/status/${status}`).pipe(
+      catchError((error) => {
+        console.error('Erro ao filtrar por status:', error);
+        return throwError(() => new Error('Erro aconteceu')); // Retorna o erro para o componente
+      })
+    );
+  }
+
   formatarDataVencimento(despesa: Gasto): void {
     if (despesa.vencimento instanceof Date) {
       // Usando o DateService para a formatação
@@ -30,7 +40,7 @@ export class GastoService {
     return this.http.post<Gasto>(this.apiUrl, gasto).pipe(
       catchError((error) => {
         console.error('Erro ao criar gasto:', error);
-        return throwError(error); // Retorna o erro para o componente
+        return throwError(() => new Error('Erro aconteceu')); // Retorna o erro para o componente
       })
     );
   }
@@ -125,7 +135,7 @@ export class GastoService {
       tap((response) => console.log('Despesa paga:', response)),
       catchError((error) => {
         console.error('Erro ao pagar a despesa:', error);
-        return throwError(error);
+        return throwError(() => new Error('Erro aconteceu'));
       })
     );
   }
@@ -143,7 +153,7 @@ export class GastoService {
         tap((response) => console.log('Status atualizado:', response)),
         catchError((error) => {
           console.error('Erro ao atualizar o status:', error);
-          return throwError(error);
+          return throwError(() => new Error('Erro aconteceu'));
         })
       );
   }
