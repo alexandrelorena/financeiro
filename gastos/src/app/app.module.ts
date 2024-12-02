@@ -13,7 +13,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatIconModule } from '@angular/material/icon';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClient, provideHttpClient } from '@angular/common/http'; // Atualize para esta importação
 import { FormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { DespesasComponent } from './component/despesas/despesas.component';
@@ -43,13 +43,13 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
     MatButtonToggleModule,
     MatIconModule,
     ReactiveFormsModule,
-    HttpClientModule,
+
     BrowserAnimationsModule,
     FormsModule,
     MatDialogModule,
     MatSelectModule,
   ],
-  providers: [DatePipe, provideAnimationsAsync()],
+  providers: [DatePipe, provideAnimationsAsync(), provideHttpClient()],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

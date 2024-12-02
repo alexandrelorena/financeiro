@@ -34,7 +34,8 @@ export class AddDespesaComponent implements OnInit {
       ],
       valor: [
         '',
-        [Validators.required, Validators.pattern(/^\d+([.,]\d{1,2})?$/)],
+        // [Validators.required, Validators.pattern(/^\d+([.,]\d{1,2})?$/)],
+        [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)],
       ],
       vencimento: ['', Validators.required],
     });

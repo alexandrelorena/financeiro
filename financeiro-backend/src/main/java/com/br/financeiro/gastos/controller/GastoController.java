@@ -6,6 +6,7 @@ import com.br.financeiro.gastos.model.TipoGasto;
 import com.br.financeiro.gastos.repository.GastoRepository;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -113,4 +114,16 @@ public class GastoController {
                 })
                 .orElse(ResponseEntity.notFound().build());
     }
+
+    @DeleteMapping("/mes/{mes}")
+    public ResponseEntity<?> apagarDespesasDoMes(@PathVariable Integer mes) {
+        try {
+            gastoRepository.deleteByMes(mes); 
+            return ResponseEntity.noContent().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao deletar despesas: " + e.getMessage());
+        }
+    }
+
+
 }

@@ -4,7 +4,7 @@
   margin: 0 auto;
   display: flex;
   justify-content: center;
-  align-items: center;
+  /* align-items: center; */
 }
 
 .container__add-despesa .col-md-12 {
@@ -25,10 +25,10 @@
   color: #726b6a;
 }
 
-textarea.form-control {
+/* textarea.form-control {
   width: 100%;
-  height: 315px; /* Altura do campo de descrição */
-}
+  height: 315px;
+} */
 
 button.btn-info {
   background-color: var(--primary-bg-color);
@@ -45,7 +45,7 @@ button.btn-info {
 }
 
 button.btn-info:hover {
-  background-color: #1cb3ca;
+  background-color: var(--button-menu-hover);
   color: white; /* Cor do texto no hover */
   font-weight: bold;
   text-shadow: 0px 1px 0px #b4c2b2;
