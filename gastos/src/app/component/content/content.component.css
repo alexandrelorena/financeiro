@@ -1,6 +1,6 @@
 .container__content {
   width: 70%; /* Ocupar a largura total */
-  height: 678px;
+  height: 540px;
   margin: auto;
   margin-top: 10px;
   margin-bottom: 10px;
@@ -19,9 +19,9 @@
 
 .app-month {
   flex: 7; /* O conteúdo principal ocupará mais espaço (3 partes) */
-  border: 1px solid grey;
+  /* border: 1px solid grey;
   border-style: double;
-  border-radius: 5px;
+  border-radius: 5px; */
 }
 
 .app-add-despesa {

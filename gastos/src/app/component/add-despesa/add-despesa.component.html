@@ -9,9 +9,10 @@
       </div>
 
       <div class="form-group">
-        <input type="number" id="valor" class="form-control" formControlName="valor" placeholder="Ex.: 1234567890,99" />
-        <div *ngIf="despesaForm.get('valor')?.invalid && despesaForm.get('valor')?.touched" class="text-danger">
-          Insira um valor válido!
+        <input type="text" id="valor" class="form-control" formControlName="valor" placeholder="Ex.: 123,99" />
+        <div *ngIf="despesaForm.get('valor')?.hasError('pattern') && despesaForm.get('valor')?.touched"
+          class="text-danger">
+          Insira um valor válido! Ex.: 123.99
         </div>
       </div>
 

@@ -10,12 +10,15 @@
 /* -------------------- Botões de Mês -------------------- */
 .month-buttons {
   width: 100%;
+  max-width: 300px; /* Limita a largura máxima do container */
   margin-top: 0px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start; /* Alinha os botões ao início do container */
   align-items: flex-start; /* Alinha os itens à esquerda */
-  gap: 22.3px; /* Espaçamento entre os botões */
+  gap: 9.8px;
+  max-height: 100vh; /* Limita a altura máxima ao tamanho da janela */
+  box-sizing: border-box; /* Inclui padding e bordas no cálculo da largura e altura */
 }
 
 /* -------------------- Estilo de Botões -------------------- */

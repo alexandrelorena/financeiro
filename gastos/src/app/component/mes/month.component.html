@@ -19,6 +19,18 @@
       </tr>
     </thead>
     <tbody>
+      <!-- Exibe a mensagem quando não há despesas -->
+      <tr *ngIf="despesas.length === 0">
+        <td colspan="5" class="mensagem-sem-despesas">
+          Não há despesas neste mês.
+        </td>
+      </tr>
+      <!-- Exibe a mensagem quando não há despesas -->
+      <tr *ngIf="despesas.length > 0 && despesasFiltradas.length === 0">
+        <td colspan="5" class="mensagem-sem-despesas">
+          Não foram encontradas despesas com este STATUS.
+        </td>
+      </tr>
       <!-- <tr *ngFor="let despesa of despesas; let i = index"> -->
       <tr *ngFor="let despesa of despesasFiltradas; let i = index">
 
@@ -48,7 +60,7 @@
         <!-- Modo de Visualização -->
         <ng-template #viewMode class="tabela-despesas">
           <td>{{ despesa.nome }}</td>
-          <td>{{ despesa.valor | currency:'BRL'}}</td>
+          <td>{{ formatCurrency(despesa.valor) }}</td>
           <td>{{ despesa.vencimento | date: 'dd/MM' }}</td>
 
           <td [ngClass]="{

@@ -38,7 +38,7 @@ export class MonthComponent implements OnInit, OnDestroy {
   monthNames: { [key: string]: [string, number] } = {
     jan: ['Janeiro', 1],
     fev: ['Fevereiro', 2],
-    mar: ['Masço', 3],
+    mar: ['Março', 3],
     abr: ['Abril', 4],
     mai: ['Maio', 5],
     jun: ['Junho', 6],
@@ -76,6 +76,11 @@ export class MonthComponent implements OnInit, OnDestroy {
     this.eventService.onStatusChange().subscribe(() => {
       this.onStatusChange(); // Chama o método quando o evento for disparado
     });
+    this.subscription.add(
+      this.eventService.onStatusChange$.subscribe(() => {
+        this.recarregarMes(new Date().getMonth() + 1);
+      })
+    );
   }
 
   aplicarFiltro(): void {
@@ -94,7 +99,7 @@ export class MonthComponent implements OnInit, OnDestroy {
   }
 
   // Método auxiliar para formatar o valor como moeda (BRL)
-  private formatCurrency(value: number): string {
+  public formatCurrency(value: number): string {
     return value.toLocaleString('pt-BR', {
       style: 'currency',
       currency: 'BRL',
@@ -103,6 +108,21 @@ export class MonthComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+  }
+
+  recarregarMes(month: number): void {
+    console.log('Recarregando informações do mês...');
+
+    // Supondo que você tenha um serviço para buscar despesas:
+    this.gastoService.getDespesas(month).subscribe(
+      (despesas) => {
+        this.despesas = despesas;
+        console.log('Despesas atualizadas:', despesas);
+      },
+      (erro) => {
+        console.error('Erro ao recarregar informações do mês:', erro);
+      }
+    );
   }
 
   // Inscreve-se para atualizações do mês selecionado

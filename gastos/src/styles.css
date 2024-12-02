@@ -46,15 +46,6 @@ body {
   transition: color 0.3s; /* Suaviza a transição da cor */
 }
 
-html,
-body {
-  height: 90%;
-}
-body {
-  margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
-}
-
 /* -------------------- Variáveis de cores -------------------- */
 
 :root {
@@ -72,13 +63,4 @@ body {
   --status-due: red;
   --status-today: rgb(255, 123, 0);
   --button-hover-scale: 1.1;
-}
-
-html,
-body {
-  height: 100%;
-}
-body {
-  margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
 }

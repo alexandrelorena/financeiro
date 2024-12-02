@@ -1,6 +1,8 @@
 import { Component, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { MonthService } from '../../service/month.service'; // Importando o serviço
+import { EventService } from '../../service/event.service';
+import { GastoService } from '../../service/gasto.service';
 
 @Component({
   selector: 'app-header',
@@ -34,8 +36,29 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   constructor(
     private renderer: Renderer2,
-    private monthService: MonthService
+    private monthService: MonthService,
+    private eventService: EventService
   ) {}
+
+  apagarDespesasDoMes(selectedMonthNumber: number): void {
+    const confirmacao = confirm(
+      `Tem certeza de que deseja apagar todas as despesas do mês de ${this.selectedMonthFullName}?`
+    );
+
+    if (confirmacao) {
+      // Chama o serviço para atualizar as despesas
+      this.eventService
+        .apagarDespesasDoMes(selectedMonthNumber)
+        .subscribe(() => {
+          alert(
+            `Todas as despesas do mês de ${this.selectedMonthFullName} foram apagadas.`
+          );
+          // Emite o evento para notificar outros componentes
+          this.eventService.emitStatusChange();
+          alert('Despesas apagadas com sucesso!');
+        });
+    }
+  }
 
   ngOnInit(): void {
     // Configuração inicial do tema (claro ou escuro)

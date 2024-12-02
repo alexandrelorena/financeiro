@@ -3,15 +3,15 @@
 .container__month {
   background-color: transparent;
   color: var(--text-light);
-  padding: 15px;
+  /* padding: 15px; */
   border-radius: 8px;
   width: 100%;
-  height: 676px;
+  height: 540px;
   max-height: 800px;
   overflow-y: auto;
 }
 
-.container__month::-webkit-scrollbar {
+/* .container__month::-webkit-scrollbar {
   width: 8px;
 }
 
@@ -22,10 +22,36 @@
 
 .container__month::-webkit-scrollbar-thumb:hover {
   background-color: var(--scrollbar-hover);
-}
+} */
 
 .container__month > p {
   margin-left: 10px;
+}
+
+/* Estilizando para Chrome, Safari e Edge */
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Estilizando para Firefox */
+* {
+  scrollbar-width: auto;
+  scrollbar-color: var(--button-menu-selected) transparent;
 }
 
 /* -------------------- Tabela -------------------- */
@@ -51,7 +77,7 @@ thead {
 
 th,
 td {
-  padding: 10px;
+  padding: 5px;
   text-align: center;
   border-bottom: 1px solid gray;
   border-left: 1px solid var(--scrollbar-color);
@@ -73,17 +99,17 @@ td:first-child {
 
 th:nth-child(2),
 td:nth-child(2) {
-  width: 31%;
+  width: 33%;
 }
 
 th:nth-child(3),
 td:nth-child(3) {
-  width: 20%;
+  width: 15%;
 }
 
 th:nth-child(4),
 td:nth-child(4) {
-  width: 10%;
+  width: 15%;
 }
 
 th:nth-child(5),
@@ -126,25 +152,25 @@ td:last-child(6) {
 
 .status-pago {
   color: var(--status-paid);
-  font-weight: bold;
+  /* font-weight: bold; */
   text-align: center;
 }
 
 .status-pendente {
   color: var(--status-pending);
-  font-weight: bold;
+  /* font-weight: bold; */
   text-align: center;
 }
 
 .status-vencido {
   color: var(--status-due);
-  font-weight: bold;
+  /* font-weight: bold; */
   text-align: center;
 }
 
 .status-hoje {
   color: var(--status-today);
-  font-weight: bold;
+  /* font-weight: bold; */
   text-align: center;
 }
 
@@ -171,7 +197,7 @@ button.pagar {
 }
 
 button.editar {
-  color: rgb(81, 81, 255);
+  color: var(--status-pending);
 }
 
 button.remover {
@@ -206,4 +232,10 @@ button.status-pago {
 .filter-option {
   background-color: red;
   color: #000; /* Ajuste conforme o contraste desejado */
+}
+
+.mensagem-sem-despesas {
+  text-align: center;
+  font-style: italic;
+  color: gray;
 }
