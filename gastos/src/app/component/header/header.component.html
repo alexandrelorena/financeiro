@@ -1,4 +1,4 @@
-<div class="header__container">
+<!-- <div class="header__container">
   <button (click)="toggleMode()" class="ml-1 mr-3 focus:outline-none m-0">
     <span *ngIf="isDarkMode; else lightMode" id="darkMode" class="material-icons">dark_mode</span>
     <ng-template #lightMode>
@@ -6,11 +6,51 @@
     </ng-template>
   </button>
 
-  <p>Controle de finanças: Total de despesas do mês de {{ selectedMonthFullName }}:
+  <p>Controle de finanças: Total de despesas de {{ selectedMonthFullName }}:
     {{ despesasTotal }}
   </p>
 
-  <button class="btn-apagar-todas" (click)="apagarDespesasDoMes(selectedMonthNumber)">Apagar despesas</button>
+  <button class="btn-apagar-todas" (click)="apagarDespesasDoMes(selectedMonthNumber)" title="Apagar as despesas do mês">
+
+    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="red">
+      <path d="M0 0h24v24H0z" fill="none" />
+      <path d="M0 0h24v24H0V0z" fill="none" />
+      <path
+        d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zm2.46-7.12l1.41-1.41L12 12.59l2.12-2.12 1.41 1.41L13.41 14l2.12 2.12-1.41 1.41L12 15.41l-2.12 2.12-1.41-1.41L10.59 14l-2.13-2.12zM15.5 4l-1-1h-5l-1 1H5v2h14V4z" />
+    </svg>
+  </button>
 
 
+</div> -->
+<div class="header__container">
+  <!-- Primeira Div: Botão de alternar tema -->
+  <div class="header__item">
+    <button (click)="toggleMode()" class="focus:outline-none m-0">
+      <span *ngIf="isDarkMode; else lightMode" id="darkMode" class="material-icons">dark_mode</span>
+      <ng-template #lightMode>
+        <span id="lightMode" class="material-icons">light_mode</span>
+      </ng-template>
+    </button>
+  </div>
+
+  <!-- Segunda Div: Texto com informações -->
+  <div class="header__item">
+    <p>
+      Controle de finanças: Total de despesas de {{ selectedMonthFullName }}:
+      {{ despesasTotal }}
+    </p>
+  </div>
+
+  <!-- Terceira Div: Botão para apagar despesas -->
+  <div class="header__item">
+    <button class="btn-apagar-todas" (click)="apagarDespesasDoMes(selectedMonthNumber)"
+      title="Apagar as despesas do mês">
+      <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="red">
+        <path d="M0 0h24v24H0z" fill="none" />
+        <path d="M0 0h24v24H0V0z" fill="none" />
+        <path
+          d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zm2.46-7.12l1.41-1.41L12 12.59l2.12-2.12 1.41 1.41L13.41 14l2.12 2.12-1.41 1.41L12 15.41l-2.12 2.12-1.41-1.41L10.59 14l-2.13-2.12zM15.5 4l-1-1h-5l-1 1H5v2h14V4z" />
+      </svg>
+    </button>
+  </div>
 </div>
