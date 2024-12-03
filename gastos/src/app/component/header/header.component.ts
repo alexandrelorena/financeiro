@@ -3,6 +3,8 @@ import { Subscription } from 'rxjs';
 import { MonthService } from '../../service/month.service'; // Importando o serviço
 import { EventService } from '../../service/event.service';
 import { GastoService } from '../../service/gasto.service';
+import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-header',
@@ -37,27 +39,56 @@ export class HeaderComponent implements OnInit, OnDestroy {
   constructor(
     private renderer: Renderer2,
     private monthService: MonthService,
-    private eventService: EventService
+    private eventService: EventService,
+    private dialog: MatDialog
   ) {}
 
-  apagarDespesasDoMes(selectedMonthNumber: number): void {
-    const confirmacao = confirm(
-      `Tem certeza de que deseja apagar todas as despesas do mês de ${this.selectedMonthFullName}?`
-    );
+  // apagarDespesasDoMes(selectedMonthNumber: number): void {
+  //   const confirmacao = confirm(
+  //     `Tem certeza de que deseja apagar todas as despesas do mês de ${this.selectedMonthFullName}?`
+  //   );
 
-    if (confirmacao) {
-      // Chama o serviço para atualizar as despesas
-      this.eventService
-        .apagarDespesasDoMes(selectedMonthNumber)
-        .subscribe(() => {
-          alert(
-            `Todas as despesas do mês de ${this.selectedMonthFullName} foram apagadas.`
-          );
-          // Emite o evento para notificar outros componentes
-          this.eventService.emitStatusChange();
-          alert('Despesas apagadas com sucesso!');
+  //   if (confirmacao) {
+  //     // Chama o serviço para atualizar as despesas
+  //     this.eventService
+  //       .apagarDespesasDoMes(selectedMonthNumber)
+  //       .subscribe(() => {
+  //         alert(
+  //           `Todas as despesas do mês de ${this.selectedMonthFullName} foram apagadas.`
+  //         );
+  //         // Emite o evento para notificar outros componentes
+  //         this.eventService.emitStatusChange();
+  //         alert('Despesas apagadas com sucesso!');
+  //       });
+  //   }
+  // }
+
+  apagarDespesasDoMes(selectedMonthNumber: number): void {
+    // Abre o diálogo de confirmação
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      width: '390px',
+      data: {
+        message: `Tem certeza de que deseja apagar todas as despesas do mês de ${this.selectedMonthFullName}?`,
+      },
+    });
+
+    // Quando o usuário clicar em confirmar, executa a exclusão
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result === 'confirm') {
+        // Chama o serviço para apagar as despesas
+        this.eventService.apagarDespesasDoMes(selectedMonthNumber).subscribe({
+          next: () => {
+            // Emite o evento para notificar outros componentes
+            this.eventService.emitStatusChange();
+          },
+          error: (error) =>
+            console.error(
+              'Erro ao apagar as despesas:',
+              error.message || error
+            ),
         });
-    }
+      }
+    });
   }
 
   ngOnInit(): void {
