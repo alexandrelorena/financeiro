@@ -21,13 +21,13 @@
     <tbody>
       <!-- Exibe a mensagem quando não há despesas -->
       <tr *ngIf="despesas.length === 0">
-        <td colspan="5" class="mensagem-sem-despesas">
+        <td colspan="6" class="mensagem-sem-despesas">
           Não há despesas neste mês.
         </td>
       </tr>
       <!-- Exibe a mensagem quando não há despesas -->
       <tr *ngIf="despesas.length > 0 && despesasFiltradas.length === 0">
-        <td colspan="5" class="mensagem-sem-despesas">
+        <td colspan="6" class="mensagem-sem-despesas">
           Não foram encontradas despesas com este STATUS.
         </td>
       </tr>
