@@ -54,6 +54,7 @@ table.month {
   border-radius: 8px; /* Define o raio das bordas arredondadas */
   overflow: hidden; /* Garante que os conteúdos sigam o formato */
   border: 1px solid grey; /* Bordas da tabela */
+  width: 100%;
 }
 
 thead {
@@ -79,7 +80,7 @@ td:last-child {
 
 /* -------------------- Largura de colunas -------------------- */
 
-th:first-child,
+/* th:first-child,
 td:first-child {
   width: 5%;
 }
@@ -96,12 +97,12 @@ td:nth-child(3) {
 
 th:nth-child(4),
 td:nth-child(4) {
-  width: 15%;
+  width: 19%;
 }
 
 th:nth-child(5),
 td:nth-child(5) {
-  width: 10%;
+  width: 5%;
 }
 
 th:last-child(6),
@@ -110,7 +111,7 @@ td:last-child(6) {
   text-align: center;
   justify-content: center;
   align-items: center;
-}
+} */
 
 /* -------------------- Theme -------------------- */
 
@@ -168,7 +169,6 @@ button {
   border: none;
   color: var(--text-light);
   cursor: pointer;
-  font-size: 16px;
   transition: transform 0.3s ease;
   padding: 5px 10px;
   border-radius: 5px;
@@ -191,6 +191,12 @@ button.remover {
   color: var(--status-due);
 }
 
+button.pagar,
+button.editar,
+button.remover {
+  font-size: 16px;
+}
+
 /* Botão desabilitado */
 button.status-pago {
   color: #a9a9a9;
@@ -204,7 +210,7 @@ button.status-pago {
   background-color: var(--button-menu-selected); /* Fundo claro */
   border: none; /* Borda cinza */
   border-radius: 5px; /* Cantos arredondados */
-  padding: 5px 10px; /* Espaçamento interno */
+
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   font-size: 14px; /* Tamanho da fonte */
   font-weight: bold;
@@ -226,4 +232,39 @@ button.status-pago {
   text-align: center;
   font-style: italic;
   color: gray;
+}
+
+/* -------------------- Input Edição Ajustado -------------------- */
+
+.input-nome,
+.input-valor,
+.input-vencimento {
+  background-color: white; /* Mantém o fundo neutro */
+  width: 100%; /* Ocupa toda a largura da célula */
+  border: none; /* Remove bordas externas */
+  padding: 0; /* Remove padding para alinhar com o texto */
+  text-align: center; /* Centraliza o conteúdo */
+  font-family: inherit; /* Herda a fonte da célula */
+  font-size: inherit; /* Herda o tamanho da fonte */
+  color: black; /* Herda a cor da célula */
+  outline: none; /* Remove o destaque padrão ao focar */
+  box-sizing: border-box; /* Garante que o padding e bordas não alterem o tamanho */
+  line-height: normal; /* Ajusta a altura da linha */
+}
+
+.input-nome:focus,
+.input-valor:focus,
+.input-vencimento:focus {
+  border-bottom: 1px solid var(--button-menu-selected); /* Adiciona uma linha inferior ao focar */
+  background-color: var(
+    --button-menu-selected-hover
+  ); /* Fundo sutil ao focar */
+  color: var(--text-light); /* Cor clara ao focar */
+}
+
+/* Botões dentro das células */
+td button {
+  margin: 0; /* Remove margens extras */
+  padding: 5px; /* Garante tamanho consistente */
+  font-size: 14px; /* Herda um tamanho fixo */
 }

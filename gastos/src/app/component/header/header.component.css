@@ -34,7 +34,6 @@
 
 .header__item {
   display: flex;
-
   font-size: 24px;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   white-space: nowrap; /* Impede quebra de linha */
@@ -42,7 +41,7 @@
 }
 
 .header__item > p {
-  margin-top: 6px;
+  margin-top: 10px;
   margin-left: 24px;
 }
 
@@ -51,13 +50,12 @@
   border: none;
   padding: 0;
   margin: 0;
-  cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
   width: 40px; /* Ajuste de tamanho */
   height: 40px;
-  border-radius: 50%; /* Botões redondos */
+  cursor: pointer;
   transition: background-color 0.3s ease, transform 0.2s ease; /* Animação ao passar o mouse */
 }
 
@@ -85,6 +83,14 @@
 
 .btn-apagar-todas:hover {
   background-color: none;
+}
+
+#apagar {
+  margin-left: -300px;
+}
+
+#toggle {
+  margin-top: -50px;
 }
 
 /* Estilos para ícones de toggle */
