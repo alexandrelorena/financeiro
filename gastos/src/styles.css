@@ -7,10 +7,13 @@
   box-sizing: border-box;
 }
 
+/* -------------------- Modo Claro e Escuro -------------------- */
+
 /* Estilo padrão (modo claro) */
 body {
   background-color: white;
   color: grey;
+  font-size: 1rem; /* Tamanho de fonte base */
 }
 
 /* Estilo para o modo escuro */
@@ -19,34 +22,54 @@ body {
   color: white;
 }
 
-/* Estilo global para modo claro */
+/* Variáveis de cores para os temas */
 body.light-theme {
   --primary-text-color: grey;
   --icon-color: grey; /* Cor dos ícones no modo claro */
 }
 
-/* Estilo global para modo escuro */
 body.dark-theme {
   --primary-text-color: white;
   --icon-color: white; /* Cor dos ícones no modo escuro */
 }
 
+/* -------------------- Tipografia -------------------- */
+
+html {
+  font-size: 50%; /* Base para rem */
+}
+
 html,
 body {
-  height: 90%;
+  height: 88%;
 }
+
 body {
-  margin: 85px;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  margin: 5rem;
+  font-family: Tahoma, Geneva, Verdana, sans-serif, Arial;
 }
 
-/* Estilo dos ícones */
+/* Ajustes responsivos de tipografia */
+@media (max-width: 768px) {
+  html {
+    font-size: 14px; /* Reduz base em telas menores */
+  }
+}
+
+@media (min-width: 1200px) {
+  html {
+    font-size: 18px; /* Aumenta base em telas maiores */
+  }
+}
+
+/* -------------------- Ícones -------------------- */
+
 .container__footer i {
-  color: var(--icon-color); /* Usando a variável CSS para a cor dos ícones */
-  transition: color 0.3s; /* Suaviza a transição da cor */
+  color: var(--icon-color); /* Usando variáveis de tema */
+  transition: color 0.3s ease; /* Suaviza mudanças de cor */
 }
 
-/* -------------------- Variáveis de cores -------------------- */
+/* -------------------- Variáveis de Cores -------------------- */
 
 :root {
   --background-dark: #2f3640;
@@ -63,4 +86,71 @@ body {
   --status-due: red;
   --status-today: rgb(255, 123, 0);
   --button-hover-scale: 1.1;
+}
+
+/* -------------------- Scrollbar -------------------- */
+
+/* Estilo para Chrome, Safari e Edge */
+::-webkit-scrollbar {
+  width: 0.75rem; /* 12px */
+  height: 0.75rem; /* 12px */
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 0.625rem; /* 10px */
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-color);
+  border-radius: 0.625rem; /* 10px */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-hover);
+}
+
+/* Estilo para Firefox */
+* {
+  scrollbar-width: auto;
+  scrollbar-color: var(--scrollbar-color) transparent;
+}
+
+/* -------------------- Botões -------------------- */
+
+button {
+  background: none;
+  border: none;
+  color: var(--primary-text-color);
+  cursor: pointer;
+  transition: transform 0.3s ease, color 0.3s ease;
+  padding: 0.3125rem 0.625rem; /* 5px 10px */
+  border-radius: 0.3125rem; /* 5px */
+}
+
+button:hover {
+  transform: scale(var(--button-hover-scale));
+  color: var(--button-menu-hover);
+}
+
+/* -------------------- Ajustes para Status -------------------- */
+
+.status-pago {
+  color: var(--status-paid);
+  text-align: center;
+}
+
+.status-pendente {
+  color: var(--status-pending);
+  text-align: center;
+}
+
+.status-vencido {
+  color: var(--status-due);
+  text-align: center;
+}
+
+.status-hoje {
+  color: var(--status-today);
+  text-align: center;
 }

@@ -1,104 +1,94 @@
 .container__add-despesa {
-  height: 676px;
-  max-width: 700px;
+  height: 42.125rem; /* 676px -> 42.125rem */
+  max-width: 43.75rem; /* 700px -> 43.75rem */
   margin: 0 auto;
   display: flex;
   justify-content: center;
-  /* align-items: center; */
 }
 
 .container__add-despesa .col-md-12 {
   width: 90%; /* Garante que o form ocupe toda a largura disponível */
-  max-width: 500px; /* Limita a largura máxima do formulário */
-  margin-top: 20px;
+  max-width: 31.25rem; /* 500px -> 31.25rem */
+  margin-top: 1.25rem; /* 20px -> 1.25rem */
 }
 
 .form-control {
   width: 100%; /* Garante que os inputs preencham a largura do form */
-  margin-bottom: 10px;
-  padding: 10px;
-  font-size: 16px;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  border-radius: 5px;
-  border: 1px solid grey;
+  margin-bottom: 0.625rem; /* 10px -> 0.625rem */
+  padding: 0.625rem; /* 10px -> 0.625rem */
+  font-size: 1rem; /* 16px -> 1rem */
+  font-family: Tahoma, Geneva, Verdana, sans-serif, Arial;
+  border-radius: 0.3125rem; /* 5px -> 0.3125rem */
+  border: 0.0625rem solid grey; /* 1px -> 0.0625rem */
   border-style: double;
   color: #726b6a;
 }
 
-/* textarea.form-control {
-  width: 100%;
-  height: 315px;
-} */
-
 button.btn-info {
-  background-color: var(--primary-bg-color);
-  /* width: 100%; */
   background-color: transparent;
-  border: 1px solid grey;
+  border: 0.0625rem solid grey; /* 1px -> 0.0625rem */
   border-style: double;
-  padding: 8px;
+  padding: 0.5rem; /* 8px -> 0.5rem */
   color: var(--primary-bg-color);
-  font-size: 16px;
+  font-size: 1rem; /* 16px -> 1rem */
   font-weight: bold;
   cursor: pointer;
-  border-radius: 5px;
+  border-radius: 0.3125rem; /* 5px -> 0.3125rem */
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 button.btn-info:hover {
-  /* background-color: var(--button-menu-hover); */
   color: var(--button-menu-hover); /* Cor do texto no hover */
   font-weight: bold;
-  padding: 8px; /* Ajuste o padding para ter um espaço adequado */
-  border-radius: 5px;
+  padding: 0.5rem; /* Ajuste o padding para ter um espaço adequado */
+  border-radius: 0.3125rem;
   background-clip: padding-box;
 }
 
 .text-danger {
   color: red;
-  margin-bottom: 10px;
+  margin-bottom: 0.625rem; /* 10px -> 0.625rem */
 }
 
 .form-group-checkbox-container {
-  display: flex; /* Utiliza Flexbox para organizar os elementos em linha */
-  align-items: center; /* Alinha verticalmente os itens */
+  display: flex;
+  align-items: center;
   justify-content: center;
-  margin-bottom: 10px; /* Margem inferior para espaçamento */
-  border: 1px solid grey;
-  border-radius: 5px;
+  margin-bottom: 0.625rem; /* 10px -> 0.625rem */
+  border: 0.0625rem solid grey; /* 1px -> 0.0625rem */
+  border-radius: 0.3125rem; /* 5px -> 0.3125rem */
   border-style: dotted;
 }
 
 .form-group-checkbox {
-  display: flex; /* Mantém o layout do checkbox e do label */
-  align-items: center; /* Alinha verticalmente o label e o checkbox */
+  display: flex;
+  align-items: center;
 }
 
 .form-group-btn-btn-info {
   display: flex;
-  gap: 22px;
+  gap: 1.375rem; /* 22px -> 1.375rem */
 }
 
 .repeticao-container {
-  margin-top: 10px;
-  display: flex; /* Utiliza Flexbox para alinhar o campo de repetição e a mensagem de erro */
-  align-items: center; /* Alinha verticalmente o campo de repetição */
-  margin-left: 10px; /* Adiciona espaço entre o checkbox e o campo de repetição */
+  margin-top: 0.625rem; /* 10px -> 0.625rem */
+  display: flex;
+  align-items: center;
+  margin-left: 0.625rem; /* 10px -> 0.625rem */
 }
 
 .repeticao-container .form-control {
-  width: 110px; /* Tamanho do campo de repetição */
-  height: 30px; /* Altura para corresponder aos outros campos */
+  width: 6.875rem; /* 110px -> 6.875rem */
+  height: 1.875rem; /* 30px -> 1.875rem */
 }
 
 input.form-control,
 textarea.form-control {
-  box-sizing: border-box; /* Inclui padding e border na largura total */
+  box-sizing: border-box;
 }
 
-/* Estilo para campos desabilitados */
 input.form-control:disabled {
-  background-color: #f0f0f0; /* Cor de fundo para campos desabilitados */
-  color: #999; /* Cor do texto para indicar que o campo está desabilitado */
-  cursor: not-allowed; /* Mudança de cursor para indicar que não pode ser editado */
+  background-color: #f0f0f0;
+  color: #999;
+  cursor: not-allowed;
 }
