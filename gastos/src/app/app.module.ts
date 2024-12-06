@@ -12,13 +12,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatIconModule } from '@angular/material/icon';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatSelectModule } from '@angular/material/select';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClient, provideHttpClient } from '@angular/common/http'; // Atualize para esta importação
 import { FormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { DespesasComponent } from './component/despesas/despesas.component';
-import { MatDialogModule } from '@angular/material/dialog';
-import { MatSelectModule } from '@angular/material/select';
 import { ConfirmationDialogComponent } from './../app/component/confirmation-dialog/confirmation-dialog.component';
 import { RepeatComponent } from './component/repeat/repeat.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
@@ -43,11 +45,12 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
     MatButtonToggleModule,
     MatIconModule,
     ReactiveFormsModule,
-
     BrowserAnimationsModule,
     FormsModule,
     MatDialogModule,
     MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
   ],
   providers: [DatePipe, provideAnimationsAsync(), provideHttpClient()],
   bootstrap: [AppComponent],
