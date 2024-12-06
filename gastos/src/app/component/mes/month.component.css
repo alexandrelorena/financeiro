@@ -114,6 +114,30 @@ td:last-child(6) {
   align-items: center;
 } */
 
+th:nth-child(2) { /* Para "Despesa" */
+  width: 35%;
+  max-width: 35%;
+  min-width: 35%;
+}
+
+th:nth-child(3) { /* Para "Valor" */
+  width: 15%;
+  max-width: 15%;
+  min-width: 15%;
+}
+
+th:nth-child(4) { /* Para "Vencimento" */
+  width: 15%;
+  max-width: 15%;
+  min-width: 15%;
+}
+
+th:nth-child(5) { /* Para "Status" */
+  width: 10%;
+  max-width: 10%;
+  min-width: 10%;
+}
+
 /* -------------------- Theme -------------------- */
 
 /* Estilo para o modo escuro */
@@ -191,7 +215,12 @@ button.remover {
 button.pagar,
 button.editar,
 button.remover {
-  font-size: 1rem; /* 16px */
+  font-size: 0.875rem;
+}
+
+button.pagar
+ {
+  font-size: 0.840rem;
 }
 
 /* Botão desabilitado */
@@ -241,6 +270,9 @@ button.status-pago {
 
 .input-venciento {
   width: 50%;
+  width: 8rem; /* Controla a largura do campo */
+  padding: 0.2rem; /* Reduz o espaço interno */
+  font-size: 0.875rem; /* Ajusta o tamanho da fonte */
 }
 
 .input-nome,
@@ -274,6 +306,25 @@ td button {
   margin: 0; /* Remove margens extras */
   padding: 0.3125rem; /* 5px */
   font-size: 0.875rem; /* 14px */
+  margin-right: 0.625rem; /* 10px em rem */
+}
+
+td button:last-child {
+  margin-right: 0; /* Remove o espaçamento do último botão */
+}
+
+button.btn-salvar button.btn-cancelar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 20px; /* Ajusta o espaçamento interno do botão */
+  margin-right: 20px; /* Adiciona espaçamento entre os botões */
+
+}
+
+* Remove o espaçamento extra do último botão */
+button.btn-cancelar {
+  margin-right: 0;
 }
 
 /* Estilo para o botão de salvar */
@@ -281,8 +332,8 @@ button.btn-salvar {
   background-color: transparent;
   border: 1px solid #4caf50; /* Cor verde para o botão de salvar */
   color: #4caf50; /* Cor do texto do botão de salvar */
-  font-size: 1rem; /* Tamanho da fonte */
-  padding: 0.3rem; /* Espaçamento interno */
+  font-size: 0.770rem; /* Tamanho da fonte */
+
   border-radius: 0.3125rem; /* Borda arredondada */
   cursor: pointer; /* Indica que é clicável */
   transition: background-color 0.3s ease, color 0.3s ease;
@@ -299,8 +350,8 @@ button.btn-cancelar {
   background-color: transparent;
   border: 1px solid #f44336; /* Cor vermelha para o botão de cancelar */
   color: #f44336; /* Cor do texto do botão de cancelar */
-  font-size: 1rem; /* Tamanho da fonte */
-  padding: 0.3rem; /* Espaçamento interno */
+  font-size: 0.875rem; /* Tamanho da fonte */
+
   border-radius: 0.3125rem; /* Borda arredondada */
   cursor: pointer; /* Indica que é clicável */
   transition: background-color 0.3s ease, color 0.3s ease;

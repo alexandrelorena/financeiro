@@ -76,7 +76,7 @@
             <!-- Exibe o botão "Pagar" caso a despesa esteja pendente ou vencida -->
             <button class="pagar" (click)="pagarDespesa(despesa.id)"
               [disabled]="despesa.status === 'Pago' || despesa.disableButtons"
-              [class.status-pago]="despesa.status === 'Pago'">﹩</button>
+              [class.status-pago]="despesa.status === 'Pago'">$</button>
             <!-- Botão de edição, desabilitado se a despesa estiver paga -->
             <button class="editar" (click)="iniciarEdicao(despesa)" [disabled]="despesa.status === 'Pago'"
               [class.status-pago]="despesa.status === 'Pago'">↻</button>
