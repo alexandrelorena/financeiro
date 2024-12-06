@@ -7,6 +7,7 @@ DESPESAS
 
 - mostrar apenas despesas do ano atual
 
+- alterar despesas deve ser modal
 
 RECEITAS
 
