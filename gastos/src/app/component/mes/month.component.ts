@@ -17,6 +17,7 @@ import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation
 import { MatDialog } from '@angular/material/dialog';
 import { MonthService } from '../../service/month.service';
 import { EventService } from '../../service/event.service';
+import { EditDespesaModalComponent } from '../../edit-despesa-modal/edit-despesa-modal.component';
 
 @Component({
   selector: 'app-month',
@@ -240,19 +241,60 @@ export class MonthComponent implements OnInit, OnDestroy {
     });
   }
 
-  // Inicia a edição de uma despesa
-  iniciarEdicao(despesa: Gasto): void {
+  editarDespesa(despesa: Gasto): void {
     // Certifique-se de que a data de vencimento esteja no formato correto
-    if (typeof despesa.vencimento === 'string') {
-      // Se a data de vencimento for uma string, converta-a para Date
-      this.despesaEditando = {
-        ...despesa,
-        vencimento: new Date(despesa.vencimento), // Converte a string para um objeto Date
-      };
-    } else {
-      // Caso já seja um objeto Date, apenas copie
-      this.despesaEditando = { ...despesa };
-    }
+    // const despesaParaEdicao =
+    //   typeof despesa.vencimento === 'string'
+    //     ? { ...despesa, vencimento: new Date(despesa.vencimento) }
+    //     : { ...despesa };
+
+    // const dialogRef = this.dialog.open(EditDespesaModalComponent, {
+    //   width: '400px',
+    //   data: { despesa: despesaParaEdicao }, // Passa a despesa para o modal
+    // });
+
+    const despesaParaEdicao = {
+      ...despesa,
+      vencimento:
+        despesa.vencimento instanceof Date
+          ? despesa.vencimento.toISOString().split('T')[0]
+          : new Date(despesa.vencimento).toISOString().split('T')[0],
+    };
+
+    const dialogRef = this.dialog.open(EditDespesaModalComponent, {
+      width: '400px',
+      data: { despesa: despesaParaEdicao }, // Passa a despesa formatada para o modal
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        // Atualizar no backend
+        this.gastoService
+          .updateDespesa(result.id!, result)
+          .pipe(take(1))
+          .subscribe({
+            next: (updatedDespesa) => {
+              // Atualiza o status e a classe CSS após a edição
+              const infoDespesa = this.getStatus(updatedDespesa);
+              updatedDespesa.status = infoDespesa.status;
+              updatedDespesa.cssClass = infoDespesa.cssClass;
+              updatedDespesa.disableButtons = infoDespesa.disableButtons;
+
+              // Atualiza a lista de despesas
+              const index = this.despesas.findIndex(
+                (d) => d.id === updatedDespesa.id
+              );
+              if (index !== -1) {
+                this.despesas[index] = updatedDespesa;
+                this.calcularTotalDespesas();
+                this.onStatusChange();
+              }
+            },
+            error: (error) =>
+              console.error('Erro ao salvar edição:', error.message || error),
+          });
+      }
+    });
   }
 
   // Função para formatar a data no formato 'yyyy-MM-dd'
@@ -307,21 +349,20 @@ export class MonthComponent implements OnInit, OnDestroy {
   removerDespesa(despesa: Gasto): void {
     // Abre o diálogo de confirmação
 
-    const vencimentoFormatado = new Date(despesa.vencimento).toLocaleDateString(
-      'pt-BR',
-      {
-        day: '2-digit',
-        month: '2-digit',
-        year: 'numeric',
-      }
+    const vencimentoFormatado = this.datePipe.transform(
+      despesa.vencimento,
+      'dd/MM'
     );
 
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      width: '390px',
+      width: '500px',
       data: {
         message: `despesa: <strong>${despesa.nome}</strong><br>
-        valor: <strong>R$ ${despesa.valor},00</strong><br>
-        vencimento: <strong>${despesa.vencimento}</strong>`,
+        valor: <strong>${despesa.valor.toLocaleString('pt-BR', {
+          style: 'currency',
+          currency: 'BRL',
+        })}</strong><br>
+        vencimento: <strong>${vencimentoFormatado}</strong>`,
       },
     });
 

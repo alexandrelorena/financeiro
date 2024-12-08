@@ -114,25 +114,29 @@ td:last-child(6) {
   align-items: center;
 } */
 
-th:nth-child(2) { /* Para "Despesa" */
+th:nth-child(2) {
+  /* Para "Despesa" */
   width: 35%;
   max-width: 35%;
   min-width: 35%;
 }
 
-th:nth-child(3) { /* Para "Valor" */
+th:nth-child(3) {
+  /* Para "Valor" */
   width: 15%;
   max-width: 15%;
   min-width: 15%;
 }
 
-th:nth-child(4) { /* Para "Vencimento" */
+th:nth-child(4) {
+  /* Para "Vencimento" */
   width: 15%;
   max-width: 15%;
   min-width: 15%;
 }
 
-th:nth-child(5) { /* Para "Status" */
+th:nth-child(5) {
+  /* Para "Status" */
   width: 10%;
   max-width: 10%;
   min-width: 10%;
@@ -218,9 +222,8 @@ button.remover {
   font-size: 0.875rem;
 }
 
-button.pagar
- {
-  font-size: 0.840rem;
+button.pagar {
+  font-size: 0.84rem;
 }
 
 /* Botão desabilitado */
@@ -319,10 +322,9 @@ button.btn-salvar button.btn-cancelar {
   align-items: center;
   padding: 10px 20px; /* Ajusta o espaçamento interno do botão */
   margin-right: 20px; /* Adiciona espaçamento entre os botões */
-
 }
 
-* Remove o espaçamento extra do último botão */
+/* Remove o espaçamento extra do último botão */
 button.btn-cancelar {
   margin-right: 0;
 }
@@ -332,7 +334,7 @@ button.btn-salvar {
   background-color: transparent;
   border: 1px solid #4caf50; /* Cor verde para o botão de salvar */
   color: #4caf50; /* Cor do texto do botão de salvar */
-  font-size: 0.770rem; /* Tamanho da fonte */
+  font-size: 0.77rem; /* Tamanho da fonte */
 
   border-radius: 0.3125rem; /* Borda arredondada */
   cursor: pointer; /* Indica que é clicável */

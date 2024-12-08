@@ -1,6 +1,6 @@
 .header__container {
   width: 70%;
-  height: 3.125rem; /* 50px -> 3.125rem */
+  height: 2.5rem; /* 50px -> 3.125rem */
   margin: 0.625rem auto; /* 10px -> 0.625rem (Centraliza horizontalmente) */
   display: grid;
   grid-template-columns: auto 1fr auto auto; /* Tabela: botões nas laterais e texto centralizado */
@@ -11,6 +11,7 @@
   border-style: double;
   color: var(--primary-text-color);
   box-sizing: border-box; /* Inclui padding na largura */
+  background-color: transparent;
 }
 
 .header__container > button {
@@ -31,7 +32,7 @@
 
 .header__item {
   display: flex;
-  font-size: 1.2rem; /* 24px -> 1.5rem */
+  font-size: 1rem; /* 24px -> 1.5rem */
   font-family: Tahoma, Geneva, Verdana, sans-serif, Arial;
   white-space: nowrap; /* Impede quebra de linha */
   color: var(--primary-text-color);
@@ -87,7 +88,7 @@
 }
 
 #toggle {
-  margin-top: 0.125rem; /* -50px -> -3.125rem */
+  margin-top: 0.1rem; /* -50px -> -3.125rem */
   margin-left: 13rem;
 }
 

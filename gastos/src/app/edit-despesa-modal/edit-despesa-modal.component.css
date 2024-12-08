@@ -1,0 +1,81 @@
+/* Estilização do container do modal */
+:host {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: var(--modal-edit-bg); /* Fundo do modal */
+}
+
+/* Estilização do conteúdo do modal */
+::ng-deep .modal-content {
+  background-color: var(--modal-bg); /* Variável para fundo do modal */
+  color: var(--modal-content-color); /* Variável para texto */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para destaque */
+  border-radius: 8px; /* Cantos arredondados */
+  padding: 16px; /* Espaçamento interno */
+}
+
+/* Estilização específica para modais de edição */
+.modal.edit-despesa {
+  background-color: var(--modal-edit-bg); /* Fundo com tema */
+  border-radius: 8px;
+  padding: 16px;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
+  color: var(--modal-edit-title-color); /* Variável para título */
+}
+
+/* Estilização do formulário */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem; /* Espaçamento entre campos */
+  width: 100%;
+}
+
+.mat-form-field {
+  width: 100%;
+}
+
+/* Botões no modal */
+.modal-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2rem;
+}
+
+button {
+  min-width: 8rem;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+/* Botão de cancelar */
+button[type="button"] {
+  background-color: var(--modal-btn-edit-cancel-bg);
+  color: var(--modal-btn-edit-cancel-text);
+}
+
+button[type="button"]:hover {
+  background-color: var(--modal-btn-edit-cancel-bg-hover);
+  color: var(--modal-btn-edit-cancel-text-hover);
+}
+
+/* Botão de salvar */
+button[type="submit"] {
+  background-color: var(--modal-btn-edit-confirm-bg);
+  color: var(--modal-btn-edit-confirm-text);
+}
+
+button[type="submit"]:hover {
+  background-color: var(--modal-btn-edit-confirm-bg-hover);
+  color: var(--modal-btn-edit-confirm-text-hover);
+}
