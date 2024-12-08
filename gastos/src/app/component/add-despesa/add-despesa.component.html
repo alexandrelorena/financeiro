@@ -1,5 +1,7 @@
+<p>Adicionar despesa</p>
 <div class="container__add-despesa">
-  <div class="col-md-12 p-3 border">
+  <div class="adiciona-despesa">
+
     <form [formGroup]="despesaForm" (ngSubmit)="adicionarDespesa()">
       <div class="form-group">
         <input type="text" id="nome" class="form-control" formControlName="nome" placeholder="Nome da Despesa" />
@@ -29,8 +31,8 @@
         <input id="repetir" type="checkbox" formControlName="repetir" />
       </div> -->
       <div class="form-group-btn-btn-info">
-        <button type="submit" class="btn btn-info" [disabled]="despesaForm.invalid">Adicionar despesa</button>
-        <button type="button" class="btn btn-info" (click)="resetForm()">Cancelar despesa</button>
+        <button type="submit" class="btn btn-info" [disabled]="despesaForm.invalid">Adicionar</button>
+        <button type="button" class="btn btn-info" (click)="resetForm()">Cancelar</button>
       </div>
     </form>
   </div>
