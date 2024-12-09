@@ -60,7 +60,6 @@ export class EventService {
   // Método para apagar despesas do mês selecionado
   apagarDespesasDoMes(selectedMonthNumber: number): Observable<any> {
     const url = `http://localhost:8080/api/gastos/mes/${selectedMonthNumber}`;
-    console.log(`Requisição DELETE para: ${url}`); // Verifique a URL no console
     this.notifyStatusChange();
 
     return this.http.delete(url);

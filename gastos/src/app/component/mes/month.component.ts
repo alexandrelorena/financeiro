@@ -112,13 +112,9 @@ export class MonthComponent implements OnInit, OnDestroy {
   }
 
   recarregarMes(month: number): void {
-    console.log('Recarregando informações do mês...');
-
-    // Supondo que você tenha um serviço para buscar despesas:
     this.gastoService.getDespesas(month).subscribe(
       (despesas) => {
         this.despesas = despesas;
-        console.log('Despesas atualizadas:', despesas);
       },
       (erro) => {
         console.error('Erro ao recarregar informações do mês:', erro);
@@ -223,7 +219,6 @@ export class MonthComponent implements OnInit, OnDestroy {
     despesa.status = 'Pago';
     despesa.cssClass = 'status-pago'; // Atualiza a classe para "status-pago"
     despesa.disableButtons = true;
-    console.log(`Despesa ${id} paga e botões desabilitados`);
 
     this.gastoService.pagarDespesa(id).subscribe({
       next: () => {
@@ -242,17 +237,6 @@ export class MonthComponent implements OnInit, OnDestroy {
   }
 
   editarDespesa(despesa: Gasto): void {
-    // Certifique-se de que a data de vencimento esteja no formato correto
-    // const despesaParaEdicao =
-    //   typeof despesa.vencimento === 'string'
-    //     ? { ...despesa, vencimento: new Date(despesa.vencimento) }
-    //     : { ...despesa };
-
-    // const dialogRef = this.dialog.open(EditDespesaModalComponent, {
-    //   width: '400px',
-    //   data: { despesa: despesaParaEdicao }, // Passa a despesa para o modal
-    // });
-
     const despesaParaEdicao = {
       ...despesa,
       vencimento:

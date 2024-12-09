@@ -2,7 +2,6 @@ import { Component, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { MonthService } from '../../service/month.service'; // Importando o serviço
 import { EventService } from '../../service/event.service';
-import { GastoService } from '../../service/gasto.service';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -92,7 +91,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    // Configuração inicial do tema (claro ou escuro)
     const isDarkTheme = localStorage.getItem('isDarkTheme') === 'true';
     this.isDarkMode = isDarkTheme;
     this.applyTheme(this.isDarkMode);
@@ -102,16 +100,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
     const monthKeys = Object.keys(this.monthNames); // Array com as chaves dos meses
     const currentMonthKey = monthKeys[currentMonthIndex]; // Garante uma chave válida
 
-    console.log('currentMonthIndex:', currentMonthIndex);
-    console.log('monthKeys:', monthKeys);
-    console.log('currentMonthKey:', currentMonthKey);
     if (currentMonthKey) {
       this.updateSelectedMonth(currentMonthKey);
     } else {
       console.error('Não foi possível determinar o mês atual.');
     }
 
-    // Assinar o serviço para obter valores dinâmicos
     this.subscription.add(
       this.monthService.despesasTotal$.subscribe((total) => {
         this.despesasTotal = total;
@@ -121,7 +115,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     this.subscription.add(
       this.monthService.selectedMonth$.subscribe((monthKey) => {
-        console.log('Chave recebida do serviço:', monthKey);
         this.updateSelectedMonth(monthKey);
       })
     );
@@ -142,7 +135,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   toggleMode(): void {
     this.isDarkMode = !this.isDarkMode;
-    // Salva o estado do tema no localStorage
     localStorage.setItem('isDarkTheme', String(this.isDarkMode));
     this.applyTheme(this.isDarkMode);
   }
