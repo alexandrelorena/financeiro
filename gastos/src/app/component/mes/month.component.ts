@@ -53,6 +53,11 @@ export class MonthComponent implements OnInit, OnDestroy {
 
   private subscription = new Subscription();
 
+  /**
+   * Construtor do componente
+
+   * @param dialog Serviço Angular Material para gerenciamento de diálogos
+   */
   constructor(
     private dateService: DateService,
     private gastoService: GastoService,
@@ -341,6 +346,7 @@ export class MonthComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       width: '500px',
       data: {
+        title: 'Deseja apagar esta despesa?',
         message: `despesa: <strong>${despesa.nome}</strong><br>
         valor: <strong>${despesa.valor.toLocaleString('pt-BR', {
           style: 'currency',
