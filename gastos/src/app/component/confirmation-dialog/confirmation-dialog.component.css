@@ -15,7 +15,6 @@
   text-align: center;
   font-size: 1.5rem;
   font-weight: bold;
-
   margin-bottom: 1rem;
 }
 
@@ -26,12 +25,6 @@
 .custom-message {
   color: whitesmoke; /* Altere para a cor desejada */
   font-size: 1rem;
-}
-
-/* Estilizar o conteúdo do diálogo */
-.mat-dialog-content > data.message {
-  font-size: 1rem;
-  color: var(--modal-del-content-color); /* Texto do conteúdo */
   margin: 1.5rem 0;
 }
 

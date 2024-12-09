@@ -81,39 +81,6 @@ td:last-child {
 
 /* -------------------- Largura de colunas -------------------- */
 
-/* th:first-child,
-td:first-child {
-  width: 5%;
-}
-
-th:nth-child(2),
-td:nth-child(2) {
-  width: 33%;
-}
-
-th:nth-child(3),
-td:nth-child(3) {
-  width: 15%;
-}
-
-th:nth-child(4),
-td:nth-child(4) {
-  width: 19%;
-}
-
-th:nth-child(5),
-td:nth-child(5) {
-  width: 5%;
-}
-
-th:last-child(6),
-td:last-child(6) {
-  width: 5%;
-  text-align: center;
-  justify-content: center;
-  align-items: center;
-} */
-
 th:nth-child(2) {
   /* Para "Despesa" */
   width: 35%;
