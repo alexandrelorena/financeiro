@@ -1,10 +1,20 @@
 @import "@angular/material/prebuilt-themes/indigo-pink.css";
 
+/* -------------------- Reset Geral -------------------- */
 * {
-  padding: 0;
-  margin: 0;
   border: 0;
   box-sizing: border-box;
+}
+
+body,
+h1,
+h2,
+h3,
+p,
+ul,
+ol {
+  padding: 0;
+  margin: 0;
 }
 
 /* -------------------- Modo Claro e Escuro -------------------- */
@@ -17,31 +27,99 @@ body {
 }
 
 /* Estilo para o modo escuro */
-.dark-theme {
+body.dark-theme {
   background-color: black;
   color: white;
 }
 
 /* Variáveis de cores para os temas */
-body.light-theme {
-  --primary-text-color: grey;
-  --icon-color: grey; /* Cor dos ícones no modo claro */
+:root {
+  --background-dark: #2f3640;
+  --background-light: #353b48;
+  --button-menu-hover: #1cb3ca;
+  --button-menu-selected: #1cb3ca;
+  --button-menu-color: #fff;
+  --primary-color: gray;
+  --text-light: #fff;
+  --scrollbar-color: #888;
+  --scrollbar-hover: #555;
+  --status-paid: rgb(9, 190, 9);
+  --status-pending: rgb(1, 114, 180);
+  --status-due: red;
+  --status-today: rgb(255, 123, 0);
+  --button-hover-scale: 1.1;
+
+  /* Modal */
+  --modal-edit-title-color: #1cb3ca;
+  --modal-del-title-color: red;
+  --modal-content-color: #333333;
+
+  --modal-btn-edit-cancel-bg: #e0e0e0;
+  --modal-btn-edit-cancel-text: #6c757d;
+  /* --modal-btn-edit-cancel-bg: #424242;
+  --modal-btn-edit-cancel-text: #bbbbbb; */
+  --modal-btn-edit-cancel-bg-hover: #f8f9fa;
+  --modal-btn-edit-cancel-text-hover: #1cb3ca;
+
+  --modal-btn-edit-confirm-bg: #e0e0e0;
+  --modal-btn-edit-confirm-text: #6c757d;
+  /* --modal-btn-edit-confirm-bg: #424242;
+  --modal-btn-edit-confirm-text: #bbbbbb; */
+  --modal-btn-edit-confirm-bg-hover: #f8f9fa;
+  --modal-btn-edit-confirm-text-hover: #1cb3ca;
+
+  --modal-btn-del-cancel-bg: #424242;
+  --modal-btn-del-cancel-text: #bbbbbb;
+  --modal-btn-del-cancel-bg-hover: #333333;
+  --modal-btn-del-cancel-text-hover: #ffffff;
+
+  --modal-btn-del-confirm-bg: #ff5252;
+  --modal-btn-del-confirm-text: #ffffff;
+  --modal-btn-del-confirm-bg-hover: #e53935;
+  --modal-btn-del-confirm-text-hover: #ffffff;
 }
 
+/* Tema Escuro */
 body.dark-theme {
-  --primary-text-color: white;
-  --icon-color: white; /* Cor dos ícones no modo escuro */
+  --background-dark: #353b48;
+  --modal-edit-bg: #1cb3ca;
+  --modal-edit-title-color: #fff;
+  --modal-edit-content-color: #fff;
+  --modal-del-bg: black;
+  --modal-del-title-color: red;
+  --modal-del-content-color: white;
+
+  --modal-btn-edit-cancel-bg: #e0e0e0;
+  --modal-btn-edit-cancel-text: #6c757d;
+  --modal-btn-edit-cancel-bg-hover: #f8f9fa;
+  --modal-btn-edit-cancel-text-hover: #1cb3ca;
+
+  --modal-btn-edit-confirm-bg: #e0e0e0;
+  --modal-btn-edit-confirm-text: #6c757d;
+  --modal-btn-edit-confirm-bg-hover: #f8f9fa;
+  --modal-btn-edit-confirm-text-hover: #1cb3ca;
+
+  --modal-btn-del-cancel-bg: #424242;
+  --modal-btn-del-cancel-text: #bbbbbb;
+  --modal-btn-del-cancel-bg-hover: #333333;
+  --modal-btn-del-cancel-text-hover: #ffffff;
+
+  --modal-btn-del-confirm-bg: #ff5252;
+  --modal-btn-del-confirm-text: #ffffff;
+  --modal-btn-del-confirm-bg-hover: #e53935;
+  --modal-btn-del-confirm-text-hover: #ffffff;
 }
 
 /* -------------------- Tipografia -------------------- */
-
 html {
   font-size: 50%; /* Base para rem */
 }
 
 html,
 body {
-  height: 88%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden; /* Impede a rolagem */
 }
 
 body {
@@ -63,93 +141,9 @@ body {
 }
 
 /* -------------------- Ícones -------------------- */
-
 .container__footer i {
   color: var(--icon-color); /* Usando variáveis de tema */
   transition: color 0.3s ease; /* Suaviza mudanças de cor */
-}
-
-/* -------------------- Variáveis de Cores -------------------- */
-
-:root {
-  --background-dark: #2f3640;
-  --background-light: #353b48;
-  --button-menu-hover: #1cb3ca;
-  --button-menu-selected: #1cb3ca;
-  --button-menu-color: #fff;
-  --primary-color: gray;
-  --text-light: #fff;
-  --scrollbar-color: #888;
-  --scrollbar-hover: #555;
-  --status-paid: rgb(9, 190, 9);
-  --status-pending: rgb(1, 114, 180);
-  --status-due: red;
-  --status-today: rgb(255, 123, 0);
-  --button-hover-scale: 1.1;
-  /* --button-cancel-edition: #f5f5f5;
-  --button-cancel-edition-text: #333;
-  --button-cancel-edition-hover: #e0e0e0; */
-}
-
-/* Modal - light */
-:root {
-  /* --modal-edit-bg: #ffffff; */
-  --modal-del-title-color: brown;
-  --modal-edit-title-color: #333333;
-  --modal-content-color: #333333;
-
-  --modal-btn-edit-cancel-bg: #e0e0e0;
-  --modal-btn-edit-cancel-text: #6c757d;
-  --modal-btn-edit-cancel-bg-hover: #6c757d;
-  --modal-btn-edit-cancel-text-hover: #f8f9fa;
-
-  --modal-btn-edit-confirm-bg: #e0e0e0;
-  --modal-btn-edit-confirm-text: #6c757d;
-  --modal-btn-edit-confirm-bg-hover: #00c853;
-  --modal-btn-edit-confirm-text-hover: #f8f9fa;
-
-  /* Deletar despesa */
-  --modal-btn-del-cancel-bg: #424242;
-  --modal-btn-del-cancel-text: #bbbbbb;
-  --modal-btn-del-cancel-bg-hover: #333333;
-  --modal-btn-del-cancel-text-hover: #ffffff;
-
-  --modal-btn-del-confirm-bg: #ff5252;
-  --modal-btn-del-confirm-text: #ffffff;
-  --modal-btn-del-confirm-bg-hover: #e53935;
-  --modal-btn-del-confirm-text-hover: #ffffff;
-}
-
-/* Modal - dark */
-.dark-theme {
-  --modal-edit-bg: #1cb3ca;
-  --modal-edit-title-color: #fff;
-  --modal-edit-content-color: #fff;
-  --modal-del-bg: black;
-  --modal-del-title-color: brown;
-  --modal-del-content-color: white;
-
-  /* Editar despesa */
-  --modal-btn-edit-cancel-bg: #424242;
-  --modal-btn-edit-cancel-text: #bbbbbb;
-  --modal-btn-edit-cancel-bg-hover: #6c757d;
-  --modal-btn-edit-cancel-text-hover: #f8f9fa;
-
-  --modal-btn-edit-confirm-bg: #424242;
-  --modal-btn-edit-confirm-text: #bbbbbb;
-  --modal-btn-edit-confirm-bg-hover: #00c853;
-  --modal-btn-edit-confirm-text-hover: #f8f9fa;
-
-  /* Deletar despesa */
-  --modal-btn-del-cancel-bg: #424242;
-  --modal-btn-del-cancel-text: #bbbbbb;
-  --modal-btn-del-cancel-bg-hover: #333333;
-  --modal-btn-del-cancel-text-hover: #ffffff;
-
-  --modal-btn-del-confirm-bg: #ff5252;
-  --modal-btn-del-confirm-text: #ffffff;
-  --modal-btn-del-confirm-bg-hover: #e53935;
-  --modal-btn-del-confirm-text-hover: #ffffff;
 }
 
 /* -------------------- Scrollbar -------------------- */
@@ -181,11 +175,9 @@ body {
 }
 
 /* -------------------- Botões -------------------- */
-
 button {
   background: none;
   border: none;
-  /* color: var(--primary-text-color); */
   cursor: pointer;
   transition: transform 0.3s ease, color 0.3s ease;
   padding: 0.3125rem 0.625rem; /* 5px 10px */
@@ -194,11 +186,9 @@ button {
 
 button:hover {
   transform: scale(var(--button-hover-scale));
-  /* color: var(--button-menu-hover); */
 }
 
 /* -------------------- Ajustes para Status -------------------- */
-
 .status-pago {
   color: var(--status-paid);
   text-align: center;

@@ -1,9 +1,9 @@
 <!-- confirmation-dialog.component.html -->
-<h2 mat-dialog-title class="custom-title">Confirmar exclusão</h2>
+<p class="custom-title">{{ data.title }}</p>
 <mat-dialog-content>
   <p [innerHTML]="data.message" class="custom-message"></p>
 </mat-dialog-content>
 <mat-dialog-actions>
-  <button mat-raised-button class="cancel" (click)="onCancel()">Cancelar</button>
-  <button mat-raised-button class="confirm" (click)="onConfirm()">Confirmar</button>
+  <button mat-raised-button class="cancel" (click)="onCancel()">Não</button>
+  <button mat-raised-button class="confirm" (click)="onConfirm()">Sim</button>
 </mat-dialog-actions>

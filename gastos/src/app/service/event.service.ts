@@ -1,25 +1,58 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Subject } from 'rxjs';
-import { Observable, of } from 'rxjs';
-import { HttpClient } from '@angular/common/http'; // Para chamadas HTTP
+import { BehaviorSubject, Subject, Observable, of } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
 })
 export class EventService {
-  // Suporte para despesas
-  private despesasSubject = new BehaviorSubject<any[]>([]); // Lista de despesas
+  /**
+   * Suporte para despesas.
+   * @private
+   */
+  private despesasSubject = new BehaviorSubject<any[]>([]);
+
+  /**
+   * Observable da lista de despesas.
+   * @type {Observable<any[]>}
+   */
   despesas$ = this.despesasSubject.asObservable();
 
-  private statusSelecionadoSubject = new BehaviorSubject<string>('Todos'); // Status atual
+  /**
+   * Status atual selecionado.
+   * @private
+   */
+  private statusSelecionadoSubject = new BehaviorSubject<string>('Todos');
+
+  /**
+   * Observable do status atual.
+   * @type {Observable<string>}
+   */
   statusSelecionado$ = this.statusSelecionadoSubject.asObservable();
 
-  private statusChange = new Subject<void>(); // Notificação de mudanças
+  /**
+   * Notificação de mudanças de status.
+   * @private
+   */
+  private statusChange = new Subject<void>();
 
+  /**
+   * Observable para escutar mudanças de status.
+   * @type {Observable<void>}
+   */
+  onStatusChange$ = this.statusChange.asObservable();
+
+  /**
+   * Lista local de despesas.
+   * @private
+   * @type {any[]}
+   */
   private despesas = [];
 
-  // Observable para escutar mudanças
-  onStatusChange$ = this.statusChange.asObservable();
+  /**
+   * Construtor da classe EventService.
+   * @param {HttpClient} http Serviço para chamadas HTTP.
+   */
 
   // Método para emitir mudanças
   emitStatusChange(): void {
@@ -28,36 +61,60 @@ export class EventService {
 
   constructor(private http: HttpClient) {}
 
-  // Métodos para gerenciar despesas
-  atualizarDespesas(novasDespesas: any[]) {
-    this.despesasSubject.next(novasDespesas); // Atualiza a lista de despesas
-    this.notifyStatusChange(); // Notifica a mudança
+  /**
+   * Atualiza a lista de despesas.
+   * @param {any[]} novasDespesas - Nova lista de despesas.
+   */
+  atualizarDespesas(novasDespesas: any[]): void {
+    this.despesasSubject.next(novasDespesas);
+    this.notifyStatusChange();
   }
 
-  obterDespesas() {
-    return this.despesasSubject.getValue(); // Retorna a lista atual de despesas
+  /**
+   * Retorna a lista atual de despesas.
+   * @returns {any[]} Lista atual de despesas.
+   */
+  obterDespesas(): any[] {
+    return this.despesasSubject.getValue();
   }
 
-  // Métodos para gerenciar status
-  atualizarStatusSelecionado(novoStatus: string) {
+  /**
+   * Atualiza o status selecionado.
+   * @param {string} novoStatus - Novo status selecionado.
+   */
+  atualizarStatusSelecionado(novoStatus: string): void {
     this.statusSelecionadoSubject.next(novoStatus);
-    this.notifyStatusChange(); // Notifica a mudança
+    this.notifyStatusChange();
   }
 
-  obterStatusSelecionado() {
+  /**
+   * Retorna o status atual selecionado.
+   * @returns {string} Status atual.
+   */
+  obterStatusSelecionado(): string {
     return this.statusSelecionadoSubject.getValue();
   }
 
-  // Métodos para disparar e escutar mudanças de status
-  notifyStatusChange() {
+  /**
+   * Notifica mudanças no status.
+   */
+  notifyStatusChange(): void {
     this.statusChange.next();
   }
 
-  onStatusChange() {
+  /**
+   * Escuta mudanças no status.
+   * @returns {Observable<void>} Observable de mudanças de status.
+   */
+  onStatusChange(): Observable<void> {
     return this.statusChange.asObservable();
   }
 
-  // Método para apagar despesas do mês selecionado
+  /**
+   * Apaga despesas do mês selecionado.
+   * @param {number} selectedMonthNumber - Número do mês selecionado.
+   * @returns {Observable<any>} Resultado da operação.
+   */
   apagarDespesasDoMes(selectedMonthNumber: number): Observable<any> {
     const url = `http://localhost:8080/api/gastos/mes/${selectedMonthNumber}`;
     this.notifyStatusChange();
