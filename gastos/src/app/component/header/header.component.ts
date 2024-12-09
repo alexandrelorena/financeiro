@@ -1,25 +1,43 @@
 import { Component, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { MonthService } from '../../service/month.service'; // Importando o serviço
+import { MonthService } from '../../service/month.service';
 import { EventService } from '../../service/event.service';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 
+/**
+ * HeaderComponent
+ * Responsável por gerenciar o cabeçalho da aplicação, incluindo a alternância entre os temas (claro/escuro)
+ * e as interações relacionadas aos meses e despesas.
+ */
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-  isDarkMode = false; // Controle do tema
-  despesasTotal: string = ''; // Total de despesas como string (do serviço)
-  totalDespesas: number = 0; // Total de despesas como número
-  selectedMonthAbbreviation: string = ''; // Abreviação do mês selecionado (ex.: "jan", "fev")
-  selectedMonthFullName: string = ''; // Nome completo do mês selecionado (ex.: "Janeiro")
-  selectedMonthNumber: number = 0; // Número do mês selecionado (1 a 12)
+  /** Indica se o tema escuro está ativado */
+  isDarkMode = false;
+
+  /** Total de despesas como string obtido do serviço */
+  despesasTotal: string = '';
+
+  /** Total de despesas como número */
+  totalDespesas: number = 0;
+
+  /** Abreviação do mês selecionado (ex.: "jan", "fev") */
+  selectedMonthAbbreviation: string = '';
+
+  /** Nome completo do mês selecionado (ex.: "Janeiro") */
+  selectedMonthFullName: string = '';
+
+  /** Número do mês selecionado (1 a 12) */
+  selectedMonthNumber: number = 0;
+
+  /** Assinaturas de observáveis para gerenciamento de memória */
   private subscription: Subscription = new Subscription();
 
-  // Map de meses com os nomes e números
+  /** Map de meses com os nomes completos e seus respectivos números */
   monthNames: { [key: string]: [string, number] } = {
     jan: ['Janeiro', 1],
     fev: ['Fevereiro', 2],
@@ -31,10 +49,17 @@ export class HeaderComponent implements OnInit, OnDestroy {
     ago: ['Agosto', 8],
     set: ['Setembro', 9],
     out: ['Outubro', 10],
-    nov: ['Novembro', 11], // Verifique este!
+    nov: ['Novembro', 11],
     dez: ['Dezembro', 12],
   };
 
+  /**
+   * Construtor do componente
+   * @param renderer Serviço Angular para manipulação do DOM
+   * @param monthService Serviço responsável por gerenciar os meses
+   * @param eventService Serviço responsável por eventos relacionados às despesas
+   * @param dialog Serviço Angular Material para gerenciamento de diálogos
+   */
   constructor(
     private renderer: Renderer2,
     private monthService: MonthService,
@@ -42,63 +67,18 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private dialog: MatDialog
   ) {}
 
-  // apagarDespesasDoMes(selectedMonthNumber: number): void {
-  //   const confirmacao = confirm(
-  //     `Tem certeza de que deseja apagar todas as despesas do mês de ${this.selectedMonthFullName}?`
-  //   );
-
-  //   if (confirmacao) {
-  //     // Chama o serviço para atualizar as despesas
-  //     this.eventService
-  //       .apagarDespesasDoMes(selectedMonthNumber)
-  //       .subscribe(() => {
-  //         alert(
-  //           `Todas as despesas do mês de ${this.selectedMonthFullName} foram apagadas.`
-  //         );
-  //         // Emite o evento para notificar outros componentes
-  //         this.eventService.emitStatusChange();
-  //         alert('Despesas apagadas com sucesso!');
-  //       });
-  //   }
-  // }
-
-  apagarDespesasDoMes(selectedMonthNumber: number): void {
-    // Abre o diálogo de confirmação
-    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      width: '390px',
-      data: {
-        message: `Tem certeza de que deseja apagar todas as despesas do mês de ${this.selectedMonthFullName}?`,
-      },
-    });
-
-    // Quando o usuário clicar em confirmar, executa a exclusão
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result === 'confirm') {
-        // Chama o serviço para apagar as despesas
-        this.eventService.apagarDespesasDoMes(selectedMonthNumber).subscribe({
-          next: () => {
-            // Emite o evento para notificar outros componentes
-            this.eventService.emitStatusChange();
-          },
-          error: (error) =>
-            console.error(
-              'Erro ao apagar as despesas:',
-              error.message || error
-            ),
-        });
-      }
-    });
-  }
-
+  /**
+   * Método executado ao inicializar o componente
+   * Configura o tema e assina observáveis para obter informações dinâmicas
+   */
   ngOnInit(): void {
     const isDarkTheme = localStorage.getItem('isDarkTheme') === 'true';
     this.isDarkMode = isDarkTheme;
     this.applyTheme(this.isDarkMode);
 
-    // Obter o mês atual
-    const currentMonthIndex = new Date().getMonth(); // Índice do mês (0 a 11)
-    const monthKeys = Object.keys(this.monthNames); // Array com as chaves dos meses
-    const currentMonthKey = monthKeys[currentMonthIndex]; // Garante uma chave válida
+    const currentMonthIndex = new Date().getMonth();
+    const monthKeys = Object.keys(this.monthNames);
+    const currentMonthKey = monthKeys[currentMonthIndex];
 
     if (currentMonthKey) {
       this.updateSelectedMonth(currentMonthKey);
@@ -109,7 +89,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.subscription.add(
       this.monthService.despesasTotal$.subscribe((total) => {
         this.despesasTotal = total;
-        this.totalDespesas = parseFloat(total) || 0; // Garantir que seja um número
+        this.totalDespesas = parseFloat(total) || 0;
       })
     );
 
@@ -120,7 +100,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
     );
   }
 
-  // Atualiza o mês selecionado com base na chave (abreviação do mês)
+  /**
+   * Atualiza as informações relacionadas ao mês selecionado
+   * @param monthKey Abreviação do mês (ex.: "jan", "fev")
+   */
   updateSelectedMonth(monthKey: string): void {
     if (!this.monthNames[monthKey]) {
       console.error(`Chave do mês inválida: ${monthKey}`);
@@ -133,12 +116,19 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.selectedMonthNumber = monthNumber;
   }
 
+  /**
+   * Alterna o tema entre claro e escuro
+   */
   toggleMode(): void {
     this.isDarkMode = !this.isDarkMode;
     localStorage.setItem('isDarkTheme', String(this.isDarkMode));
     this.applyTheme(this.isDarkMode);
   }
 
+  /**
+   * Aplica o tema selecionado ao corpo do documento
+   * @param isDark Indica se o tema escuro deve ser aplicado
+   */
   private applyTheme(isDark: boolean): void {
     if (isDark) {
       this.renderer.addClass(document.body, 'dark-theme');
@@ -148,8 +138,63 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.renderer.removeClass(document.body, 'dark-theme');
     }
   }
-  ngOnDestroy() {
-    // Cancelando a inscrição quando o componente for destruído para evitar vazamentos de memória
+
+  /**
+   * Exibe um diálogo de confirmação para apagar as despesas de um mês
+   * @param selectedMonthNumber Número do mês selecionado
+   * @param despesasTotal
+   */
+
+  apagarDespesasDoMes(selectedMonthNumber: number): void {
+    // Remover o símbolo de moeda e substituir a vírgula por ponto
+    const despesas =
+      parseFloat(
+        this.despesasTotal.replace('R$', '').replace(',', '.').trim()
+      ) || 0;
+    // Garante que o valor seja 0 se for NaN
+
+    // Verifica se há despesas para o mês
+    if (despesas === 0) {
+      // Se não houver despesas, abre o diálogo informando que não há despesas para apagar
+      this.dialog.open(ConfirmationDialogComponent, {
+        width: '500px',
+        data: {
+          title: 'Não há despesas para apagar!!',
+          message: '',
+        },
+      });
+    } else {
+      // Caso haja despesas, exibe o diálogo de confirmação para apagar
+      const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+        width: '500px',
+        data: {
+          title: `Deseja apagar as despesas de ${this.selectedMonthFullName}?`,
+          // message: `Deseja apagar as despesas de ${this.selectedMonthFullName}?`,
+        },
+      });
+
+      dialogRef.afterClosed().subscribe((result) => {
+        if (result === 'confirm') {
+          this.eventService.apagarDespesasDoMes(selectedMonthNumber).subscribe({
+            next: () => {
+              this.eventService.emitStatusChange();
+            },
+            error: (error) =>
+              console.error(
+                'Erro ao apagar as despesas:',
+                error.message || error
+              ),
+          });
+        }
+      });
+    }
+  }
+
+  /**
+   * Método executado ao destruir o componente
+   * Cancela assinaturas para evitar vazamentos de memória
+   */
+  ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
 }

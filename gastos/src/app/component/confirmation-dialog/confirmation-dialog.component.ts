@@ -17,10 +17,15 @@ export class ConfirmationDialogComponent {
    *
    * @param dialogRef Referência para o diálogo, usado para fechar o modal.
    * @param data Dados injetados no diálogo, contendo a mensagem a ser exibida.
+   * @param title
    */
   constructor(
     public dialogRef: MatDialogRef<ConfirmationDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { message: string }
+    @Inject(MAT_DIALOG_DATA)
+    public data: {
+      title: any;
+      message: string;
+    }
   ) {}
 
   /**
