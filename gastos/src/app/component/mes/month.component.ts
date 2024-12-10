@@ -27,6 +27,8 @@ import { EditDespesaModalComponent } from '../../edit-despesa-modal/edit-despesa
   encapsulation: ViewEncapsulation.None,
 })
 export class MonthComponent implements OnInit, OnDestroy {
+  objectKeys = Object.keys;
+
   hoje: Date = new Date();
   @Input() selectedMonth: string = '';
   despesas: Gasto[] = [];
@@ -353,6 +355,7 @@ export class MonthComponent implements OnInit, OnDestroy {
           currency: 'BRL',
         })}</strong><br>
         vencimento: <strong>${vencimentoFormatado}</strong>`,
+        type: 'confirmation',
       },
     });
 
@@ -373,6 +376,87 @@ export class MonthComponent implements OnInit, OnDestroy {
           });
       }
     });
+  }
+
+  // Método para apagar despesas do mês
+  apagarDespesasDoMes(monthKey: string): void {
+    const monthData = this.monthNames[monthKey];
+
+    if (!monthData) {
+      console.error('Mês inválido:', monthKey);
+      this.dialog.open(ConfirmationDialogComponent, {
+        width: '500px',
+        data: {
+          title: 'Erro!',
+          message: 'Mês inválido. Por favor, tente novamente.',
+          type: 'info', // Apenas exibe o botão "Fechar"
+        },
+      });
+      return;
+    }
+
+    // Verifica se há despesas para o mês
+    if (!this.totalDespesas) {
+      // Se não houver despesas, abre o diálogo informativo
+      this.dialog.open(ConfirmationDialogComponent, {
+        width: '500px',
+        data: {
+          title: `Não há despesas registradas para ${monthData[0]}.`,
+          // message: `Não há despesas registradas para ${monthData[0]}.`,
+          type: 'info', // Apenas exibe o botão "Fechar"
+        },
+      });
+    } else {
+      // Caso haja despesas, exibe o diálogo de confirmação
+      const monthNumber = monthData[1]; // Obter o número do mês
+      const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+        width: '500px',
+        data: {
+          title: `Deseja apagar as despesas de ${monthData[0]}?`,
+          message: `Todas as despesas serão apagadas.`,
+          type: 'confirmation', // Exibe os botões "Sim" e "Não"
+        },
+      });
+
+      dialogRef.afterClosed().subscribe((result) => {
+        if (result === 'confirm') {
+          // Se o usuário confirmar, apaga as despesas
+          this.gastoService
+            .apagarDespesasDoMes(monthNumber)
+            .pipe(take(1))
+            .subscribe(
+              () => {
+                this.despesas = [];
+                this.despesasFiltradas = [];
+                this.calcularTotalDespesas();
+                this.dialog.open(ConfirmationDialogComponent, {
+                  width: '500px',
+                  data: {
+                    title: 'Sucesso!',
+                    message: `Despesas de ${monthData[0]} apagadas com sucesso!`,
+                    type: 'info', // Apenas exibe o botão "Fechar"
+                  },
+                });
+              },
+              (erro) => {
+                console.error('Erro ao apagar despesas:', erro);
+                this.dialog.open(ConfirmationDialogComponent, {
+                  width: '500px',
+                  data: {
+                    title: 'Erro!',
+                    message:
+                      'Não foi possível apagar as despesas. Por favor, tente novamente.',
+                    type: 'info', // Apenas exibe o botão "Fechar"
+                  },
+                });
+              }
+            );
+        } else {
+          // Ação cancelada pelo usuário
+          console.log('Ação de exclusão cancelada.');
+        }
+      });
+    }
   }
 
   getStatus(despesa: Gasto): {

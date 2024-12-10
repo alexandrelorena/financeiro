@@ -83,9 +83,9 @@ td:last-child {
 
 th:nth-child(2) {
   /* Para "Despesa" */
-  width: 35%;
-  max-width: 35%;
-  min-width: 35%;
+  width: 30%;
+  max-width: 30%;
+  min-width: 30%;
 }
 
 th:nth-child(3) {
