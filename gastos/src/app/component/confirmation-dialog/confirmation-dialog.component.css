@@ -52,6 +52,8 @@
   }
 
   .mat-dialog-actions button {
+    display: flex;
+    justify-content: space-between;
     width: 100%;
   }
 }
@@ -67,6 +69,9 @@ button {
   cursor: pointer;
 }
 
+button.cancel, button.confirm {
+  margin: auto;
+}
 /* Botão de cancelar */
 button.cancel {
   background-color: var(--modal-btn-del-cancel-bg);
