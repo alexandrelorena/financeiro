@@ -2,7 +2,13 @@
   <table class="month">
     <thead>
       <tr>
-        <th>#</th>
+        <th>
+          <button id="apagar" class="btn-apagar" (click)="apagarDespesasDoMes(selectedMonth)"
+            title="Apagar as despesas do mês">
+            <i class="fa-solid fa-trash-can"></i>
+
+          </button>
+        </th>
         <th>Despesa</th>
         <th>Valor</th>
         <th>Vencimento</th>
@@ -84,7 +90,6 @@
           </td>
         </ng-template>
       </tr>
-
     </tbody>
   </table>
 </div>

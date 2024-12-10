@@ -20,7 +20,7 @@
 }
 
 .custom-title {
-  color: var(--modal-del-title-color);
+  color: gray;
   font-size: 1.2rem;
 }
 
@@ -87,6 +87,13 @@ button.confirm {
 button.confirm:hover {
   background-color: var(--modal-btn-del-confirm-bg-hover);
   color: var(--modal-btn-del-confirm-text-hover);
+}
+
+button.close {
+  display: flex;
+  margin: auto;
+  background-color: #1cb3ca; /* Azul */
+  color: #fff;
 }
 
 /* Botão desabilitado */

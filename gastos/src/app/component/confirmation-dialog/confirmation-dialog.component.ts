@@ -23,6 +23,7 @@ export class ConfirmationDialogComponent {
     public dialogRef: MatDialogRef<ConfirmationDialogComponent>,
     @Inject(MAT_DIALOG_DATA)
     public data: {
+      type: any;
       title: any;
       message: string;
     }
@@ -39,6 +40,10 @@ export class ConfirmationDialogComponent {
    * Método para confirmar a ação, fechando o diálogo com a resposta 'confirm'.
    */
   onConfirm(): void {
+    this.dialogRef.close('confirm');
+  }
+
+  onClose(): void {
     this.dialogRef.close('confirm');
   }
 }

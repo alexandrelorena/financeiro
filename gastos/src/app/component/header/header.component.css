@@ -67,26 +67,6 @@
   transform: scale(1.1); /* Aumenta ligeiramente o ícone ao passar o mouse */
 }
 
-.btn-apagar {
-  background-color: none;
-  color: white;
-  border: 0.0625rem solid red; /* 1px -> 0.0625rem */
-  margin-top: -6.25rem; /* -100px -> -6.25rem */
-  cursor: pointer;
-  border-radius: 0.3125rem; /* 5px -> 0.3125rem */
-  /* display: flex;
-  justify-content: center;
-  align-items: center; */
-}
-
-.btn-apagar-todas:hover {
-  background-color: none;
-}
-
-#apagar {
-  margin-left: -17.75rem; /* -300px -> -18.75rem */
-}
-
 #toggle {
   margin-top: 0.1rem; /* -50px -> -3.125rem */
   margin-left: 13rem;

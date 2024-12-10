@@ -1,9 +1,21 @@
-<!-- confirmation-dialog.component.html -->
-<p class="custom-title">{{ data.title }}</p>
-<mat-dialog-content>
-  <p [innerHTML]="data.message" class="custom-message"></p>
-</mat-dialog-content>
-<mat-dialog-actions>
-  <button mat-raised-button class="cancel" (click)="onCancel()">Não</button>
-  <button mat-raised-button class="confirm" (click)="onConfirm()">Sim</button>
-</mat-dialog-actions>
+<div>
+  <h2 class="custom-title">{{ data.title }}</h2>
+  <mat-dialog-content>
+    <p [innerHTML]="data.message" class="custom-message"></p>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <!-- Exibe "Sim" e "Não" se o tipo for "confirmation" -->
+    <button *ngIf="data.type === 'confirmation'" mat-raised-button class="cancel" (click)="onCancel()">
+      Não
+    </button>
+    <button *ngIf="data.type === 'confirmation'" mat-raised-button color="primary" class="confirm"
+      (click)="onConfirm()">
+      Sim
+    </button>
+
+    <!-- Exibe apenas "Fechar" se o tipo for "info" -->
+    <button *ngIf="data.type === 'info'" mat-raised-button color="primary" class="close" (click)="onClose()">
+      Fechar
+    </button>
+  </mat-dialog-actions>
+</div>
