@@ -69,7 +69,8 @@ button {
   cursor: pointer;
 }
 
-button.cancel, button.confirm {
+button.cancel,
+button.confirm {
   margin: auto;
 }
 /* Botão de cancelar */
