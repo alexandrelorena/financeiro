@@ -413,7 +413,7 @@ export class MonthComponent implements OnInit, OnDestroy {
         width: '500px',
         data: {
           title: `Deseja apagar as despesas de ${monthData[0]}?`,
-          message: `Todas as despesas serão apagadas.`,
+          // message: `Todas as despesas serão apagadas.`,
           type: 'confirmation', // Exibe os botões "Sim" e "Não"
         },
       });
