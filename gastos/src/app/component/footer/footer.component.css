@@ -20,6 +20,14 @@ a {
   transition: color 0.3s ease; /* Suaviza a transição de cor */
 }
 
+.name {
+  color: var(--primary-text-color);
+}
+
+.name:hover {
+  color: var(--hover-color, #2290a1); /* Cor ao passar o mouse */
+}
+
 a:hover .fab {
   color: var(--hover-color, #2290a1); /* Cor ao passar o mouse */
 }
