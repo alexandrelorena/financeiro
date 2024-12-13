@@ -11,6 +11,10 @@
   background-color: var(--modal-del-bg);
 }
 
+.mat-dialog-content {
+  background-color: yellow;
+}
+
 /* Estilizar o título do diálogo */
 .mat-dialog-title {
   text-align: center;
@@ -20,7 +24,8 @@
 }
 
 .custom-title {
-  color: gray;
+  text-align: center;
+  color: red;
   font-size: 1.2rem;
 }
 
@@ -32,11 +37,9 @@
 
 /* Estilizar as ações do diálogo */
 .mat-dialog-actions {
-  display: flex;
-  justify-content: space-between;
-  gap: 2rem;
-  margin-top: 1rem;
-  width: 100%;
+
+  margin: auto;
+
 }
 
 .mat-dialog-actions button.cancel {
@@ -69,8 +72,7 @@ button {
   cursor: pointer;
 }
 
-button.cancel,
-button.confirm {
+button.cancel, button.confirm {
   margin: auto;
 }
 /* Botão de cancelar */
