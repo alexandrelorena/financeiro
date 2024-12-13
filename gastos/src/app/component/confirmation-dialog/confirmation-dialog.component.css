@@ -37,9 +37,12 @@
 
 /* Estilizar as ações do diálogo */
 .mat-dialog-actions {
-
+  display: flex;
+  justify-content: space-between;
   margin: auto;
-
+  gap: 2rem;
+  margin-top: 1rem;
+  width: 100%;
 }
 
 .mat-dialog-actions button.cancel {
@@ -55,8 +58,7 @@
   }
 
   .mat-dialog-actions button {
-    display: flex;
-    justify-content: space-between;
+    margin: auto;
     width: 100%;
   }
 }
