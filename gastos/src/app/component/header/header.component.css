@@ -38,6 +38,10 @@
   color: var(--primary-text-color);
 }
 
+.header__item > p > span {
+  color: #2290a1;
+}
+
 .header__item > p {
   margin-top: 0.5rem; /* 10px -> 0.625rem */
   margin-left: 1.5rem; /* 24px -> 1.5rem */

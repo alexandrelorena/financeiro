@@ -36,8 +36,8 @@ body.dark-theme {
 :root {
   --background-dark: #2f3640;
   --background-light: #353b48;
-  --button-menu-hover: #1cb3ca;
-  --button-menu-selected: #1cb3ca;
+  --button-menu-hover: #2290a1;
+  --button-menu-selected: #2290a1;
   --button-menu-color: #fff;
   --primary-color: gray;
   --text-light: #fff;
@@ -50,7 +50,7 @@ body.dark-theme {
   --button-hover-scale: 1.1;
 
   /* Modal */
-  --modal-edit-title-color: #1cb3ca;
+  --modal-edit-title-color: #2290a1;
   --modal-del-title-color: red;
   --modal-content-color: #333333;
 
@@ -59,14 +59,14 @@ body.dark-theme {
   /* --modal-btn-edit-cancel-bg: #424242;
   --modal-btn-edit-cancel-text: #bbbbbb; */
   --modal-btn-edit-cancel-bg-hover: #f8f9fa;
-  --modal-btn-edit-cancel-text-hover: #1cb3ca;
+  --modal-btn-edit-cancel-text-hover: #2290a1;
 
   --modal-btn-edit-confirm-bg: #e0e0e0;
   --modal-btn-edit-confirm-text: #6c757d;
   /* --modal-btn-edit-confirm-bg: #424242;
   --modal-btn-edit-confirm-text: #bbbbbb; */
   --modal-btn-edit-confirm-bg-hover: #f8f9fa;
-  --modal-btn-edit-confirm-text-hover: #1cb3ca;
+  --modal-btn-edit-confirm-text-hover: #2290a1;
 
   --modal-btn-del-cancel-bg: #424242;
   --modal-btn-del-cancel-text: #bbbbbb;
@@ -82,7 +82,7 @@ body.dark-theme {
 /* Tema Escuro */
 body.dark-theme {
   --background-dark: #353b48;
-  --modal-edit-bg: #1cb3ca;
+  --modal-edit-bg: #2290a1;
   --modal-edit-title-color: #fff;
   --modal-edit-content-color: #fff;
   --modal-del-bg: black;
@@ -92,12 +92,12 @@ body.dark-theme {
   --modal-btn-edit-cancel-bg: #e0e0e0;
   --modal-btn-edit-cancel-text: #6c757d;
   --modal-btn-edit-cancel-bg-hover: #f8f9fa;
-  --modal-btn-edit-cancel-text-hover: #1cb3ca;
+  --modal-btn-edit-cancel-text-hover: #2290a1;
 
   --modal-btn-edit-confirm-bg: #e0e0e0;
   --modal-btn-edit-confirm-text: #6c757d;
   --modal-btn-edit-confirm-bg-hover: #f8f9fa;
-  --modal-btn-edit-confirm-text-hover: #1cb3ca;
+  --modal-btn-edit-confirm-text-hover: #2290a1;
 
   --modal-btn-del-cancel-bg: #424242;
   --modal-btn-del-cancel-text: #bbbbbb;
