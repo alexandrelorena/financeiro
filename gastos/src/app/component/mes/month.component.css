@@ -2,7 +2,7 @@
 
 .container__month {
   background-color: transparent;
-  color: var(--text-light);
+  color: var(--text-dark);
   border-radius: 0.5rem; /* 8px */
   width: 100%;
   height: 33.75rem; /* 540px */
@@ -16,31 +16,46 @@
 
 /* Estilizando para Chrome, Safari e Edge */
 ::-webkit-scrollbar {
-  width: 12px;
-  height: 12px;
+  width: 12px; /* largura da barra de rolagem vertical */
+  height: 12px; /* altura da barra de rolagem horizontal */
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
-  border-radius: 10px;
+  background: transparent; /* cor do fundo da barra de rolagem */
+  border-radius: 10px; /* borda arredondada da track */
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #888;
-  border-radius: 10px;
+  background: #888; /* cor do "polegar" da barra de rolagem */
+  border-radius: 10px; /* borda arredondada do polegar */
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #555;
+  background: #555; /* cor quando o polegar está sendo hoverizado */
 }
 
 /* Estilizando para Firefox */
 * {
-  scrollbar-width: auto;
-  scrollbar-color: var(--button-menu-selected) transparent;
+  scrollbar-width: auto; /* largura da barra de rolagem no Firefox */
+  scrollbar-color: var(--button-menu-selected) transparent; /* cor do polegar e do track */
 }
 
-/* -------------------- Tabela -------------------- */
+/* Estilizando o cdk-virtual-scroll-viewport */
+/* cdk-virtual-scroll-viewport {
+  height: 10px;
+  width: 100%;
+  overflow: auto;
+  border-radius: 5px;
+  background-color: red;
+} */
+
+/* Estilizando itens dentro do viewport */
+/* cdk-virtual-scroll-viewport div {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  font-size: 16px;
+  color: red;
+} */
 
 table {
   width: 100%;
@@ -52,31 +67,41 @@ table {
 table.month {
   border-collapse: separate; /* Necessário para bordas arredondadas */
   border-spacing: 0; /* Remove espaços entre células */
-  border-radius: 8px; /* Define o raio das bordas arredondadas */
+  border-radius: 0.3125rem; /* Define o raio das bordas arredondadas */
+  border-style: double; /* Estilo da borda */
   overflow: hidden; /* Garante que os conteúdos sigam o formato */
-  border: 1px solid grey; /* Bordas da tabela */
+  /* border: 1px solid red; */
 }
 
 thead {
   background-color: var(--button-menu-selected);
-  color: var(--text-light);
+  color: var(--text-dark);
   font-size: 0.875rem; /* 14px */
 }
 
 th,
 td {
-  font-family: Tahoma, Geneva, Verdana, sans-serif, Arial;
+  font-family: Tahoma, Verdana, sans-serif, Arial;
   padding: 0.3125rem; /* 5px */
   text-align: center;
   border-bottom: 0.0625rem solid gray; /* 1px */
   border-left: 0.0625rem solid var(--scrollbar-color);
+  /* border-left-style: dashed; */
   border-right: 0.0625rem solid var(--scrollbar-color);
+  /* border-right-style: dashed; */
+}
+.nome {
+  text-align: left;
 }
 
 th:last-child,
 td:last-child {
   /* Remove a borda da última coluna */
   border-right: 1px solid var(--scrollbar-hover);
+}
+
+.btn-apagar {
+  color: var(--text-dark);
 }
 
 /* -------------------- Largura de colunas -------------------- */
@@ -114,7 +139,6 @@ th:nth-child(5) {
 /* Estilo para o modo escuro */
 .dark-theme tbody tr:nth-child(even) {
   background-color: rgb(44, 44, 44);
-  color: white;
 }
 
 .dark-theme tbody tr:nth-child(odd) {
@@ -124,12 +148,12 @@ th:nth-child(5) {
 /* Estilo para o modo claro */
 .light-theme tbody tr:nth-child(even) {
   background-color: rgb(209, 208, 208);
-  color: gray;
+  /* color: gray; */
 }
 
 .light-theme tbody tr:nth-child(odd) {
   background-color: white;
-  color: grey;
+  /* color: grey; */
 }
 
 /* -------------------- Status -------------------- */
@@ -172,15 +196,15 @@ button:hover {
 
 /* Ações específicas */
 button.pagar {
-  color: var(--status-paid);
+  color: var(--button-paid);
 }
 
 button.editar {
-  color: var(--status-pending);
+  color: var(--button-pending);
 }
 
 button.remover {
-  color: var(--status-due);
+  color: var(--button-remove);
 }
 
 button.pagar,
@@ -206,10 +230,10 @@ button.status-pago {
   background-color: var(--button-menu-selected); /* Fundo claro */
   border: none; /* Borda cinza */
   border-radius: 5px; /* Cantos arredondados */
-  font-family: Tahoma, Geneva, Verdana, sans-serif, Arial;
+  font-family: Tahoma, Verdana, sans-serif, Arial;
   font-size: 0.875rem; /* 14px */
   font-weight: bold;
-  color: white; /* Cor do texto */
+  color: var(--text-dark); /* Cor do texto */
   cursor: pointer; /* Cursor de seleção */
   text-align: center;
 }
@@ -227,48 +251,6 @@ button.status-pago {
   text-align: center;
   font-style: italic;
   color: gray;
-}
-
-/* -------------------- Input Edição Ajustado -------------------- */
-.input-nome {
-  width: 50%;
-}
-
-.input-valor {
-  width: 50%;
-}
-
-.input-venciento {
-  width: 50%;
-  width: 8rem; /* Controla a largura do campo */
-  padding: 0.2rem; /* Reduz o espaço interno */
-  font-size: 0.875rem; /* Ajusta o tamanho da fonte */
-}
-
-.input-nome,
-.input-valor,
-.input-vencimento {
-  background-color: white; /* Mantém o fundo neutro */
-
-  border: none; /* Remove bordas externas */
-  padding: 0; /* Remove padding para alinhar com o texto */
-  text-align: center; /* Centraliza o conteúdo */
-  font-family: inherit; /* Herda a fonte da célula */
-  font-size: inherit; /* 16px */
-  color: black; /* Herda a cor da célula */
-  outline: none; /* Remove o destaque padrão ao focar */
-  box-sizing: border-box; /* Garante que o padding e bordas não alterem o tamanho */
-  line-height: normal; /* Ajusta a altura da linha */
-}
-
-.input-nome:focus,
-.input-valor:focus,
-.input-vencimento:focus {
-  border-bottom: 1px solid var(--button-menu-selected); /* Adiciona uma linha inferior ao focar */
-  background-color: var(
-    --button-menu-selected-hover
-  ); /* Fundo sutil ao focar */
-  color: var(--text-light); /* Cor clara ao focar */
 }
 
 /* Botões dentro das células */

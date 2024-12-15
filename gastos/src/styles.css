@@ -17,54 +17,100 @@ ol {
   margin: 0;
 }
 
-/* -------------------- Modo Claro e Escuro -------------------- */
-
-/* Estilo padrão (modo claro) */
-body {
-  background-color: white;
-  color: grey;
-  font-size: 1rem; /* Tamanho de fonte base */
-}
-
-/* Estilo para o modo escuro */
-body.dark-theme {
-  background-color: black;
-  color: white;
-}
-
-/* Variáveis de cores para os temas */
+/* =============================== */
+/*          Variáveis Globais      */
+/* =============================== */
 :root {
-  --background-dark: #2f3640;
-  --background-light: #353b48;
+  --scrollbar-color: #888;
+  --scrollbar-hover: #555;
+  --input-focus-border: #4caf50;
+  --button-cancel-color: #f44336;
   --button-menu-hover: #2290a1;
   --button-menu-selected: #2290a1;
   --button-menu-color: #fff;
+  --button-paid: rgb(37, 150, 37);
+  --button-pending: rgb(1, 114, 180);
+  --button-remove: crimson;
+  --text-light: grey;
+  --text-dark: whitesmoke;
+  --background-dark: yellow;
+  --background-light: white;
   --primary-color: gray;
-  --text-light: #fff;
-  --scrollbar-color: #888;
-  --scrollbar-hover: #555;
-  --status-paid: rgb(9, 190, 9);
-  --status-pending: rgb(1, 114, 180);
-  --status-due: red;
+  --status-paid: gray;
+  --status-pending: #2290a1;
+  --status-due: crimson;
   --status-today: rgb(255, 123, 0);
   --button-hover-scale: 1.1;
+  color: crimson;
+}
 
+/* Estilo para cada status */
+.status-pago {
+  color: var(--status-paid);
+  /* font-weight: bold; */
+}
+
+.status-pendente {
+  color: var(--status-pending);
+  /* font-weight: bold; */
+}
+
+.status-vencido {
+  color: var(--status-due);
+  /* font-weight: bold; */
+}
+
+.status-hoje {
+  color: var(--status-today);
+  /* font-weight: bold; */
+}
+
+/* Botões com estilos específicos quando desabilitados */
+button.status-pago {
+  /* background-color: var(--status-paid); */
+  color: #353b48;
+  cursor: not-allowed;
+}
+
+/* =============================== */
+/*       Configurações Globais     */
+/* =============================== */
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--background-light);
+  color: grey;
+  font-size: 1rem; /* Tamanho de fonte base */
+  font-family: Arial, sans-serif;
+}
+
+/* =============================== */
+/*         Tema Claro e Escuro     */
+/* =============================== */
+.dark-theme {
+  background-color: black;
+  color: var(--text-dark);
+}
+
+.light-theme {
+  background-color: background-light;
+  color: var(--text-light);
+}
+
+/* Variáveis de cores para os temas */
+body.light-theme {
   /* Modal */
   --modal-edit-title-color: #2290a1;
-  --modal-del-title-color: red;
+  --modal-del-title-color: crimson;
   --modal-content-color: #333333;
 
   --modal-btn-edit-cancel-bg: #e0e0e0;
   --modal-btn-edit-cancel-text: #6c757d;
-  /* --modal-btn-edit-cancel-bg: #424242;
-  --modal-btn-edit-cancel-text: #bbbbbb; */
   --modal-btn-edit-cancel-bg-hover: #f8f9fa;
   --modal-btn-edit-cancel-text-hover: #2290a1;
 
   --modal-btn-edit-confirm-bg: #e0e0e0;
   --modal-btn-edit-confirm-text: #6c757d;
-  /* --modal-btn-edit-confirm-bg: #424242;
-  --modal-btn-edit-confirm-text: #bbbbbb; */
   --modal-btn-edit-confirm-bg-hover: #f8f9fa;
   --modal-btn-edit-confirm-text-hover: #2290a1;
 
@@ -73,9 +119,9 @@ body.dark-theme {
   --modal-btn-del-cancel-bg-hover: #333333;
   --modal-btn-del-cancel-text-hover: #ffffff;
 
-  --modal-btn-del-confirm-bg: #ff5252;
+  --modal-btn-del-confirm-bg: crimson;
   --modal-btn-del-confirm-text: #ffffff;
-  --modal-btn-del-confirm-bg-hover: #e53935;
+  --modal-btn-del-confirm-bg-hover: crimson;
   --modal-btn-del-confirm-text-hover: #ffffff;
 }
 
@@ -86,7 +132,7 @@ body.dark-theme {
   --modal-edit-title-color: #fff;
   --modal-edit-content-color: #fff;
   --modal-del-bg: black;
-  --modal-del-title-color: red;
+  --modal-del-title-color: crimson;
   --modal-del-content-color: white;
 
   --modal-btn-edit-cancel-bg: #e0e0e0;
@@ -104,9 +150,9 @@ body.dark-theme {
   --modal-btn-del-cancel-bg-hover: #333333;
   --modal-btn-del-cancel-text-hover: #ffffff;
 
-  --modal-btn-del-confirm-bg: #ff5252;
+  --modal-btn-del-confirm-bg: crimson;
   --modal-btn-del-confirm-text: #ffffff;
-  --modal-btn-del-confirm-bg-hover: #e53935;
+  --modal-btn-del-confirm-bg-hover: crimson;
   --modal-btn-del-confirm-text-hover: #ffffff;
 }
 
@@ -124,13 +170,13 @@ body {
 
 body {
   margin: 3rem;
-  font-family: Tahoma, Geneva, Verdana, sans-serif, Arial;
+  font-family: Tahoma, Verdana, sans-serif, Arial;
 }
 
 /* Ajustes responsivos de tipografia */
 @media (max-width: 768px) {
   html {
-    font-size: 14px; /* Reduz base em telas menores */
+    font-size: 0.875 rem; /* Reduz base em telas menores */
   }
 }
 

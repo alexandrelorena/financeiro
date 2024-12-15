@@ -125,5 +125,25 @@ public class GastoController {
         }
     }
 
+    @PutMapping("/status/vencendo")
+    public ResponseEntity<String> atualizarStatusVencendo() {
+        try {
+            gastoService.atualizarStatusVencendo();
+            return ResponseEntity.ok("Status atualizado para 'Vencendo' para despesas vencendo hoje.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                                .body("Erro ao atualizar status: " + e.getMessage());
+        }
+    }
 
+    @PutMapping("/status/vencido")
+    public ResponseEntity<String> atualizarStatusVencido() {
+        try {
+            gastoService.atualizarStatusGastos(); // Atualiza todos os status, incluindo "Vencido"
+            return ResponseEntity.ok("Status atualizado para 'Vencido' para despesas vencidas.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                                .body("Erro ao atualizar status: " + e.getMessage());
+        }
+    }
 }

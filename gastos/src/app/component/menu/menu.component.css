@@ -32,7 +32,7 @@
   padding: 8px; /* Preenchimento interno */
   cursor: pointer; /* Cursor de pointer para indicar que é clicável */
   color: var(--primary-text-color); /* Cor do texto do botão */
-  font-size: 16px; /* Tamanho da fonte */
+  font-size: 0.875rem; /* Tamanho da fonte */
   font-weight: bold;
   text-transform: capitalize; /* Letras maiúsculas */
   transition: background-color 0.3s ease, color 0.3s ease; /* Transição suave ao mudar cores */
