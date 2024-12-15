@@ -1,4 +1,6 @@
-/* Estilização do container do modal */
+/* -------------------- Estilização do Modal -------------------- */
+
+/* Container do modal */
 :host {
   display: flex;
   flex-direction: row;
@@ -7,15 +9,12 @@
   padding: 2rem;
   width: 100%;
   box-sizing: border-box;
-  border: 1px solid gray;
+  border: 0.0625rem solid gray;
   background-color: var(--modal-del-bg);
 }
 
-/* .mat-dialog-content {
-  background-color: yellow;
-} */
+/* -------------------- Estilização do Título -------------------- */
 
-/* Estilizar o título do diálogo */
 .mat-dialog-title {
   text-align: center;
   font-size: 1.5rem;
@@ -32,21 +31,23 @@
 .custom-message {
   color: var(--primary-color);
   font-size: 1rem;
-  margin-left: 25px;
+  margin-left: 1.5625rem;
 }
+
+/* -------------------- Estilização das Ações do Modal -------------------- */
 
 .mat-mdc-dialog-actions {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  /* background-color: yellow; */
 }
 
 .mat-dialog-actions button.cancel {
   margin-right: 1.5rem;
 }
 
-/* Responsividade: Ajustar botões para telas pequenas */
+/* -------------------- Responsividade para Telas Pequenas -------------------- */
+
 @media (max-width: 600px) {
   .mat-dialog-actions {
     flex-direction: column;
@@ -60,14 +61,14 @@
   }
 }
 
-/* Estilizar os botões */
+/* -------------------- Estilização dos Botões -------------------- */
+
 button {
   min-width: 8rem;
   border-radius: 0.25rem;
   transition: background-color 0.3s, color 0.3s;
   font-size: 1rem;
-  /* padding: 0.75rem 1rem; */
-  border: none; /* Removido border padrão do navegador */
+  border: none;
   cursor: pointer;
 }
 
@@ -75,6 +76,7 @@ button.cancel,
 button.confirm {
   margin: 0.5rem;
 }
+
 /* Botão de cancelar */
 button.cancel {
   background-color: var(--modal-btn-del-cancel-bg);
@@ -100,7 +102,7 @@ button.confirm:hover {
 button.close {
   display: flex;
   margin: auto;
-  background-color: #1cb3ca; /* Azul */
+  background-color: #1cb3ca;
   color: #fff;
 }
 
