@@ -38,7 +38,12 @@
         </td>
       </tr>
       <!-- <tr *ngFor="let despesa of despesas; let i = index"> -->
-      <tr *ngFor="let despesa of despesasFiltradas; let i = index">
+      <tr *ngFor="let despesa of despesasFiltradas; let i = index" [ngClass]="{
+          'status-pago': despesa.status === 'Pago',
+          'status-pendente': despesa.status === 'Pendente',
+          'status-vencido': despesa.status === 'Vencido',
+          'status-hoje': despesa.status === 'Vencendo'
+        }">
 
         <td>{{ i + 1 }}</td>
         <!-- Alterna entre visualização e edição -->
@@ -63,9 +68,14 @@
           </td>
         </ng-container>
 
+        <cdk-virtual-scroll-viewport appendOnly itemSize="50" class="example-viewport">
+          <div *cdkVirtualFor="let despesa of despesasFiltradas" class="example-item">{{despesa}}</div>
+        </cdk-virtual-scroll-viewport>
+
+
         <!-- Modo de Visualização -->
         <ng-template #viewMode class="tabela-despesas">
-          <td>{{ despesa.nome }}</td>
+          <td class="nome">{{ despesa.nome }}</td>
           <td>{{ formatCurrency(despesa.valor) }}</td>
           <td>{{ despesa.vencimento | date: 'dd/MM' }}</td>
 

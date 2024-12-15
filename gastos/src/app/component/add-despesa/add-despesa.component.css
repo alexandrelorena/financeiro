@@ -14,24 +14,27 @@
   margin-bottom: 0.625rem; /* 10px -> 0.625rem */
   padding: 0.625rem; /* 10px -> 0.625rem */
   font-size: 1rem; /* 16px -> 1rem */
-  font-family: Tahoma, Geneva, Verdana, sans-serif, Arial;
-  border-radius: 0.3125rem; /* 5px -> 0.3125rem */
+  font-family: Tahoma, Verdana, sans-serif, Arial;
+  border-radius: 0.5rem; /* 5px -> 0.3125rem */
   border: 0.0625rem solid grey; /* 1px -> 0.0625rem */
   border-style: double;
   color: #726b6a;
+}
+
+.add-title {
+  background-color: #2290a1;
+  border-radius: 0.2rem 0.2rem 0 0; /* Apenas os cantos superiores arredondados */
 }
 
 p {
   width: 100%;
   height: 7%;
   /* border: 0.0625rem solid grey; */
-  border-top-left-radius: 1rem solid gray; /* Arredonda o canto superior esquerdo */
-  border-top-right-radius: 1rem solid gray; /* Arredonda o canto superior direito */
-  padding: 0.4rem; /* 5px */
-  background-color: #2290a1;
+  padding: 0.5rem; /* 5px */
+  /* background-color: #2290a1; */
   color: white;
-  font-family: Tahoma, Geneva, Verdana, sans-serif, Arial;
-  font-size: 0.875rem; /* 16px -> 1rem */
+  font-family: Tahoma, Verdana, sans-serif, Arial;
+  font-size: 0.875rem; /* 14px */
   font-weight: bold;
   display: flex;
   justify-content: center;

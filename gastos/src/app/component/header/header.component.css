@@ -33,7 +33,7 @@
 .header__item {
   display: flex;
   font-size: 1rem; /* 24px -> 1.5rem */
-  font-family: Tahoma, Geneva, Verdana, sans-serif, Arial;
+  font-family: Tahoma, Verdana, sans-serif, Arial;
   white-space: nowrap; /* Impede quebra de linha */
   color: var(--primary-text-color);
 }

@@ -22,7 +22,10 @@ export class EditDespesaModalComponent {
     private dialogRef: MatDialogRef<EditDespesaModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
-    this.despesa = { ...data.despesa };
+    this.despesa = {
+      ...data.despesa,
+      vencimento: data.despesa.vencimento || null, // Inclui o vencimento se existir
+    };
   }
 
   /**

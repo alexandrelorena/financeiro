@@ -1,7 +1,7 @@
 /* Estilização do container do modal */
 :host {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
   padding: 2rem;
@@ -11,9 +11,9 @@
   background-color: var(--modal-del-bg);
 }
 
-.mat-dialog-content {
+/* .mat-dialog-content {
   background-color: yellow;
-}
+} */
 
 /* Estilizar o título do diálogo */
 .mat-dialog-title {
@@ -25,28 +25,25 @@
 
 .custom-title {
   text-align: center;
-  color: red;
+  color: var(--modal-del-title-color);
   font-size: 1.2rem;
 }
 
 .custom-message {
   color: var(--primary-color);
   font-size: 1rem;
-  margin: 1.5rem 0;
+  margin-left: 25px;
 }
 
-/* Estilizar as ações do diálogo */
-.mat-dialog-actions {
+.mat-mdc-dialog-actions {
   display: flex;
-  justify-content: space-between;
-  margin: auto;
-  gap: 2rem;
-  margin-top: 1rem;
-  width: 100%;
+  justify-content: space-evenly;
+  align-items: center;
+  /* background-color: yellow; */
 }
 
 .mat-dialog-actions button.cancel {
-  margin-right: 1.5rem; /* Adicionado para clareza */
+  margin-right: 1.5rem;
 }
 
 /* Responsividade: Ajustar botões para telas pequenas */
@@ -69,13 +66,14 @@ button {
   border-radius: 0.25rem;
   transition: background-color 0.3s, color 0.3s;
   font-size: 1rem;
-  padding: 0.75rem 1rem;
+  /* padding: 0.75rem 1rem; */
   border: none; /* Removido border padrão do navegador */
   cursor: pointer;
 }
 
-button.cancel, button.confirm {
-  margin: auto;
+button.cancel,
+button.confirm {
+  margin: 0.5rem;
 }
 /* Botão de cancelar */
 button.cancel {

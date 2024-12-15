@@ -31,6 +31,7 @@ import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms'; // Se necessário
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 // Utilitários
 import { DatePipe } from '@angular/common';
@@ -64,6 +65,7 @@ import { DatePipe } from '@angular/common';
     MatNativeDateModule,
     MatFormFieldModule,
     MatInputModule,
+    ScrollingModule,
 
     // Módulos de Formulários
     ReactiveFormsModule,
