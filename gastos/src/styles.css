@@ -1,6 +1,8 @@
 @import "@angular/material/prebuilt-themes/indigo-pink.css";
 
-/* -------------------- Reset Geral -------------------- */
+/* =============================== */
+/*          Reset Geral            */
+/* =============================== */
 * {
   border: 0;
   box-sizing: border-box;
@@ -24,7 +26,6 @@ ol {
   --scrollbar-color: #888;
   --scrollbar-hover: #555;
   --input-focus-border: #4caf50;
-  --button-cancel-color: #f44336;
   --button-menu-hover: #2290a1;
   --button-menu-selected: #2290a1;
   --button-menu-color: #fff;
@@ -44,30 +45,30 @@ ol {
   color: crimson;
 }
 
-/* Estilo para cada status */
+/* =============================== */
+/*          Ajustes para Status    */
+/* =============================== */
 .status-pago {
   color: var(--status-paid);
-  /* font-weight: bold; */
+  text-align: center;
 }
 
 .status-pendente {
   color: var(--status-pending);
-  /* font-weight: bold; */
+  text-align: center;
 }
 
 .status-vencido {
   color: var(--status-due);
-  /* font-weight: bold; */
+  text-align: center;
 }
 
 .status-hoje {
   color: var(--status-today);
-  /* font-weight: bold; */
+  text-align: center;
 }
 
-/* Botões com estilos específicos quando desabilitados */
 button.status-pago {
-  /* background-color: var(--status-paid); */
   color: #353b48;
   cursor: not-allowed;
 }
@@ -80,7 +81,7 @@ body {
   padding: 0;
   background-color: var(--background-light);
   color: grey;
-  font-size: 1rem; /* Tamanho de fonte base */
+  font-size: 1rem;
   font-family: Arial, sans-serif;
 }
 
@@ -93,39 +94,33 @@ body {
 }
 
 .light-theme {
-  background-color: background-light;
+  background-color: var(--background-light);
   color: var(--text-light);
 }
 
 /* Variáveis de cores para os temas */
 body.light-theme {
-  /* Modal */
   --modal-edit-title-color: #2290a1;
   --modal-del-title-color: crimson;
   --modal-content-color: #333333;
-
   --modal-btn-edit-cancel-bg: #e0e0e0;
   --modal-btn-edit-cancel-text: #6c757d;
   --modal-btn-edit-cancel-bg-hover: #f8f9fa;
   --modal-btn-edit-cancel-text-hover: #2290a1;
-
   --modal-btn-edit-confirm-bg: #e0e0e0;
   --modal-btn-edit-confirm-text: #6c757d;
   --modal-btn-edit-confirm-bg-hover: #f8f9fa;
   --modal-btn-edit-confirm-text-hover: #2290a1;
-
   --modal-btn-del-cancel-bg: #424242;
   --modal-btn-del-cancel-text: #bbbbbb;
   --modal-btn-del-cancel-bg-hover: #333333;
   --modal-btn-del-cancel-text-hover: #ffffff;
-
   --modal-btn-del-confirm-bg: crimson;
   --modal-btn-del-confirm-text: #ffffff;
   --modal-btn-del-confirm-bg-hover: crimson;
   --modal-btn-del-confirm-text-hover: #ffffff;
 }
 
-/* Tema Escuro */
 body.dark-theme {
   --background-dark: #353b48;
   --modal-edit-bg: #2290a1;
@@ -134,29 +129,27 @@ body.dark-theme {
   --modal-del-bg: black;
   --modal-del-title-color: crimson;
   --modal-del-content-color: white;
-
   --modal-btn-edit-cancel-bg: #e0e0e0;
   --modal-btn-edit-cancel-text: #6c757d;
   --modal-btn-edit-cancel-bg-hover: #f8f9fa;
   --modal-btn-edit-cancel-text-hover: #2290a1;
-
   --modal-btn-edit-confirm-bg: #e0e0e0;
   --modal-btn-edit-confirm-text: #6c757d;
   --modal-btn-edit-confirm-bg-hover: #f8f9fa;
   --modal-btn-edit-confirm-text-hover: #2290a1;
-
   --modal-btn-del-cancel-bg: #424242;
   --modal-btn-del-cancel-text: #bbbbbb;
   --modal-btn-del-cancel-bg-hover: #333333;
   --modal-btn-del-cancel-text-hover: #ffffff;
-
   --modal-btn-del-confirm-bg: crimson;
   --modal-btn-del-confirm-text: #ffffff;
   --modal-btn-del-confirm-bg-hover: crimson;
   --modal-btn-del-confirm-text-hover: #ffffff;
 }
 
-/* -------------------- Tipografia -------------------- */
+/* =============================== */
+/*          Tipografia             */
+/* =============================== */
 html {
   font-size: 50%; /* Base para rem */
 }
@@ -173,10 +166,9 @@ body {
   font-family: Tahoma, Verdana, sans-serif, Arial;
 }
 
-/* Ajustes responsivos de tipografia */
 @media (max-width: 768px) {
   html {
-    font-size: 0.875 rem; /* Reduz base em telas menores */
+    font-size: 0.875rem; /* Reduz base em telas menores */
   }
 }
 
@@ -186,15 +178,17 @@ body {
   }
 }
 
-/* -------------------- Ícones -------------------- */
+/* =============================== */
+/*          Ícones                 */
+/* =============================== */
 .container__footer i {
   color: var(--icon-color); /* Usando variáveis de tema */
   transition: color 0.3s ease; /* Suaviza mudanças de cor */
 }
 
-/* -------------------- Scrollbar -------------------- */
-
-/* Estilo para Chrome, Safari e Edge */
+/* =============================== */
+/*          Scrollbar              */
+/* =============================== */
 ::-webkit-scrollbar {
   width: 0.75rem; /* 12px */
   height: 0.75rem; /* 12px */
@@ -214,13 +208,14 @@ body {
   background: var(--scrollbar-hover);
 }
 
-/* Estilo para Firefox */
 * {
   scrollbar-width: auto;
   scrollbar-color: var(--scrollbar-color) transparent;
 }
 
-/* -------------------- Botões -------------------- */
+/* =============================== */
+/*          Botões                 */
+/* =============================== */
 button {
   background: none;
   border: none;
@@ -232,25 +227,4 @@ button {
 
 button:hover {
   transform: scale(var(--button-hover-scale));
-}
-
-/* -------------------- Ajustes para Status -------------------- */
-.status-pago {
-  color: var(--status-paid);
-  text-align: center;
-}
-
-.status-pendente {
-  color: var(--status-pending);
-  text-align: center;
-}
-
-.status-vencido {
-  color: var(--status-due);
-  text-align: center;
-}
-
-.status-hoje {
-  color: var(--status-today);
-  text-align: center;
 }

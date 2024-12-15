@@ -14,6 +14,8 @@
   margin-left: 0.625rem; /* 10px */
 }
 
+/* -------------------- Estilizando a Barra de Rolagem -------------------- */
+
 /* Estilizando para Chrome, Safari e Edge */
 ::-webkit-scrollbar {
   width: 12px; /* largura da barra de rolagem vertical */
@@ -40,22 +42,7 @@
   scrollbar-color: var(--button-menu-selected) transparent; /* cor do polegar e do track */
 }
 
-/* Estilizando o cdk-virtual-scroll-viewport */
-/* cdk-virtual-scroll-viewport {
-  height: 10px;
-  width: 100%;
-  overflow: auto;
-  border-radius: 5px;
-  background-color: red;
-} */
-
-/* Estilizando itens dentro do viewport */
-/* cdk-virtual-scroll-viewport div {
-  padding: 10px;
-  border-bottom: 1px solid #ddd;
-  font-size: 16px;
-  color: red;
-} */
+/* -------------------- Estilizando Tabelas -------------------- */
 
 table {
   width: 100%;
@@ -64,13 +51,13 @@ table {
   border-radius: 5px;
 }
 
+/* Tabela com bordas arredondadas */
 table.month {
-  border-collapse: separate; /* Necessário para bordas arredondadas */
-  border-spacing: 0; /* Remove espaços entre células */
-  border-radius: 0.3125rem; /* Define o raio das bordas arredondadas */
-  border-style: double; /* Estilo da borda */
-  overflow: hidden; /* Garante que os conteúdos sigam o formato */
-  /* border: 1px solid red; */
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: 0.3125rem; /* Raio das bordas */
+  border-style: double;
+  overflow: hidden;
 }
 
 thead {
@@ -84,59 +71,59 @@ td {
   font-family: Tahoma, Verdana, sans-serif, Arial;
   padding: 0.3125rem; /* 5px */
   text-align: center;
-  border-bottom: 0.0625rem solid gray; /* 1px */
+  border-bottom: 0.0625rem solid gray; /* Borda inferior */
   border-left: 0.0625rem solid var(--scrollbar-color);
-  /* border-left-style: dashed; */
   border-right: 0.0625rem solid var(--scrollbar-color);
-  /* border-right-style: dashed; */
 }
+
 .nome {
   text-align: left;
 }
 
+/* Remover borda da última coluna */
 th:last-child,
 td:last-child {
-  /* Remove a borda da última coluna */
   border-right: 1px solid var(--scrollbar-hover);
 }
 
+/* Botões dentro da tabela */
 .btn-apagar {
   color: var(--text-dark);
 }
 
-/* -------------------- Largura de colunas -------------------- */
+/* -------------------- Largura de Colunas -------------------- */
 
 th:nth-child(2) {
-  /* Para "Despesa" */
+  /* Despesa */
   width: 30%;
   max-width: 30%;
   min-width: 30%;
 }
 
 th:nth-child(3) {
-  /* Para "Valor" */
+  /* Valor */
   width: 15%;
   max-width: 15%;
   min-width: 15%;
 }
 
 th:nth-child(4) {
-  /* Para "Vencimento" */
+  /* Vencimento */
   width: 15%;
   max-width: 15%;
   min-width: 15%;
 }
 
 th:nth-child(5) {
-  /* Para "Status" */
+  /* Status */
   width: 10%;
   max-width: 10%;
   min-width: 10%;
 }
 
-/* -------------------- Theme -------------------- */
+/* -------------------- Tema -------------------- */
 
-/* Estilo para o modo escuro */
+/* Modo Escuro */
 .dark-theme tbody tr:nth-child(even) {
   background-color: rgb(44, 44, 44);
 }
@@ -145,40 +132,16 @@ th:nth-child(5) {
   background-color: black;
 }
 
-/* Estilo para o modo claro */
+/* Modo Claro */
 .light-theme tbody tr:nth-child(even) {
   background-color: rgb(209, 208, 208);
-  /* color: gray; */
 }
 
 .light-theme tbody tr:nth-child(odd) {
   background-color: white;
-  /* color: grey; */
 }
 
-/* -------------------- Status -------------------- */
-
-.status-pago {
-  color: var(--status-paid);
-  text-align: center;
-}
-
-.status-pendente {
-  color: var(--status-pending);
-  text-align: center;
-}
-
-.status-vencido {
-  color: var(--status-due);
-  text-align: center;
-}
-
-.status-hoje {
-  color: var(--status-today);
-  text-align: center;
-}
-
-/* -------------------- Botões -------------------- */
+/* -------------------- Estilos de Botões -------------------- */
 
 button {
   background: none;
@@ -194,7 +157,7 @@ button:hover {
   transform: scale(var(--button-hover-scale));
 }
 
-/* Ações específicas */
+/* Ações Específicas */
 button.pagar {
   color: var(--button-paid);
 }
@@ -217,9 +180,9 @@ button.pagar {
   font-size: 0.84rem;
 }
 
-/* Botão desabilitado */
+/* Botão Desabilitado */
 button.status-pago {
-  color: #a9a9a9;
+  color: var(--status-paid);
   cursor: not-allowed;
   pointer-events: none;
 }
@@ -234,7 +197,7 @@ button.status-pago {
   font-size: 0.875rem; /* 14px */
   font-weight: bold;
   color: var(--text-dark); /* Cor do texto */
-  cursor: pointer; /* Cursor de seleção */
+  cursor: pointer;
   text-align: center;
 }
 
@@ -253,63 +216,14 @@ button.status-pago {
   color: gray;
 }
 
-/* Botões dentro das células */
+/* Botões dentro das células da tabela */
 td button {
-  margin: 0; /* Remove margens extras */
+  margin: 0;
   padding: 0.3125rem; /* 5px */
   font-size: 0.875rem; /* 14px */
-  margin-right: 0.625rem; /* 10px em rem */
+  margin-right: 0.625rem; /* 10px */
 }
 
 td button:last-child {
   margin-right: 0; /* Remove o espaçamento do último botão */
-}
-
-button.btn-salvar button.btn-cancelar {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 10px 20px; /* Ajusta o espaçamento interno do botão */
-  margin-right: 20px; /* Adiciona espaçamento entre os botões */
-}
-
-/* Remove o espaçamento extra do último botão */
-button.btn-cancelar {
-  margin-right: 0;
-}
-
-/* Estilo para o botão de salvar */
-button.btn-salvar {
-  background-color: transparent;
-  border: 1px solid #4caf50; /* Cor verde para o botão de salvar */
-  color: #4caf50; /* Cor do texto do botão de salvar */
-  font-size: 0.77rem; /* Tamanho da fonte */
-
-  border-radius: 0.3125rem; /* Borda arredondada */
-  cursor: pointer; /* Indica que é clicável */
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-/* Estilo para o botão de salvar ao passar o mouse */
-button.btn-salvar:hover {
-  background-color: #4caf50; /* Cor de fundo ao passar o mouse */
-  color: white; /* Cor do texto ao passar o mouse */
-}
-
-/* Estilo para o botão de cancelar */
-button.btn-cancelar {
-  background-color: transparent;
-  border: 1px solid #f44336; /* Cor vermelha para o botão de cancelar */
-  color: #f44336; /* Cor do texto do botão de cancelar */
-  font-size: 0.875rem; /* Tamanho da fonte */
-
-  border-radius: 0.3125rem; /* Borda arredondada */
-  cursor: pointer; /* Indica que é clicável */
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-/* Estilo para o botão de cancelar ao passar o mouse */
-button.btn-cancelar:hover {
-  background-color: #f44336; /* Cor de fundo ao passar o mouse */
-  color: white; /* Cor do texto ao passar o mouse */
 }
