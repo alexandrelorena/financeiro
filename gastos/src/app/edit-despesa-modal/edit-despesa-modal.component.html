@@ -8,13 +8,20 @@
   <mat-form-field>
     <mat-label>Valor</mat-label>
     <input matInput type="text" [(ngModel)]="despesa.valor" name="valor" (input)="formatarValor($event)"
-      placeholder="Ex.: 123.45" />
+      placeholder="Ex.: 123.45">
   </mat-form-field>
 
   <mat-form-field>
     <mat-label>Vencimento</mat-label>
     <input matInput type="date" [(ngModel)]="despesa.vencimento" name="vencimento">
   </mat-form-field>
+
+  <!-- <mat-form-field>
+    <mat-label>Vencimento</mat-label>
+    <input matInput [matDatepicker]="picker" [(ngModel)]="despesa.vencimento" name="vencimento">
+    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker class="light-theme-datepicker"></mat-datepicker>
+  </mat-form-field> -->
 
   <div class="modal-actions">
     <button mat-raised-button type="button" (click)="fechar()">Cancelar</button>

@@ -20,9 +20,72 @@ ol {
 }
 
 /* =============================== */
-/*          Variáveis Globais      */
+/*        Variáveis Globais        */
 /* =============================== */
-:root {
+:root,
+[data-bs-theme="light"] {
+  --bs-primary: #0d6efd;
+  --bs-secondary: #6c757d;
+  --bs-success: #198754;
+  --bs-info: #0dcaf0;
+  --bs-warning: #ffc107;
+  --bs-danger: #dc3545;
+  --bs-light: #f8f9fa;
+  --bs-dark: #212529;
+
+  --bs-primary-text-emphasis: #052c65;
+  --bs-secondary-text-emphasis: #2b2f32;
+  --bs-success-text-emphasis: #0a3622;
+  --bs-info-text-emphasis: #055160;
+  --bs-warning-text-emphasis: #664d03;
+  --bs-danger-text-emphasis: #58151c;
+  --bs-light-text-emphasis: #495057;
+  --bs-dark-text-emphasis: #495057;
+
+  --bs-blue: #0d6efd;
+  --bs-indigo: #6610f2;
+  --bs-purple: #6f42c1;
+  --bs-pink: #d63384;
+  --bs-red: #dc3545;
+  --bs-orange: #fd7e14;
+  --bs-yellow: #ffc107;
+  --bs-green: #198754;
+  --bs-teal: #20c997;
+  --bs-cyan: #0dcaf0;
+  --bs-black: #000;
+  --bs-white: #fff;
+
+  --bs-gray: #6c757d;
+  --bs-gray-dark: #343a40;
+  --bs-gray-100: #f8f9fa;
+  --bs-gray-200: #e9ecef;
+  --bs-gray-300: #dee2e6;
+  --bs-gray-400: #ced4da;
+  --bs-gray-500: #adb5bd;
+  --bs-gray-600: #6c757d;
+  --bs-gray-700: #495057;
+  --bs-gray-800: #343a40;
+  --bs-gray-900: #212529;
+
+  --bs-primary-bg-subtle: #cfe2ff;
+  --bs-secondary-bg-subtle: #e2e3e5;
+  --bs-success-bg-subtle: #d1e7dd;
+  --bs-info-bg-subtle: #cff4fc;
+  --bs-warning-bg-subtle: #fff3cd;
+  --bs-danger-bg-subtle: #f8d7da;
+  --bs-light-bg-subtle: #fcfcfd;
+  --bs-dark-bg-subtle: #ced4da;
+
+  --bs-primary-border-subtle: #9ec5fe;
+  --bs-secondary-border-subtle: #c4c8cb;
+  --bs-success-border-subtle: #a3cfbb;
+  --bs-info-border-subtle: #9eeaf9;
+  --bs-warning-border-subtle: #ffe69c;
+  --bs-danger-border-subtle: #f1aeb5;
+  --bs-light-border-subtle: #e9ecef;
+  --bs-dark-border-subtle: #adb5bd;
+
+  --month-title: #2290a1;
   --scrollbar-color: #888;
   --scrollbar-hover: #555;
   --input-focus-border: #4caf50;
@@ -34,19 +97,47 @@ ol {
   --button-remove: crimson;
   --text-light: grey;
   --text-dark: whitesmoke;
-  --background-dark: yellow;
-  --background-light: white;
+
   --primary-color: gray;
+  --selected: #2290a1;
   --status-paid: gray;
   --status-pending: #2290a1;
   --status-due: crimson;
   --status-today: rgb(255, 123, 0);
   --button-hover-scale: 1.1;
-  color: crimson;
+}
+
+[data-bs-theme="dark"] {
+  --bs-primary-text-emphasis: #6ea8fe;
+  --bs-secondary-text-emphasis: #a7acb1;
+  --bs-success-text-emphasis: #75b798;
+  --bs-info-text-emphasis: #6edff6;
+  --bs-warning-text-emphasis: #ffda6a;
+  --bs-danger-text-emphasis: #ea868f;
+  --bs-light-text-emphasis: #f8f9fa;
+  --bs-dark-text-emphasis: #dee2e6;
+
+  --bs-primary-bg-subtle: #031633;
+  --bs-secondary-bg-subtle: #161719;
+  --bs-success-bg-subtle: #051b11;
+  --bs-info-bg-subtle: #032830;
+  --bs-warning-bg-subtle: #332701;
+  --bs-danger-bg-subtle: #2c0b0e;
+  --bs-light-bg-subtle: #343a40;
+  --bs-dark-bg-subtle: #1a1d20;
+
+  --bs-primary-border-subtle: #084298;
+  --bs-secondary-border-subtle: #41464b;
+  --bs-success-border-subtle: #0f5132;
+  --bs-info-border-subtle: #087990;
+  --bs-warning-border-subtle: #997404;
+  --bs-danger-border-subtle: #842029;
+  --bs-light-border-subtle: #495057;
+  --bs-dark-border-subtle: #343a40;
 }
 
 /* =============================== */
-/*          Ajustes para Status    */
+/*       Ajustes para Status       */
 /* =============================== */
 .status-pago {
   color: var(--status-paid);
@@ -77,16 +168,16 @@ button.status-pago {
 /*       Configurações Globais     */
 /* =============================== */
 body {
-  margin: 0;
+  margin: 130px;
   padding: 0;
   background-color: var(--background-light);
-  color: grey;
+  color: var(--primary-color);
   font-size: 1rem;
   font-family: Arial, sans-serif;
 }
 
 /* =============================== */
-/*         Tema Claro e Escuro     */
+/*       Tema Claro e Escuro       */
 /* =============================== */
 .dark-theme {
   background-color: black;
@@ -98,7 +189,9 @@ body {
   color: var(--text-light);
 }
 
-/* Variáveis de cores para os temas */
+/* =============================== */
+/*         Ajustes de Modal        */
+/* =============================== */
 body.light-theme {
   --modal-edit-title-color: #2290a1;
   --modal-del-title-color: crimson;
@@ -147,84 +240,58 @@ body.dark-theme {
   --modal-btn-del-confirm-text-hover: #ffffff;
 }
 
-/* =============================== */
-/*          Tipografia             */
-/* =============================== */
-html {
-  font-size: 50%; /* Base para rem */
+.modal-content {
+  background-color: var(--background-dark);
 }
 
-html,
-body {
-  height: 100%;
-  margin: 0;
-  overflow: hidden; /* Impede a rolagem */
-}
-
-body {
-  margin: 3rem;
-  font-family: Tahoma, Verdana, sans-serif, Arial;
-}
-
-@media (max-width: 768px) {
-  html {
-    font-size: 0.875rem; /* Reduz base em telas menores */
-  }
-}
-
-@media (min-width: 1200px) {
-  html {
-    font-size: 18px; /* Aumenta base em telas maiores */
-  }
-}
-
-/* =============================== */
-/*          Ícones                 */
-/* =============================== */
-.container__footer i {
-  color: var(--icon-color); /* Usando variáveis de tema */
-  transition: color 0.3s ease; /* Suaviza mudanças de cor */
-}
-
-/* =============================== */
-/*          Scrollbar              */
-/* =============================== */
-::-webkit-scrollbar {
-  width: 0.75rem; /* 12px */
-  height: 0.75rem; /* 12px */
-}
-
-::-webkit-scrollbar-track {
-  background: #f1f1f1;
-  border-radius: 0.625rem; /* 10px */
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--scrollbar-color);
-  border-radius: 0.625rem; /* 10px */
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--scrollbar-hover);
-}
-
-* {
-  scrollbar-width: auto;
-  scrollbar-color: var(--scrollbar-color) transparent;
-}
-
-/* =============================== */
-/*          Botões                 */
-/* =============================== */
-button {
-  background: none;
-  border: none;
+.modal-footer .btn {
+  background-color: var(--modal-btn-edit-confirm-bg);
+  color: var(--modal-btn-edit-confirm-text);
   cursor: pointer;
-  transition: transform 0.3s ease, color 0.3s ease;
-  padding: 0.3125rem 0.625rem; /* 5px 10px */
-  border-radius: 0.3125rem; /* 5px */
 }
 
-button:hover {
-  transform: scale(var(--button-hover-scale));
+.modal-footer .btn:hover {
+  background-color: var(--modal-btn-edit-confirm-bg-hover);
+  color: var(--modal-btn-edit-confirm-text-hover);
+}
+.mat-form-field.mat-datepicker {
+  background-color: yellow;
+}
+
+/* Garantir tamanho uniforme para as células do calendário */
+.mat-calendar-body-cell {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%; /* Deixa os números circulares */
+  color: blue;
+}
+
+/* Uniformizar o texto dos dias */
+.mat-calendar-body-cell-content {
+  font-size: 14px;
+  font-weight: bold;
+  background-color: white;
+}
+
+/* Seleção de data no modo claro */
+body.light-mode .mat-calendar-body-selected {
+  background-color: var(--selected); /* Azul primário */
+  color: white;
+}
+
+.mat-focus-indicator {
+  background-color: transparent; /* Azul primário */
+}
+
+body.dark-mode .mat-calendar-body-selected {
+  background-color: var(--selected); /* Azul primário */
+  color: white;
+}
+
+body.dark-mode .mat-calendar-body-label {
+  background-color: var(--selected); /* Azul primário */
+  color: white;
 }

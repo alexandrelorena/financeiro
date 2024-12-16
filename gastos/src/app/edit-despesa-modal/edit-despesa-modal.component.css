@@ -87,3 +87,24 @@ button[type="submit"]:hover {
   background-color: var(--modal-btn-edit-confirm-bg-hover);
   color: var(--modal-btn-edit-confirm-text-hover);
 }
+/* Garantir tamanho uniforme para as células do calendário */
+.mat-calendar-body-cell {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%; /* Deixa os números circulares */
+}
+
+/* Uniformizar o texto dos dias */
+.mat-calendar-body-cell-content {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+/* Seleção de data no modo claro */
+body.light-mode .mat-calendar-body-selected {
+  background-color: var(--selected); /* Azul primário */
+  color: var(--bs-info);
+}
