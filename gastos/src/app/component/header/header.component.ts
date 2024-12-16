@@ -71,10 +71,16 @@ export class HeaderComponent implements OnInit, OnDestroy {
    * Método executado ao inicializar o componente
    * Configura o tema e assina observáveis para obter informações dinâmicas
    */
+
   ngOnInit(): void {
     const isDarkTheme = localStorage.getItem('isDarkTheme') === 'true';
     this.isDarkMode = isDarkTheme;
     this.applyTheme(this.isDarkMode);
+
+    this.renderer.addClass(
+      document.body,
+      this.isDarkMode ? 'dark-mode' : 'light-mode'
+    );
 
     const currentMonthIndex = new Date().getMonth();
     const monthKeys = Object.keys(this.monthNames);
