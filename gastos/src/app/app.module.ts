@@ -30,7 +30,7 @@ import { MatInputModule } from '@angular/material/input';
 // Outros módulos
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms'; // Se necessário
+import { FormsModule } from '@angular/forms';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 
 // Utilitários

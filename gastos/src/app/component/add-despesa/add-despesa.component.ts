@@ -21,6 +21,20 @@ export class AddDespesaComponent implements OnInit {
     private cdr: ChangeDetectorRef, // Importando ChangeDetectorRef
     private eventService: EventService
   ) {}
+  tipos: string[] = [
+    'Cartão',
+    'Água',
+    'Luz',
+    'Internet',
+    'Aluguel',
+    'Pets',
+    'Alimentação',
+    'Transporte',
+    'Moradia',
+    'Lazer',
+    'Saúde',
+    'Outros',
+  ];
 
   ngOnInit(): void {
     this.despesaForm = this.formBuilder.group({

@@ -7,6 +7,7 @@
 
     <form [formGroup]="despesaForm" (ngSubmit)="adicionarDespesa()">
       <div class="form-group">
+        <!-- <label> nome </label> -->
         <input type="text" id="nome" class="form-control" formControlName="nome" placeholder="Nome da Despesa" />
         <div *ngIf="despesaForm.get('nome')?.invalid && despesaForm.get('nome')?.touched" class="text-danger">
           Nome é obrigatório.
@@ -14,6 +15,18 @@
       </div>
 
       <div class="form-group">
+        <!-- <label for="tipo">Tipo da Despesa</label> -->
+        <select id="tipo" class="form-control" formControlName="tipo">
+          <option value="" disabled selected>Selecione o Tipo da Despesa</option>
+          <option *ngFor="let tipo of tipos" [value]="tipo">{{ tipo }}</option>
+        </select>
+        <div *ngIf="despesaForm.get('nome')?.invalid && despesaForm.get('nome')?.touched" class="text-danger">
+          Tipo é obrigatório.
+        </div>
+      </div>
+
+      <div class="form-group">
+        <!-- <label> valor </label> -->
         <input type="text" id="valor" class="form-control" formControlName="valor" placeholder="Ex.: 123,99" />
         <div *ngIf="despesaForm.get('valor')?.hasError('pattern') && despesaForm.get('valor')?.touched"
           class="text-danger">
@@ -22,6 +35,7 @@
       </div>
 
       <div class="form-group">
+        <!-- <label> vencimento </label> -->
         <input type="date" id="vencimento" class="form-control" formControlName="vencimento" placeholder="Vencimento" />
         <div *ngIf="despesaForm.get('vencimento')?.invalid && despesaForm.get('vencimento')?.touched"
           class="text-danger">
