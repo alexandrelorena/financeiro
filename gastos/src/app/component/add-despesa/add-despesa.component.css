@@ -1,40 +1,42 @@
 .container__add-despesa {
-  height: 42.125rem; /* 676px -> 42.125rem */
-  max-width: 43.75rem; /* 700px -> 43.75rem */
+  height: 42.125rem;
+  max-width: 43.75rem;
   margin: 0 auto;
   display: flex;
   justify-content: center;
-  width: 90%; /* Garante que o form ocupe toda a largura disponível */
-  max-width: 31.25rem; /* 500px -> 31.25rem (removido o valor anterior para consistência) */
-  margin-top: 1.25rem; /* 20px -> 1.25rem */
+  width: 90%;
+  max-width: 31.25rem;
+  margin-top: 1.25rem;
 }
 
 .form-control {
-  width: 100%; /* Garante que os inputs preencham a largura do form */
-  margin-bottom: 0.625rem; /* 10px -> 0.625rem */
-  padding: 0.625rem; /* 10px -> 0.625rem */
-  font-size: 1rem; /* 16px -> 1rem */
+  width: 100%;
+  margin-top: 0.625rem;
+  margin-bottom: 1rem;
+  padding: 0.7rem;
+  font-size: 1rem;
   font-family: Tahoma, Verdana, sans-serif, Arial;
-  border-radius: 0.5rem; /* 5px -> 0.3125rem */
-  border: 0.0625rem solid grey; /* 1px -> 0.0625rem */
+  border-radius: 0.5rem;
+  border: 0.0625rem solid grey;
   border-style: double;
   color: #726b6a;
 }
 
 .add-title {
   background-color: #2290a1;
-  border-radius: 0.2rem 0.2rem 0 0; /* Apenas os cantos superiores arredondados */
+  height: 7.5%;
+  border-radius: 0.2rem 0.2rem 0 0;
 }
 
 p {
   width: 100%;
   height: 7%;
   /* border: 0.0625rem solid grey; */
-  padding: 0.5rem; /* 5px */
+  padding: 0.5rem;
   /* background-color: #2290a1; */
   color: white;
   font-family: Tahoma, Verdana, sans-serif, Arial;
-  font-size: 0.875rem; /* 14px */
+  font-size: 0.875rem;
   font-weight: bold;
   display: flex;
   justify-content: center;
@@ -42,37 +44,37 @@ p {
 
 button.btn-info {
   background-color: transparent;
-  border: 0.0625rem solid grey; /* 1px -> 0.0625rem */
+  border: 0.0625rem solid grey;
   border-style: double;
-  padding: 0.5rem; /* 8px -> 0.5rem */
+  padding: 0.5rem;
   color: var(--primary-bg-color);
-  font-size: 1rem; /* 16px -> 1rem */
+  font-size: 1rem;
   font-weight: bold;
   cursor: pointer;
-  border-radius: 0.3125rem; /* 5px -> 0.3125rem */
+  border-radius: 0.3125rem;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 button.btn-info:hover {
-  color: var(--button-menu-hover); /* Cor do texto no hover */
+  color: var(--button-menu-hover);
   font-weight: bold;
-  padding: 0.5rem; /* Ajuste o padding para ter um espaço adequado */
+  padding: 0.5rem;
   border-radius: 0.3125rem;
   background-clip: padding-box;
 }
 
 .text-danger {
   color: red;
-  margin-bottom: 0.625rem; /* 10px -> 0.625rem */
+  margin-bottom: 0.625rem;
 }
 
 .form-group-checkbox-container {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 0.625rem; /* 10px -> 0.625rem */
-  border: 0.0625rem solid grey; /* 1px -> 0.0625rem */
-  border-radius: 0.3125rem; /* 5px -> 0.3125rem */
+  margin-bottom: 0.625rem;
+  border: 0.0625rem solid grey;
+  border-radius: 0.3125rem;
   border-style: dotted;
 }
 
@@ -83,20 +85,20 @@ button.btn-info:hover {
 
 .form-group-btn-btn-info {
   display: flex;
-  justify-content: space-around;
-  gap: 1.375rem; /* 22px -> 1.375rem */
+  justify-content: space-between;
+  gap: 1.375rem;
 }
 
 .repeticao-container {
-  margin-top: 0.625rem; /* 10px -> 0.625rem */
+  margin-top: 0.625rem;
   display: flex;
   align-items: center;
-  margin-left: 0.625rem; /* 10px -> 0.625rem */
+  margin-left: 0.625rem;
 }
 
 .repeticao-container .form-control {
-  width: 6.875rem; /* 110px -> 6.875rem */
-  height: 1.875rem; /* 30px -> 1.875rem */
+  width: 6.875rem;
+  height: 1.875rem;
 }
 
 input.form-control,
