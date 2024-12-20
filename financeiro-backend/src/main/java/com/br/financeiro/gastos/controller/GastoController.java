@@ -85,7 +85,9 @@ public class GastoController {
                         Gasto gastoSalvo = gastoRepository.save(gastoExistente);
                         return ResponseEntity.ok(gastoSalvo);
                     } catch (IllegalArgumentException e) {
-                        return ResponseEntity.badRequest().body(null);
+                        // return ResponseEntity.badRequest().body(null);
+                        return ResponseEntity.badRequest().body("Tipo de gasto inválido: " + novoTipo);
+
                     }
                 })
                 .orElse(ResponseEntity.notFound().build());
