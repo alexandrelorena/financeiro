@@ -1,0 +1,56 @@
+/* -------------------- Tema -------------------- */
+
+/* Modo Escuro */
+.dark-theme div {
+  background-color: #060606;
+}
+
+/* Modo Claro */
+.light-theme div {
+  background-color: rgb(209, 208, 208);
+}
+
+/* Estilo geral da página 404 */
+.page-not-found {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(70vh - 120px); /* Considera a altura do header e footer */
+  text-align: center;
+
+  padding: 20px;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+}
+
+/* Título da página */
+.page-not-found h1 {
+  font-size: 2.5em;
+  color: #dc3545; /* Vermelho para destaque */
+  margin: 10px 0;
+}
+
+/* Texto da página */
+.page-not-found p {
+  font-size: 1.2em;
+  color: #6c757d; /* Cinza suave */
+  margin: 10px 0;
+}
+
+/* Link para voltar */
+.page-not-found a {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 1em;
+  color: #ffffff;
+  background-color: #007bff; /* Azul padrão */
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.page-not-found a:hover {
+  background-color: #0056b3; /* Azul mais escuro no hover */
+}

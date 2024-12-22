@@ -10,6 +10,7 @@
   border-radius: 0.3125rem; /* 5px -> 0.3125rem */
   border-style: double;
   color: var(--primary-text-color);
+  font-weight: bold;
   box-sizing: border-box; /* Inclui padding na largura */
   background-color: transparent;
 }
@@ -27,7 +28,8 @@
 }
 
 .header__item .toggle {
-  margin-right: -0.6875rem; /* -11px -> -0.6875rem */
+  margin-right: 0.1rem; /* -11px -> -0.6875rem */
+  margin-bottom: 10px;
 }
 
 .header__item {
@@ -39,6 +41,15 @@
 }
 
 .header__item > p > span {
+  color: #2290a1;
+  font-weight: bold;
+}
+
+.header__item > h1 {
+  margin-top: 4px;
+  margin-left: 10px;
+  font-size: 1rem;
+  font-weight: bold;
   color: #2290a1;
 }
 
@@ -61,13 +72,7 @@
   transition: background-color 0.3s ease, transform 0.2s ease; /* Animação ao passar o mouse */
 }
 
-.header__item button svg {
-  width: 1.5rem; /* 24px -> 1.5rem */
-  height: 1.5rem; /* 24px -> 1.5rem */
-  transition: transform 0.2s ease-in-out; /* Animação ao passar o mouse */
-}
-
-.header__item button:hover svg {
+.header__item > button:hover svg {
   transform: scale(1.1); /* Aumenta ligeiramente o ícone ao passar o mouse */
 }
 

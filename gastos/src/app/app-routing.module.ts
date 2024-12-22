@@ -5,12 +5,15 @@ import { RouterModule, Routes } from '@angular/router'; // Importa o RouterModul
 // Importa os componentes que serão utilizados nas rotas
 import { AddDespesaComponent } from './component/add-despesa/add-despesa.component'; // Componente para adicionar despesas
 import { ContentComponent } from './component/content/content.component'; // Componente de conteúdo principal
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 // Define as rotas da aplicação
 const routes: Routes = [
   { path: '', redirectTo: '/content', pathMatch: 'full' }, // Se a URL estiver vazia, redireciona para 'content' (página inicial)
   { path: 'add-despesa', component: AddDespesaComponent }, // Quando o caminho for 'add-despesa', o AddDespesaComponent será carregado
   { path: 'content', component: ContentComponent }, // Quando o caminho for 'content', o ContentComponent será carregado
+  { path: 'page-not-found', component: PageNotFoundComponent },
+  { path: '**', redirectTo: '/page-not-found' }, // Rota de fallback para URLs inválidas
 ];
 
 // Configura o módulo de rotas

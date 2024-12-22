@@ -1,6 +1,7 @@
 export interface Gasto {
   id: number;
   nome: string;
+  categoria: string;
   valor: number;
   vencimento: string | Date; // Aceita tanto uma string quanto um Date
   status: string;

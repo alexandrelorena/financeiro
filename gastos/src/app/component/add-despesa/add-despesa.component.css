@@ -32,7 +32,7 @@ p {
   width: 100%;
   height: 7%;
   /* border: 0.0625rem solid grey; */
-  padding: 0.5rem;
+  padding: 0.6rem;
   /* background-color: #2290a1; */
   color: white;
   font-family: Tahoma, Verdana, sans-serif, Arial;
@@ -66,6 +66,10 @@ button.btn-info:hover {
 .text-danger {
   color: red;
   margin-bottom: 0.625rem;
+}
+
+.form-group > select {
+  color: #726b6a;
 }
 
 .form-group-checkbox-container {
@@ -104,6 +108,7 @@ button.btn-info:hover {
 input.form-control,
 textarea.form-control {
   box-sizing: border-box;
+  color: #726b6a;
 }
 
 input.form-control:disabled {

@@ -27,20 +27,44 @@ export class EditDespesaModalComponent {
       vencimento: data.despesa.vencimento || null, // Inclui o vencimento se existir
     };
   }
+  categorias: string[] = [
+    'Alimentação',
+    'Aluguel',
+    'Água',
+    'Cartão',
+    'Celular',
+    'Empréstimo',
+    'Internet',
+    'Lazer',
+    'Luz',
+    'IPTU',
+    'Outros',
+    'Pets',
+    'Saúde',
+    'Transporte',
+  ];
 
   /**
    * Método para salvar a edição da despesa e emitir os dados para o componente pai.
    */
   salvar() {
-    const dadosEdicao = {};
+    const dadosEdicao = {
+      ...this.despesa,
+      categoria: this.despesa.categoria,
+    };
     this.edicaoSalva.emit(dadosEdicao);
   }
 
   /**
    * Método para salvar a despesa editada e fechar o modal.
    */
+  // salvarEdicao() {
+  //   this.dialogRef.close(this.despesa);
+  // }
+
   salvarEdicao() {
-    this.dialogRef.close(this.despesa);
+    this.edicaoSalva.emit(this.despesa); // Emite o evento com os dados editados
+    this.dialogRef.close(this.despesa); // Fecha o modal passando os dados
   }
 
   /**
