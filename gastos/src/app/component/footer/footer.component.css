@@ -38,7 +38,6 @@ a:hover .fab {
   font-size: 1rem;
   font-family: Tahoma, Verdana, sans-serif, Arial; /* Fonte */
   color: var(--primary-text-color); /* Cor do texto usando variável */
-  opacity: 0.8; /* Ajusta a opacidade para 80% */
 }
 
 /* Estilo para o modo escuro */
