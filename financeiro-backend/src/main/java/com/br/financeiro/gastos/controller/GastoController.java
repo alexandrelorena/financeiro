@@ -1,5 +1,6 @@
 package com.br.financeiro.gastos.controller;
 
+import com.br.financeiro.gastos.utils.ValidationUtils;
 import com.br.financeiro.gastos.model.Gasto;
 import com.br.financeiro.gastos.service.GastoService;
 import com.br.financeiro.gastos.model.TipoGasto;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+// import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -62,6 +64,7 @@ public class GastoController {
         return gastoRepository.findById(id)
                 .map(gastoExistente -> {
                     gastoExistente.setNome(gastoAtualizado.getNome());
+                    gastoExistente.setCategoria(gastoAtualizado.getCategoria());
                     gastoExistente.setValor(gastoAtualizado.getValor());
                     gastoExistente.setVencimento(gastoAtualizado.getVencimento());
                     gastoExistente.setTipo(gastoAtualizado.getTipo());
@@ -99,7 +102,7 @@ public class GastoController {
         if (optionalGasto.isPresent()) {
             Gasto gasto = optionalGasto.get();
             gasto.setTipo(TipoGasto.PAGO);
-            gasto.setStatus("Pago");
+            gasto.setStatus("pago");
             gasto = gastoRepository.save(gasto);
             return ResponseEntity.ok(gasto);
         } else {
@@ -148,4 +151,14 @@ public class GastoController {
                                 .body("Erro ao atualizar status: " + e.getMessage());
         }
     }
+
+    @GetMapping("/detalhes/{input}")
+    public ResponseEntity<String> getDetails(@PathVariable("input") String input) {
+        if (!ValidationUtils.isValidInput(input)) {
+            return ResponseEntity.badRequest().body("Entrada inválida. Permitidos apenas letras, números, '_' e '-'.");
+            }
+        // Lógica de processamento
+        return ResponseEntity.ok("Parâmetro válido!");
+    }
+
 }

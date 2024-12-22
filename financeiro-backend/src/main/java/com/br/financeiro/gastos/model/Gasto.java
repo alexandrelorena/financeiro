@@ -18,6 +18,9 @@ public class Gasto {
     @NotNull(message = "O nome não pode ser nulo")
     private String nome;
 
+    @NotNull(message = "a categoria não pode ser nulo")
+    private String categoria;
+
     @NotNull(message = "O valor não pode ser nulo")
     @Positive(message = "O valor deve ser positivo")
     private double valor;
@@ -57,6 +60,14 @@ public class Gasto {
         this.nome = nome;
     }
 
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
+    }
+
     public double getValor() {
         return valor;
     }
@@ -94,15 +105,15 @@ public class Gasto {
     // Lógica para definir o status
     public void updateStatus() {
         if (this.tipo == TipoGasto.PAGO) {
-            this.status = "Pago";
+            this.status = "pago";
         } else if (vencimento != null) {
             LocalDate hoje = LocalDate.now();
             if (vencimento.isBefore(hoje)) {
-                this.status = "Vencido";
+                this.status = "vencido";
             } else if (vencimento.equals(hoje)) {
-                this.status = "Vencendo";
+                this.status = "vencendo";
             } else {
-                this.status = "Pendente";
+                this.status = "pendente";
             }
         } else {
             this.status = "Status Indefinido";

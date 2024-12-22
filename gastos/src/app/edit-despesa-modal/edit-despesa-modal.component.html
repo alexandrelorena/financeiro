@@ -5,6 +5,23 @@
     <input matInput [(ngModel)]="despesa.nome" name="nome">
   </mat-form-field>
 
+  <!-- <mat-form-field>
+    <mat-label>Categoria</mat-label>
+    <input matInput [(ngModel)]="despesa.categoria" name="categoria">
+  </mat-form-field> -->
+
+  <mat-form-field>
+    <mat-label>Categoria</mat-label>
+    <mat-select [(ngModel)]="despesa.categoria" name="categoria" required>
+      <mat-option value="" disabled>Selecione a Categoria da Despesa</mat-option>
+      <mat-option *ngFor="let categoria of categorias" [value]="categoria">
+        {{ categoria }}
+      </mat-option>
+    </mat-select>
+    <mat-error *ngIf="!despesa.categoria">Categoria é obrigatória.</mat-error>
+  </mat-form-field>
+
+
   <mat-form-field>
     <mat-label>Valor</mat-label>
     <input matInput type="text" [(ngModel)]="despesa.valor" name="valor" (input)="formatarValor($event)"

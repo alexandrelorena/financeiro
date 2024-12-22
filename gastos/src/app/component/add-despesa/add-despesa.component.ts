@@ -21,19 +21,21 @@ export class AddDespesaComponent implements OnInit {
     private cdr: ChangeDetectorRef, // Importando ChangeDetectorRef
     private eventService: EventService
   ) {}
-  tipos: string[] = [
-    'Cartão',
-    'Água',
-    'Luz',
-    'Internet',
-    'Aluguel',
-    'Pets',
+  categorias: string[] = [
     'Alimentação',
-    'Transporte',
-    'Moradia',
+    'Aluguel',
+    'Água',
+    'Cartão',
+    'Celular',
+    'Empréstimo',
+    'Internet',
     'Lazer',
-    'Saúde',
+    'Luz',
+    'IPTU',
     'Outros',
+    'Pets',
+    'Saúde',
+    'Transporte',
   ];
 
   ngOnInit(): void {
@@ -46,6 +48,7 @@ export class AddDespesaComponent implements OnInit {
           Validators.maxLength(30),
         ],
       ],
+      categoria: ['', Validators.required],
       valor: [
         '',
         // [Validators.required, Validators.pattern(/^\d+([.,]\d{1,2})?$/)],
@@ -97,6 +100,7 @@ export class AddDespesaComponent implements OnInit {
     // Criação do objeto despesa com o status calculado
     const despesa: Gasto = {
       nome: this.despesaForm.value.nome,
+      categoria: this.despesaForm.value.categoria,
       valor: +this.despesaForm.value.valor,
       vencimento: this.despesaForm.value.vencimento,
       tipo: tipoGasto, // 0 indica que a despesa está pendente

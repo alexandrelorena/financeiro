@@ -2,12 +2,12 @@
   <!-- Texto com informações -->
   <div class="header__item">
     <p>
-      <span>Controle de finanças:</span> Total de despesas de {{ selectedMonthFullName }}:
-      {{ despesasTotal }}
+      <span>Controle de finanças |</span> Total de despesas de {{ selectedMonthFullName }}:
     </p>
+    <h1> {{ despesasTotal }}</h1>
+
   </div>
-  <div class="header__item">
-  </div>
+  <div class="header__item"></div>
   <!-- Botão de alternar tema -->
   <div class="header__item">
     <button id="toggle" (click)="toggleMode()" class="toggle">
@@ -28,5 +28,6 @@
         </span>
       </ng-template>
     </button>
+
   </div>
 </div>

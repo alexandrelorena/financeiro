@@ -9,40 +9,41 @@
 
           </button>
         </th>
-        <th>Despesa</th>
-        <th>Valor</th>
-        <th>Vencimento</th>
+        <th>despesa</th>
+        <th>categoria</th>
+        <th>valor</th>
+        <th>vcto</th>
         <th>
           <select id="statusFilter" class="filter-select" [(ngModel)]="statusSelecionado" (change)="onStatusChange()">
-            <option value="Todos">Status</option>
-            <option value="Pago">Pago</option>
-            <option value="Pendente">Pendente</option>
-            <option value="Vencido">Vencido</option>
-            <option value="Vencendo">Vencendo</option>
+            <option value="Todos">status</option>
+            <option value="pago">pago</option>
+            <option value="pendente">pendente</option>
+            <option value="vencido">vencido</option>
+            <option value="vencendo">vencendo</option>
           </select>
         </th>
-        <th>Ações</th>
+        <th>ações</th>
       </tr>
     </thead>
     <tbody>
       <!-- Exibe a mensagem quando não há despesas -->
       <tr *ngIf="despesas.length === 0">
-        <td colspan="6" class="mensagem-sem-despesas">
+        <td colspan="7" class="mensagem-sem-despesas">
           Não há despesas neste mês.
         </td>
       </tr>
       <!-- Exibe a mensagem quando não há despesas -->
       <tr *ngIf="despesas.length > 0 && despesasFiltradas.length === 0">
-        <td colspan="6" class="mensagem-sem-despesas">
+        <td colspan="7" class="mensagem-sem-despesas">
           Não foram encontradas despesas com este STATUS.
         </td>
       </tr>
       <!-- <tr *ngFor="let despesa of despesas; let i = index"> -->
       <tr *ngFor="let despesa of despesasFiltradas; let i = index" [ngClass]="{
-          'status-pago': despesa.status === 'Pago',
-          'status-pendente': despesa.status === 'Pendente',
-          'status-vencido': despesa.status === 'Vencido',
-          'status-hoje': despesa.status === 'Vencendo'
+          'status-pago': despesa.status === 'pago',
+          'status-pendente': despesa.status === 'pendente',
+          'status-vencido': despesa.status === 'vencido',
+          'status-hoje': despesa.status === 'vencendo'
         }">
 
         <td>{{ i + 1 }}</td>
@@ -51,6 +52,9 @@
           <!-- Modo de Edição -->
           <td *ngIf="despesaEditando">
             <input [(ngModel)]="despesaEditando.nome" required class="input-nome" />
+          </td>
+          <td *ngIf="despesaEditando">
+            <input [(ngModel)]="despesaEditando.categoria" required class="input-categoria" />
           </td>
           <td *ngIf="despesaEditando">
             <input type="number" [(ngModel)]="despesaEditando.valor" required class="input-valor" />
@@ -76,14 +80,15 @@
         <!-- Modo de Visualização -->
         <ng-template #viewMode class="tabela-despesas">
           <td class="nome">{{ despesa.nome }}</td>
+          <td class="categoria">{{ despesa.categoria }}</td>
           <td>{{ formatCurrency(despesa.valor) }}</td>
           <td>{{ despesa.vencimento | date: 'dd/MM' }}</td>
 
           <td [ngClass]="{
-            'status-pago': despesa.status === 'Pago',
-            'status-pendente': despesa.status === 'Pendente',
-            'status-vencido': despesa.status === 'Vencido',
-            'status-hoje': despesa.status === 'Vencendo'
+            'status-pago': despesa.status === 'pago',
+            'status-pendente': despesa.status === 'pendente',
+            'status-vencido': despesa.status === 'vencido',
+            'status-hoje': despesa.status === 'vencendo'
           }">
             {{ despesa.status }}
           </td>
@@ -91,15 +96,17 @@
           <td>
             <!-- Exibe o botão "Pagar" caso a despesa esteja pendente ou vencida -->
             <button class="pagar" (click)="pagarDespesa(despesa.id)"
-              [disabled]="despesa.status === 'Pago' || despesa.disableButtons"
-              [class.status-pago]="despesa.status === 'Pago'">$</button>
+              [disabled]="despesa.status === 'pago' || despesa.disableButtons"
+              [class.status-pago]="despesa.status === 'pago'" title="pagar a despesa">$</button>
             <!-- Botão de edição, desabilitado se a despesa estiver paga -->
-            <button class="editar" (click)="editarDespesa(despesa)" [disabled]="despesa.status === 'Pago'"
-              [class.status-pago]="despesa.status === 'Pago'">↻</button>
-            <button class="remover" (click)="removerDespesa(despesa)">&nbsp;x</button>
+            <button class="editar" (click)="editarDespesa(despesa)" [disabled]="despesa.status === 'pago'"
+              [class.status-pago]="despesa.status === 'pago'" title="editar a despesa">↻</button>
+            <button class="remover" (click)="removerDespesa(despesa)" title="apagar a despesa">x</button>
           </td>
         </ng-template>
       </tr>
     </tbody>
   </table>
+  <!-- Modal de edição -->
+  <app-edit-despesa-modal (edicaoSalva)="atualizarDespesa($event)" *ngIf="despesaEditando"></app-edit-despesa-modal>
 </div>

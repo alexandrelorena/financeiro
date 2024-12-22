@@ -1,5 +1,5 @@
 <div class="add-title">
-  <p>Adicionar despesa</p>
+  <p>adicionar despesa</p>
 </div>
 <div class="container__add-despesa">
 
@@ -8,20 +8,20 @@
     <form [formGroup]="despesaForm" (ngSubmit)="adicionarDespesa()">
       <div class="form-group">
         <!-- <label> nome </label> -->
-        <input type="text" id="nome" class="form-control" formControlName="nome" placeholder="Nome da Despesa" />
+        <input type="text" id="nome" class="form-control" formControlName="nome" placeholder="nome da despesa" />
         <div *ngIf="despesaForm.get('nome')?.invalid && despesaForm.get('nome')?.touched" class="text-danger">
           Nome é obrigatório.
         </div>
       </div>
 
       <div class="form-group">
-        <!-- <label for="tipo">Tipo da Despesa</label> -->
-        <select id="tipo" class="form-control" formControlName="tipo">
-          <option value="" disabled selected>Selecione o Tipo da Despesa</option>
-          <option *ngFor="let tipo of tipos" [value]="tipo">{{ tipo }}</option>
+        <select id="categoria" class="form-control" formControlName="categoria"> <!-- Alterado para 'categoria' -->
+          <option value="" disabled selected>categoria da despesa</option>
+          <option *ngFor="let categoria of categorias" [value]="categoria">{{ categoria }}</option>
+          <!-- Usando 'categorias' -->
         </select>
-        <div *ngIf="despesaForm.get('nome')?.invalid && despesaForm.get('nome')?.touched" class="text-danger">
-          Tipo é obrigatório.
+        <div *ngIf="despesaForm.get('categoria')?.invalid && despesaForm.get('categoria')?.touched" class="text-danger">
+          Categoria é obrigatória.
         </div>
       </div>
 

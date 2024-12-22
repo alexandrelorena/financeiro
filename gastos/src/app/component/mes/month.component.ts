@@ -54,6 +54,7 @@ export class MonthComponent implements OnInit, OnDestroy {
   };
 
   private subscription = new Subscription();
+  atualizarDespesa: any;
 
   /**
    * Construtor do componente
@@ -194,7 +195,7 @@ export class MonthComponent implements OnInit, OnDestroy {
 
       // Desabilitar botões para despesas pagas
       this.despesas.forEach((despesa) => {
-        if (despesa.status === 'Pago') {
+        if (despesa.status === 'pago') {
           despesa.disableButtons = true;
         }
       });
@@ -223,7 +224,7 @@ export class MonthComponent implements OnInit, OnDestroy {
 
     // Atualiza o tipo e status da despesa para "Pago"
     despesa.tipo = 1; // Tipo 1 indica que a despesa está paga
-    despesa.status = 'Pago';
+    despesa.status = 'pago';
     despesa.cssClass = 'status-pago'; // Atualiza a classe para "status-pago"
     despesa.disableButtons = true;
 
@@ -235,7 +236,7 @@ export class MonthComponent implements OnInit, OnDestroy {
       error: (error) => {
         // Se falhar, reverte para o estado anterior
         despesa.tipo = 0; // Tipo 0 para "Pendente"
-        despesa.status = 'Pendente';
+        despesa.status = 'pendente';
         despesa.cssClass = 'status-pendente'; // Retorna para a classe "status-pendente"
         despesa.disableButtons = false; // Reabilita os botões
         console.error('Erro ao pagar despesa:', error);
@@ -259,7 +260,11 @@ export class MonthComponent implements OnInit, OnDestroy {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        // Atualizar no backend
+        // Verifique se a categoria foi editada e atualize-a
+        if (result.categoria !== despesa.categoria) {
+          despesa.categoria = result.categoria; // Atualiza a categoria
+        }
+
         this.gastoService
           .updateDespesa(result.id!, result)
           .pipe(take(1))
@@ -488,13 +493,13 @@ export class MonthComponent implements OnInit, OnDestroy {
 
     // Se o tipo for 1 (Pago)
     if (despesa.tipo === 1) {
-      return { status: 'Pago', cssClass: 'status-pago', disableButtons: true };
+      return { status: 'pago', cssClass: 'status-pago', disableButtons: true };
     }
 
     // Se o vencimento for hoje
     if (vencimentoSemHora.getTime() === hojeSemHora.getTime()) {
       return {
-        status: 'Vencendo',
+        status: 'vencendo',
         cssClass: 'status-hoje',
         disableButtons: true,
       };
@@ -503,7 +508,7 @@ export class MonthComponent implements OnInit, OnDestroy {
     // Se o vencimento passou
     if (vencimentoSemHora < hojeSemHora) {
       return {
-        status: 'Vencido',
+        status: 'vencido',
         cssClass: 'status-vencido',
         disableButtons: true,
       };
@@ -511,7 +516,7 @@ export class MonthComponent implements OnInit, OnDestroy {
 
     // Caso contrário, está pendente (vencimento futuro)
     return {
-      status: 'Pendente',
+      status: 'pendente',
       cssClass: 'status-pendente',
       disableButtons: true,
     };
