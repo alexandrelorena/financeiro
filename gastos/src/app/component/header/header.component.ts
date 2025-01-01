@@ -1,9 +1,6 @@
 import { Component, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { MonthService } from '../../service/month.service';
-import { EventService } from '../../service/event.service';
-import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
-import { MatDialog } from '@angular/material/dialog';
 
 /**
  * HeaderComponent
@@ -57,14 +54,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
    * Construtor do componente
    * @param renderer Serviço Angular para manipulação do DOM
    * @param monthService Serviço responsável por gerenciar os meses
-   * @param eventService Serviço responsável por eventos relacionados às despesas
-   * @param dialog Serviço Angular Material para gerenciamento de diálogos
    */
   constructor(
     private renderer: Renderer2,
-    private monthService: MonthService,
-    private eventService: EventService,
-    private dialog: MatDialog
+    private monthService: MonthService
   ) {}
 
   /**
@@ -142,57 +135,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     } else {
       this.renderer.addClass(document.body, 'light-theme');
       this.renderer.removeClass(document.body, 'dark-theme');
-    }
-  }
-
-  /**
-   * Exibe um diálogo de confirmação para apagar as despesas de um mês
-   * @param selectedMonthNumber Número do mês selecionado
-   * @param despesasTotal
-   */
-
-  apagarDespesasDoMes(selectedMonthNumber: number): void {
-    // Remover o símbolo de moeda e substituir a vírgula por ponto
-    const despesas =
-      parseFloat(
-        this.despesasTotal.replace('R$', '').replace(',', '.').trim()
-      ) || 0;
-    // Garante que o valor seja 0 se for NaN
-
-    // Verifica se há despesas para o mês
-    if (despesas === 0) {
-      // Se não houver despesas, abre o diálogo informando que não há despesas para apagar
-      this.dialog.open(ConfirmationDialogComponent, {
-        width: '500px',
-        data: {
-          title: 'Não há despesas para apagar!!',
-          message: '',
-        },
-      });
-    } else {
-      // Caso haja despesas, exibe o diálogo de confirmação para apagar
-      const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-        width: '500px',
-        data: {
-          title: `Deseja apagar as despesas de ${this.selectedMonthFullName}?`,
-          // message: `Deseja apagar as despesas de ${this.selectedMonthFullName}?`,
-        },
-      });
-
-      dialogRef.afterClosed().subscribe((result) => {
-        if (result === 'confirm') {
-          this.eventService.apagarDespesasDoMes(selectedMonthNumber).subscribe({
-            next: () => {
-              this.eventService.emitStatusChange();
-            },
-            error: (error) =>
-              console.error(
-                'Erro ao apagar as despesas:',
-                error.message || error
-              ),
-          });
-        }
-      });
     }
   }
 

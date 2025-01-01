@@ -28,6 +28,13 @@
   font-size: 1.2rem;
 }
 
+/* Cor para o caso de não haver despesas */
+.custom-title-no-expenses {
+  text-align: center;
+  color: var(--primary-color); /* Cor alternativa para não há despesas */
+  font-size: 1.2rem;
+}
+
 .custom-message {
   color: var(--primary-color);
   font-size: 1rem;
@@ -102,7 +109,7 @@ button.confirm:hover {
 button.close {
   display: flex;
   margin: auto;
-  background-color: #1cb3ca;
+  background-color: #2290a1;
   color: #fff;
 }
 

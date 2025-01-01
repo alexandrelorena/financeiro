@@ -3,9 +3,14 @@ implementações que faltam ser feitas:
 
 DESPESAS
 
-- recorrência de despesa
-
 - mostrar apenas despesas do ano atual
+- ajustar meses da recorência
+- ajustar campo valor
+
+- deletar despesas que nome = 'palavra' e categoria = 'categoria'
+    DELETE FROM gastos
+    WHERE nome LIKE '%Nubank%'
+    AND categoria = 'Cartão';
 
 
 RECEITAS

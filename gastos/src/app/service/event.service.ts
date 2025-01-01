@@ -47,19 +47,26 @@ export class EventService {
    * @private
    * @type {any[]}
    */
-  private despesas = [];
+  private despesas: any[] = [];
+
+  private despesaAdicionadaSource = new Subject<void>();
+  despesaAdicionada$ = this.despesaAdicionadaSource.asObservable();
 
   /**
    * Construtor da classe EventService.
    * @param {HttpClient} http Serviço para chamadas HTTP.
    */
+  constructor(private http: HttpClient) {}
 
   // Método para emitir mudanças
-  emitStatusChange(): void {
-    this.statusChange.next();
-  }
+  // emitStatusChange(): void {
+  //   this.statusChange.next();
+  // }
 
-  constructor(private http: HttpClient) {}
+  emitirDespesaAdicionada(): void {
+    console.log('Emitindo evento de despesa adicionada...');
+    this.despesaAdicionadaSource.next();
+  }
 
   /**
    * Atualiza a lista de despesas.
@@ -67,33 +74,32 @@ export class EventService {
    */
   atualizarDespesas(novasDespesas: any[]): void {
     this.despesasSubject.next(novasDespesas);
+    this.emitirDespesaAdicionada();
     this.notifyStatusChange();
   }
 
-  /**
-   * Retorna a lista atual de despesas.
-   * @returns {any[]} Lista atual de despesas.
-   */
-  obterDespesas(): any[] {
-    return this.despesasSubject.getValue();
+  adicionarDespesa(despesa: any): void {
+    this.despesas.push(despesa); // Adiciona a despesa diretamente
+    this.despesas = [...this.despesas]; // Garante que o Angular detecte a mudança
+    this.despesaAdicionadaSource.next(); // Dispara o evento
   }
 
   /**
    * Atualiza o status selecionado.
    * @param {string} novoStatus - Novo status selecionado.
    */
-  atualizarStatusSelecionado(novoStatus: string): void {
-    this.statusSelecionadoSubject.next(novoStatus);
-    this.notifyStatusChange();
-  }
+  // atualizarStatusSelecionado(novoStatus: string): void {
+  //   this.statusSelecionadoSubject.next(novoStatus);
+  //   this.notifyStatusChange();
+  // }
 
   /**
    * Retorna o status atual selecionado.
    * @returns {string} Status atual.
    */
-  obterStatusSelecionado(): string {
-    return this.statusSelecionadoSubject.getValue();
-  }
+  // obterStatusSelecionado(): string {
+  //   return this.statusSelecionadoSubject.getValue();
+  // }
 
   /**
    * Notifica mudanças no status.
@@ -108,17 +114,5 @@ export class EventService {
    */
   onStatusChange(): Observable<void> {
     return this.statusChange.asObservable();
-  }
-
-  /**
-   * Apaga despesas do mês selecionado.
-   * @param {number} selectedMonthNumber - Número do mês selecionado.
-   * @returns {Observable<any>} Resultado da operação.
-   */
-  apagarDespesasDoMes(selectedMonthNumber: number): Observable<any> {
-    const url = `http://localhost:8080/api/gastos/mes/${selectedMonthNumber}`;
-    this.notifyStatusChange();
-
-    return this.http.delete(url);
   }
 }

@@ -1,10 +1,10 @@
 package com.br.financeiro.gastos.model;
 
 public enum TipoGasto {
-    PENDENTE(0),
-    PAGO(1),
-    VENCEU(2),
-    VENCENDO(3);
+    pendente(0),
+    pago(1),
+    vencendo(2),
+    vencido(3);
 
     private final int valor;
 
@@ -25,4 +25,3 @@ public enum TipoGasto {
         throw new IllegalArgumentException("Tipo inválido: " + valor);
     }
 }
-

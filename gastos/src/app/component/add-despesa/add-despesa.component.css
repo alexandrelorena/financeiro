@@ -12,7 +12,7 @@
 .form-control {
   width: 100%;
   margin-top: 0.625rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0.75rem;
   padding: 0.7rem;
   font-size: 1rem;
   font-family: Tahoma, Verdana, sans-serif, Arial;
@@ -31,9 +31,7 @@
 p {
   width: 100%;
   height: 7%;
-  /* border: 0.0625rem solid grey; */
   padding: 0.6rem;
-  /* background-color: #2290a1; */
   color: white;
   font-family: Tahoma, Verdana, sans-serif, Arial;
   font-size: 0.875rem;
@@ -63,10 +61,18 @@ button.btn-info:hover {
   background-clip: padding-box;
 }
 
+/* Estilo para o texto de erro */
 .text-danger {
+  color: var(--bs-danger); /* Cor vermelha para o texto */
+  font-size: 14px; /* Tamanho da fonte */
+  font-weight: bold; /* Deixar o texto em negrito */
+  margin-top: none; /* Espaçamento acima da mensagem */
+}
+
+/* .text-danger {
   color: red;
   margin-bottom: 0.625rem;
-}
+} */
 
 .form-group > select {
   color: #726b6a;
@@ -87,22 +93,25 @@ button.btn-info:hover {
   align-items: center;
 }
 
-.form-group-btn-btn-info {
+.form-group-botoes {
+  margin-top: 10px;
   display: flex;
   justify-content: space-between;
   gap: 1.375rem;
 }
 
-.repeticao-container {
-  margin-top: 0.625rem;
-  display: flex;
-  align-items: center;
-  margin-left: 0.625rem;
-}
-
-.repeticao-container .form-control {
-  width: 6.875rem;
-  height: 1.875rem;
+#repeticoes {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: 100%; /* Se desejar largura ajustável */
+  max-width: 100%;
+  border: 0.0625rem solid #726b6a;
+  border-radius: 0.3125rem;
+  border-style: double;
+  color: #726b6a;
+  /* box-sizing: border-box; */
+  padding: 0.7rem;
+  font-size: 1rem;
 }
 
 input.form-control,
