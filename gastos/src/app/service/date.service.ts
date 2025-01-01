@@ -61,10 +61,36 @@ export class DateService {
    * @param date - Objeto Date a ser formatado.
    * @returns A data formatada como string.
    */
-  formatDate(date: Date): string {
+
+  formatDateFromDate(date: Date): string {
     const day = String(date.getDate()).padStart(2, '0');
     const month = String(date.getMonth() + 1).padStart(2, '0');
     const year = date.getFullYear();
     return `${day}/${month}/${year}`;
   }
+
+  // formatDate(date: Date): string {
+  //   const day = String(date.getDate()).padStart(2, '0');
+  //   const month = String(date.getMonth() + 1).padStart(2, '0');
+  //   const year = date.getFullYear();
+  //   return `${day}/${month}/${year}`;
+  // }
+
+  formatDateFromStringOrDate(date: string | Date): string {
+    // Garantir que a entrada seja um Date
+    const validDate = typeof date === 'string' ? new Date(date) : date;
+    const year = validDate.getFullYear();
+    const month = String(validDate.getMonth() + 1).padStart(2, '0');
+    const day = String(validDate.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
+
+  // formatDate(date: string | Date): string {
+  //    // Garantir que a entrada seja um Date
+  //   const validDate = typeof date === 'string' ? new Date(date) : date;
+  //   const year = validDate.getFullYear();
+  //   const month = String(validDate.getMonth() + 1).padStart(2, '0');
+  //   const day = String(validDate.getDate()).padStart(2, '0');
+  //   return `${year}-${month}-${day}`;
+  // }
 }

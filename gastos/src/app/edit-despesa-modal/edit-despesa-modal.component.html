@@ -5,11 +5,6 @@
     <input matInput [(ngModel)]="despesa.nome" name="nome">
   </mat-form-field>
 
-  <!-- <mat-form-field>
-    <mat-label>Categoria</mat-label>
-    <input matInput [(ngModel)]="despesa.categoria" name="categoria">
-  </mat-form-field> -->
-
   <mat-form-field>
     <mat-label>Categoria</mat-label>
     <mat-select [(ngModel)]="despesa.categoria" name="categoria" required>
@@ -32,13 +27,6 @@
     <mat-label>Vencimento</mat-label>
     <input matInput type="date" [(ngModel)]="despesa.vencimento" name="vencimento">
   </mat-form-field>
-
-  <!-- <mat-form-field>
-    <mat-label>Vencimento</mat-label>
-    <input matInput [matDatepicker]="picker" [(ngModel)]="despesa.vencimento" name="vencimento">
-    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-datepicker #picker class="light-theme-datepicker"></mat-datepicker>
-  </mat-form-field> -->
 
   <div class="modal-actions">
     <button mat-raised-button type="button" (click)="fechar()">Cancelar</button>

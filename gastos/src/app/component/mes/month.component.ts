@@ -55,6 +55,7 @@ export class MonthComponent implements OnInit, OnDestroy {
 
   private subscription = new Subscription();
   atualizarDespesa: any;
+  carregarDespesas: any;
 
   /**
    * Construtor do componente
@@ -77,14 +78,28 @@ export class MonthComponent implements OnInit, OnDestroy {
     this.subscribeToDespesaUpdates();
     this.totalDespesas = this.calculateTotalDespesas();
 
-    // Enviar para o HeaderComponent após o valor ser calculado
-    this.sendDespesasToHeader();
-    // this.carregarDespesas();
+    this.gastoService.despesaAdicionada$.subscribe(() => {
+      // Recarrega as despesas quando uma nova despesa for adicionada
+      const monthNumber = this.getMonthNumber(this.selectedMonth);
+      if (monthNumber !== -1) {
+        this.recarregarMes(monthNumber);
+      }
 
-    // Inscreve-se para o evento de mudança de status
-    this.eventService.onStatusChange().subscribe(() => {
-      this.onStatusChange(); // Chama o método quando o evento for disparado
+      this.cdr.detectChanges();
     });
+
+    // Enviar para o HeaderComponent
+    this.sendDespesasToHeader();
+
+    // Inscrição para o evento de mudança de status
+    this.eventService.onStatusChange().subscribe(() => {
+      this.onStatusChange();
+      const monthNumber = this.getMonthNumber(this.selectedMonth);
+      if (monthNumber !== -1) {
+        this.recarregarMes(monthNumber);
+      }
+    });
+
     this.subscription.add(
       this.eventService.onStatusChange$.subscribe(() => {
         this.recarregarMes(new Date().getMonth() + 1);
@@ -92,9 +107,35 @@ export class MonthComponent implements OnInit, OnDestroy {
     );
   }
 
-  aplicarFiltro(): void {
+  // Inscrição para atualizações de despesas
+  private subscribeToDespesaUpdates(): void {
+    this.subscription.add(
+      this.localService.despesas$.subscribe((despesas) => {
+        this.despesas = despesas;
+        this.calcularTotalDespesas();
+        this.filtrarDespesas();
+        this.cdr.detectChanges();
+      })
+    );
+  }
+
+  recarregarMes(month: number): void {
+    this.gastoService.getDespesas(month).subscribe(
+      (despesas) => {
+        this.despesas = despesas;
+        this.calcularTotalDespesas();
+        this.filtrarDespesas();
+        this.cdr.detectChanges();
+      },
+      (erro) => {
+        console.error('Erro ao recarregar informações do mês:', erro);
+      }
+    );
+  }
+
+  filtrarDespesas(): void {
     if (this.statusSelecionado === 'Todos') {
-      this.despesasFiltradas = this.despesas; // Mostra todas as despesas
+      this.despesasFiltradas = [...this.despesas];
     } else {
       this.despesasFiltradas = this.despesas.filter(
         (despesa) => despesa.status === this.statusSelecionado
@@ -104,10 +145,10 @@ export class MonthComponent implements OnInit, OnDestroy {
 
   alterarFiltro(status: string): void {
     this.statusSelecionado = status;
-    this.aplicarFiltro();
+    this.filtrarDespesas();
   }
 
-  // Método auxiliar para formatar o valor como moeda (BRL)
+  // Formata o valor como moeda (BRL)
   public formatCurrency(value: number): string {
     return value.toLocaleString('pt-BR', {
       style: 'currency',
@@ -115,22 +156,15 @@ export class MonthComponent implements OnInit, OnDestroy {
     });
   }
 
+  atualizarDespesas(novasDespesas: Gasto[]): void {
+    this.despesas = [...novasDespesas];
+  }
+
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
 
-  recarregarMes(month: number): void {
-    this.gastoService.getDespesas(month).subscribe(
-      (despesas) => {
-        this.despesas = despesas;
-      },
-      (erro) => {
-        console.error('Erro ao recarregar informações do mês:', erro);
-      }
-    );
-  }
-
-  // Inscreve-se para atualizações do mês selecionado
+  // Inscrição para atualizações do mês selecionado
   private subscribeToDateChanges(): void {
     this.subscription.add(
       this.dateService.selectedMonth$.subscribe((month) => {
@@ -143,54 +177,28 @@ export class MonthComponent implements OnInit, OnDestroy {
     );
   }
 
-  // Inscreve-se para atualizações de despesas
-  private subscribeToDespesaUpdates(): void {
-    this.subscription.add(
-      this.localService.despesas$.subscribe((despesas) => {
-        this.despesas = despesas;
-        this.calcularTotalDespesas();
-        this.cdr.detectChanges(); // Detectar mudanças após a atualização das despesas
-      })
-    );
-  }
-
-  // Método para calcular ou obter o valor total de despesas
-  calculateTotalDespesas(): number {
-    return this.despesas.reduce((total, despesa) => total + despesa.valor, 0);
-  }
-
   // Método para enviar o valor de despesas para o serviço
   sendDespesasToHeader(): void {
     const formattedTotal = this.formatCurrency(this.totalDespesas);
     this.monthService.setDespesasTotal(formattedTotal, this.selectedMonth);
   }
 
-  // Obtém o número do mês baseado no nome
+  // Obtém o número do mês
   getMonthNumber(month: string): number {
     const sanitizedMonth = month.trim().toLowerCase();
     return this.monthNames[sanitizedMonth]?.[1] ?? -1;
   }
 
-  // Método para obter o nome completo do mês
+  // Obtêm o nome do mês
   getFullMonthName(): string {
     return this.monthNames[this.selectedMonth]?.[0] ?? this.selectedMonth;
   }
 
-  // Adicione este método para filtrar despesas com base no status
-  filtrarDespesas(): void {
-    if (this.statusSelecionado === 'Todos') {
-      this.despesasFiltradas = [...this.despesas];
-    } else {
-      this.despesasFiltradas = this.despesas.filter(
-        (despesa) => despesa.status === this.statusSelecionado
-      );
-    }
-  }
   getDespesas(month: number): void {
     if (month === -1) return;
 
     this.gastoService.getDespesas(month).subscribe((despesas: Gasto[]) => {
-      this.despesas = despesas; // Não recalcula o status no frontend
+      this.despesas = despesas;
       this.calcularTotalDespesas();
 
       // Desabilitar botões para despesas pagas
@@ -199,7 +207,7 @@ export class MonthComponent implements OnInit, OnDestroy {
           despesa.disableButtons = true;
         }
       });
-      this.filtrarDespesas(); // Aplica o filtro ao carregar as despesas
+      this.filtrarDespesas();
     });
   }
 
@@ -207,38 +215,40 @@ export class MonthComponent implements OnInit, OnDestroy {
   onStatusChange(): void {
     this.filtrarDespesas();
   }
-  // Calcula o total de despesas
+
+  calculateTotalDespesas(): number {
+    return this.despesas.reduce((total, despesa) => total + despesa.valor, 0);
+  }
+
   private calcularTotalDespesas(): void {
     this.totalDespesas = this.despesas.reduce(
       (acc, despesa) => acc + despesa.valor,
       0
     );
-    // Enviar o valor total calculado para o HeaderComponent
+
     this.sendDespesasToHeader();
   }
 
-  // Marca uma despesa como paga
   pagarDespesa(id: number): void {
     const despesa = this.despesas.find((d) => d.id === id);
     if (!despesa) return;
 
-    // Atualiza o tipo e status da despesa para "Pago"
-    despesa.tipo = 1; // Tipo 1 indica que a despesa está paga
+    despesa.tipo = 1;
     despesa.status = 'pago';
-    despesa.cssClass = 'status-pago'; // Atualiza a classe para "status-pago"
+    despesa.cssClass = 'status-pago';
     despesa.disableButtons = true;
 
     this.gastoService.pagarDespesa(id).subscribe({
       next: () => {
-        this.calcularTotalDespesas(); // Atualiza o total de despesas
-        this.cdr.detectChanges(); // Força a detecção de mudanças
+        this.calcularTotalDespesas();
+        this.cdr.detectChanges();
       },
       error: (error) => {
         // Se falhar, reverte para o estado anterior
-        despesa.tipo = 0; // Tipo 0 para "Pendente"
+        despesa.tipo = 0;
         despesa.status = 'pendente';
-        despesa.cssClass = 'status-pendente'; // Retorna para a classe "status-pendente"
-        despesa.disableButtons = false; // Reabilita os botões
+        despesa.cssClass = 'status-pendente';
+        despesa.disableButtons = false;
         console.error('Erro ao pagar despesa:', error);
       },
     });
@@ -255,7 +265,7 @@ export class MonthComponent implements OnInit, OnDestroy {
 
     const dialogRef = this.dialog.open(EditDespesaModalComponent, {
       width: '400px',
-      data: { despesa: despesaParaEdicao }, // Passa a despesa formatada para o modal
+      data: { despesa: despesaParaEdicao },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
@@ -293,16 +303,6 @@ export class MonthComponent implements OnInit, OnDestroy {
     });
   }
 
-  // Função para formatar a data no formato 'yyyy-MM-dd'
-  formatDate(date: string | Date): string {
-    const validDate = typeof date === 'string' ? new Date(date) : date; // Garantir que a entrada seja um Date
-    const year = validDate.getFullYear();
-    const month = String(validDate.getMonth() + 1).padStart(2, '0');
-    const day = String(validDate.getDate()).padStart(2, '0');
-    return `${year}-${month}-${day}`;
-  }
-
-  // Salva a edição de uma despesa
   salvarEdicao(): void {
     if (!this.despesaEditando) return;
 
@@ -336,15 +336,12 @@ export class MonthComponent implements OnInit, OnDestroy {
       });
   }
 
-  // Cancela a edição da despesa
   cancelarEdicao(): void {
     this.despesaEditando = null;
   }
 
-  // Remove uma despesa
   removerDespesa(despesa: Gasto): void {
     // Abre o diálogo de confirmação
-
     const vencimentoFormatado = this.datePipe.transform(
       despesa.vencimento,
       'dd/MM'
@@ -364,7 +361,7 @@ export class MonthComponent implements OnInit, OnDestroy {
       },
     });
 
-    // Quando o usuário clicar em confirmar, executa a exclusão
+    // Confirmar exclusão
     dialogRef.afterClosed().subscribe((result) => {
       if (result === 'confirm') {
         this.gastoService
@@ -377,13 +374,12 @@ export class MonthComponent implements OnInit, OnDestroy {
               this.onStatusChange();
             },
             error: (error) =>
-              console.error('Erro ao remover despesa:', error.message || error),
+              console.error('Erro ao excluir despesa:', error.message || error),
           });
       }
     });
   }
 
-  // Método para apagar despesas do mês
   apagarDespesasDoMes(monthKey: string): void {
     const monthData = this.monthNames[monthKey];
 
@@ -400,32 +396,28 @@ export class MonthComponent implements OnInit, OnDestroy {
       return;
     }
 
-    // Verifica se há despesas para o mês
     if (!this.totalDespesas) {
       // Se não houver despesas, abre o diálogo informativo
       this.dialog.open(ConfirmationDialogComponent, {
         width: '500px',
         data: {
-          title: `Não há despesas registradas para ${monthData[0]}.`,
-          // message: `Não há despesas registradas para ${monthData[0]}.`,
-          type: 'info', // Apenas exibe o botão "Fechar"
+          title: `Não há despesas registradas para ${monthData[0].toLowerCase()}.`,
+          type: 'info',
         },
       });
     } else {
       // Caso haja despesas, exibe o diálogo de confirmação
-      const monthNumber = monthData[1]; // Obter o número do mês
+      const monthNumber = monthData[1];
       const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
         width: '500px',
         data: {
-          title: `Deseja apagar as despesas de ${monthData[0]}?`,
-          // message: `Todas as despesas serão apagadas.`,
+          title: `Deseja excluir as despesas de ${monthData[0]}?`,
           type: 'confirmation', // Exibe os botões "Sim" e "Não"
         },
       });
 
       dialogRef.afterClosed().subscribe((result) => {
         if (result === 'confirm') {
-          // Se o usuário confirmar, apaga as despesas
           this.gastoService
             .apagarDespesasDoMes(monthNumber)
             .pipe(take(1))
@@ -438,26 +430,25 @@ export class MonthComponent implements OnInit, OnDestroy {
                   width: '500px',
                   data: {
                     title: 'Sucesso!',
-                    message: `Despesas de ${monthData[0]} apagadas com sucesso!`,
-                    type: 'info', // Apenas exibe o botão "Fechar"
+                    message: `As despesas de ${monthData[0].toLowerCase()} foram excluídas!`,
+                    type: 'info',
                   },
                 });
               },
               (erro) => {
-                console.error('Erro ao apagar despesas:', erro);
+                console.error('Erro ao excluir despesas:', erro);
                 this.dialog.open(ConfirmationDialogComponent, {
                   width: '500px',
                   data: {
                     title: 'Erro!',
                     message:
-                      'Não foi possível apagar as despesas. Por favor, tente novamente.',
-                    type: 'info', // Apenas exibe o botão "Fechar"
+                      'Não foi possível excluir as despesas. Por favor, tente novamente.',
+                    type: 'info',
                   },
                 });
               }
             );
         } else {
-          // Ação cancelada pelo usuário
           console.log('Ação de exclusão cancelada.');
         }
       });
@@ -491,12 +482,10 @@ export class MonthComponent implements OnInit, OnDestroy {
       vencimento.getDate()
     );
 
-    // Se o tipo for 1 (Pago)
     if (despesa.tipo === 1) {
       return { status: 'pago', cssClass: 'status-pago', disableButtons: true };
     }
 
-    // Se o vencimento for hoje
     if (vencimentoSemHora.getTime() === hojeSemHora.getTime()) {
       return {
         status: 'vencendo',
@@ -505,7 +494,6 @@ export class MonthComponent implements OnInit, OnDestroy {
       };
     }
 
-    // Se o vencimento passou
     if (vencimentoSemHora < hojeSemHora) {
       return {
         status: 'vencido',
@@ -514,7 +502,6 @@ export class MonthComponent implements OnInit, OnDestroy {
       };
     }
 
-    // Caso contrário, está pendente (vencimento futuro)
     return {
       status: 'pendente',
       cssClass: 'status-pendente',

@@ -1,14 +1,20 @@
+export enum TipoGasto {
+  pendente = 0,
+  pago = 1,
+  vencendo = 2,
+  vencido = 3,
+}
+
 export interface Gasto {
+  disableButtons?: boolean;
   id: number;
   nome: string;
   categoria: string;
   valor: number;
-  vencimento: string | Date; // Aceita tanto uma string quanto um Date
+  vencimento: string | Date;
   status: string;
-  tipo: 0 | 1 | 2 | 3; // Definindo que tipo pode ser 0, 1 ou 2
-  cssClass?: string; // Adicionando a propriedade cssClass
-  // pago: boolean; // Indica se a despesa foi paga ou não
-  disableButtons?: boolean;
-  repeticoes?: number; // Número de repetições
-  intervaloMeses?: number; // Intervalo entre repetições (em meses)
+  tipo: TipoGasto;
+  cssClass?: string;
+  repeticoes: number;
+  origem: string; // 'original' ou 'recorrente'
 }

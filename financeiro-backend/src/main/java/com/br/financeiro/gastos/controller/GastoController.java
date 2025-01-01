@@ -1,3 +1,4 @@
+
 package com.br.financeiro.gastos.controller;
 
 import com.br.financeiro.gastos.utils.ValidationUtils;
@@ -10,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-// import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -26,32 +26,55 @@ public class GastoController {
         this.gastoService = gastoService;
     }
 
+    @Autowired
+    private GastoRepository gastoRepository;
+
+    /**
+     * Retorna uma lista de gastos com base no status informado.
+     * .
+     */
     @GetMapping("/status/{status}")
     public List<Gasto> getGastosPorStatus(@PathVariable String status) {
         return gastoService.filtrarPorStatus(status);
     }
 
-    @Autowired
-    private GastoRepository gastoRepository;
-
+    /**
+     * Retorna uma lista de despesas filtradas pelo mês informado.
+     * 
+     */
     @Operation(summary = "Buscar despesas por mês")
     @GetMapping("/mes")
     public List<Gasto> getDespesasByMonth(@RequestParam Integer month) {
         return gastoRepository.findByVencimentoMonthNative(month);
     }
 
+    /**
+     * Retorna uma lista de todas as despesas.
+     * 
+     */
     @GetMapping
     public List<Gasto> getAllGastos() {
         return gastoRepository.findAll();
     }
 
+    /**
+     * Cria um novo gasto e atualiza seu status automaticamente.
+     * 
+     */
     @PostMapping
-    public Gasto createGasto(@RequestBody Gasto gasto) {
-        gasto.updateStatus();
-        // gasto.setStatus(gasto.getStatus());
-        return gastoRepository.save(gasto);
+    public ResponseEntity<Gasto> createGasto(@RequestBody Gasto gasto) {
+        try {
+            Gasto novoGasto = gastoService.salvarGasto(gasto);
+            return ResponseEntity.status(HttpStatus.CREATED).body(novoGasto);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(null);
+        }
     }
 
+    /**
+     * Busca um gasto pelo seu ID.
+     * 
+     */
     @GetMapping("/{id}")
     public ResponseEntity<Gasto> getGastoById(@PathVariable Long id) {
         return gastoRepository.findById(id)
@@ -59,6 +82,10 @@ public class GastoController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    /**
+     * Atualiza os dados de um gasto específico pelo ID.
+     * 
+     */
     @PutMapping("/{id}")
     public ResponseEntity<Gasto> updateGasto(@PathVariable Long id, @RequestBody Gasto gastoAtualizado) {
         return gastoRepository.findById(id)
@@ -76,8 +103,12 @@ public class GastoController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    /**
+     * Atualiza o status de um gasto pelo seu ID.
+     * 
+     */
     @PutMapping("/{id}/status")
-    public ResponseEntity<? extends Object> updateStatus(@PathVariable Long id, @RequestBody String novoTipo) {
+    public ResponseEntity<?> updateStatus(@PathVariable Long id, @RequestBody String novoTipo) {
         return gastoRepository.findById(id)
                 .map(gastoExistente -> {
                     try {
@@ -88,20 +119,22 @@ public class GastoController {
                         Gasto gastoSalvo = gastoRepository.save(gastoExistente);
                         return ResponseEntity.ok(gastoSalvo);
                     } catch (IllegalArgumentException e) {
-                        // return ResponseEntity.badRequest().body(null);
                         return ResponseEntity.badRequest().body("Tipo de gasto inválido: " + novoTipo);
-
                     }
                 })
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    /**
+     * Marca um gasto como pago pelo seu ID.
+     * 
+     */
     @PutMapping("/{id}/pagar")
     public ResponseEntity<Gasto> pagarDespesa(@PathVariable Long id) {
         Optional<Gasto> optionalGasto = gastoRepository.findById(id);
         if (optionalGasto.isPresent()) {
             Gasto gasto = optionalGasto.get();
-            gasto.setTipo(TipoGasto.PAGO);
+            gasto.setTipo(TipoGasto.pago);
             gasto.setStatus("pago");
             gasto = gastoRepository.save(gasto);
             return ResponseEntity.ok(gasto);
@@ -110,6 +143,10 @@ public class GastoController {
         }
     }
 
+    /**
+     * Exclui um gasto pelo seu ID.
+     * 
+     */
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteGasto(@PathVariable Long id) {
         return gastoRepository.findById(id)
@@ -120,45 +157,60 @@ public class GastoController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    /**
+     * Exclui todas as despesas de um determinado mês.
+     * 
+     */
     @DeleteMapping("/mes/{mes}")
     public ResponseEntity<?> apagarDespesasDoMes(@PathVariable Integer mes) {
         try {
-            gastoRepository.deleteByMes(mes); 
+            gastoRepository.deleteByMes(mes);
             return ResponseEntity.noContent().build();
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao deletar despesas: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Erro ao deletar despesas: " + e.getMessage());
         }
     }
 
+    /**
+     * Atualiza o status de despesas para "vencendo" para as que vencem hoje.
+     * 
+     */
     @PutMapping("/status/vencendo")
     public ResponseEntity<String> atualizarStatusVencendo() {
         try {
             gastoService.atualizarStatusVencendo();
-            return ResponseEntity.ok("Status atualizado para 'Vencendo' para despesas vencendo hoje.");
+            return ResponseEntity.ok("Status atualizado para 'vencendo' para despesas vencendo hoje.");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                                .body("Erro ao atualizar status: " + e.getMessage());
+                    .body("Erro ao atualizar status: " + e.getMessage());
         }
     }
 
+    /**
+     * Atualiza o status de despesas para "vencido" para as que já venceram.
+     * 
+     */
     @PutMapping("/status/vencido")
     public ResponseEntity<String> atualizarStatusVencido() {
         try {
-            gastoService.atualizarStatusGastos(); // Atualiza todos os status, incluindo "Vencido"
-            return ResponseEntity.ok("Status atualizado para 'Vencido' para despesas vencidas.");
+            gastoService.atualizarStatusVencido();
+            return ResponseEntity.ok("Status atualizado para 'vencido' para despesas vencidas.");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                                .body("Erro ao atualizar status: " + e.getMessage());
+                    .body("Erro ao atualizar status: " + e.getMessage());
         }
     }
 
+    /**
+     * Valida a entrada de dados para buscar detalhes.
+     * 
+     */
     @GetMapping("/detalhes/{input}")
     public ResponseEntity<String> getDetails(@PathVariable("input") String input) {
         if (!ValidationUtils.isValidInput(input)) {
             return ResponseEntity.badRequest().body("Entrada inválida. Permitidos apenas letras, números, '_' e '-'.");
-            }
-        // Lógica de processamento
+        }
         return ResponseEntity.ok("Parâmetro válido!");
     }
-
 }

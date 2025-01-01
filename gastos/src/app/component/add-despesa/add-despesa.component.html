@@ -1,55 +1,70 @@
 <div class="add-title">
-  <p>adicionar despesa</p>
+  <p>Adicionar Despesa</p>
 </div>
 <div class="container__add-despesa">
-
   <div class="adiciona-despesa">
-
-    <form [formGroup]="despesaForm" (ngSubmit)="adicionarDespesa()">
+    <form [formGroup]="despesaForm" (ngSubmit)="onSubmit()">
+      <!-- Nome -->
       <div class="form-group">
-        <!-- <label> nome </label> -->
-        <input type="text" id="nome" class="form-control" formControlName="nome" placeholder="nome da despesa" />
+        <input type="text" id="nome" class="form-control" formControlName="nome" placeholder="Nome da despesa"
+          aria-label="Nome da despesa">
         <div *ngIf="despesaForm.get('nome')?.invalid && despesaForm.get('nome')?.touched" class="text-danger">
           Nome é obrigatório.
         </div>
       </div>
 
+      <!-- Categoria -->
       <div class="form-group">
-        <select id="categoria" class="form-control" formControlName="categoria"> <!-- Alterado para 'categoria' -->
-          <option value="" disabled selected>categoria da despesa</option>
+        <select id="categoria" class="form-control" formControlName="categoria" aria-label="Categoria da despesa">
+          <option value="" disabled selected>Selecione uma categoria</option>
           <option *ngFor="let categoria of categorias" [value]="categoria">{{ categoria }}</option>
-          <!-- Usando 'categorias' -->
         </select>
         <div *ngIf="despesaForm.get('categoria')?.invalid && despesaForm.get('categoria')?.touched" class="text-danger">
           Categoria é obrigatória.
         </div>
       </div>
 
+      <!-- Valor -->
       <div class="form-group">
-        <!-- <label> valor </label> -->
-        <input type="text" id="valor" class="form-control" formControlName="valor" placeholder="Ex.: 123,99" />
+        <input type="text" id="valor" class="form-control" formControlName="valor" placeholder="Ex.: 123.99"
+          aria-label="Valor da despesa">
         <div *ngIf="despesaForm.get('valor')?.hasError('pattern') && despesaForm.get('valor')?.touched"
           class="text-danger">
           Insira um valor válido! Ex.: 123.99
         </div>
       </div>
 
+      <!-- Vencimento -->
       <div class="form-group">
-        <!-- <label> vencimento </label> -->
-        <input type="date" id="vencimento" class="form-control" formControlName="vencimento" placeholder="Vencimento" />
+        <input type="date" id="vencimento" class="form-control" formControlName="vencimento"
+          aria-label="Data de vencimento">
         <div *ngIf="despesaForm.get('vencimento')?.invalid && despesaForm.get('vencimento')?.touched"
           class="text-danger">
           Vencimento é obrigatório.
         </div>
       </div>
-      <!-- Opção de repetir despesa nos próximos meses -->
-      <!-- <div>
-        <label for="repetir">Repetir nos próximos meses</label>
-        <input id="repetir" type="checkbox" formControlName="repetir" />
-      </div> -->
-      <div class="form-group-btn-btn-info">
-        <button type="submit" class="btn btn-info" [disabled]="despesaForm.invalid">Adicionar</button>
-        <button type="button" class="btn btn-info" (click)="resetForm()">Cancelar</button>
+
+      <div class="form-group">
+        <label for="repeticoes">
+          Digite abaixo a recorrência (0 a 11 meses):
+        </label>
+        <input id="repeticoes" type="number" formControlName="repeticoes" placeholder="repeticões"
+          aria-label="repeticoes">
+        <div *ngIf="despesaForm.get('repeticoes')?.invalid && despesaForm.get('repeticoes')?.touched"
+          class="text-danger">
+          Repetição é obrigatório.
+        </div>
+      </div>
+
+      <!-- Botões -->
+      <div class="form-group-botoes">
+        <button type="submit" class="btn btn-info" [disabled]="despesaForm.invalid">
+          Adicionar
+        </button>
+
+        <button type="button" class="btn btn-info" (click)="resetForm()">
+          Cancelar
+        </button>
       </div>
     </form>
   </div>

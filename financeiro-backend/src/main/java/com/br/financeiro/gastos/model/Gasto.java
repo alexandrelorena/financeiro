@@ -1,3 +1,8 @@
+/**
+ * Representa uma despesa no sistema financeiro.
+ * Inclui informações sobre nome, categoria, valor, vencimento, tipo e status.
+ * Atualiza automaticamente o status com base no tipo e na data de vencimento.
+ */
 package com.br.financeiro.gastos.model;
 
 import jakarta.persistence.*;
@@ -18,7 +23,7 @@ public class Gasto {
     @NotNull(message = "O nome não pode ser nulo")
     private String nome;
 
-    @NotNull(message = "a categoria não pode ser nulo")
+    @NotNull(message = "A categoria não pode ser nula")
     private String categoria;
 
     @NotNull(message = "O valor não pode ser nulo")
@@ -26,7 +31,7 @@ public class Gasto {
     private double valor;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    @Temporal(TemporalType.DATE) 
+    @Temporal(TemporalType.DATE)
     @Column(nullable = false)
     private LocalDate vencimento;
 
@@ -39,11 +44,10 @@ public class Gasto {
     private TipoGasto tipo;
 
     public Gasto() {
-        this.tipo = TipoGasto.PENDENTE;
-        updateStatus(); // Atualiza o status no construtor
+        this.tipo = TipoGasto.pendente;
+        updateStatus();
     }
 
-    // Getters e Setters
     public Long getId() {
         return id;
     }
@@ -82,7 +86,7 @@ public class Gasto {
 
     public void setVencimento(LocalDate vencimento) {
         this.vencimento = vencimento;
-        updateStatus(); // Atualiza o status sempre que a data de vencimento for alterada
+        updateStatus();
     }
 
     public String getStatus() {
@@ -99,12 +103,12 @@ public class Gasto {
 
     public void setTipo(TipoGasto tipo) {
         this.tipo = tipo;
-        updateStatus(); // Atualiza o status com base no tipo
+        updateStatus();
     }
 
-    // Lógica para definir o status
+    // Atualiza o status com base no tipo e na data de vencimento
     public void updateStatus() {
-        if (this.tipo == TipoGasto.PAGO) {
+        if (this.tipo == TipoGasto.pago) {
             this.status = "pago";
         } else if (vencimento != null) {
             LocalDate hoje = LocalDate.now();
@@ -123,12 +127,12 @@ public class Gasto {
     // Método chamado antes de persistir no banco (para inserção)
     @PrePersist
     public void beforeInsert() {
-        updateStatus();  // Garante que o status é atualizado antes de inserir
+        updateStatus();
     }
 
     // Método chamado antes de atualizar no banco
     @PreUpdate
     public void beforeUpdate() {
-        updateStatus();  // Garante que o status é atualizado antes de atualizar
+        updateStatus();
     }
 }
