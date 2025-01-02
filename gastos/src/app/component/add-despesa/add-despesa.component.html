@@ -6,10 +6,10 @@
     <form [formGroup]="despesaForm" (ngSubmit)="onSubmit()">
       <!-- Nome -->
       <div class="form-group">
-        <input type="text" id="nome" class="form-control" formControlName="nome" placeholder="Nome da despesa"
-          aria-label="Nome da despesa">
+        <input type="text" (input)="onNomeInput($event)" id="nome" class="form-control" formControlName="nome"
+          placeholder="Nome da despesa" aria-label="Nome da despesa">
         <div *ngIf="despesaForm.get('nome')?.invalid && despesaForm.get('nome')?.touched" class="text-danger">
-          Nome é obrigatório.
+          <small>O nome é obrigatório. Máximo 17 caracteres.</small>
         </div>
       </div>
 
@@ -20,17 +20,16 @@
           <option *ngFor="let categoria of categorias" [value]="categoria">{{ categoria }}</option>
         </select>
         <div *ngIf="despesaForm.get('categoria')?.invalid && despesaForm.get('categoria')?.touched" class="text-danger">
-          Categoria é obrigatória.
+          <small>Categoria é obrigatória.</small>
         </div>
       </div>
 
       <!-- Valor -->
       <div class="form-group">
-        <input type="text" id="valor" class="form-control" formControlName="valor" placeholder="Ex.: 123.99"
-          aria-label="Valor da despesa">
-        <div *ngIf="despesaForm.get('valor')?.hasError('pattern') && despesaForm.get('valor')?.touched"
-          class="text-danger">
-          Insira um valor válido! Ex.: 123.99
+        <input type="text" pattern="^\d+([.,]?\d{0,2})?$" id="valor" class="form-control" formControlName="valor"
+          placeholder="Ex.: 123.99" aria-label="Valor da despesa" (keypress)="verificarInput($event)">
+        <div *ngIf="despesaForm.get('valor')?.invalid && despesaForm.get('valor')?.touched">
+          <small>Insira um valor válido! Ex.: 123.99</small>
         </div>
       </div>
 
@@ -40,7 +39,7 @@
           aria-label="Data de vencimento">
         <div *ngIf="despesaForm.get('vencimento')?.invalid && despesaForm.get('vencimento')?.touched"
           class="text-danger">
-          Vencimento é obrigatório.
+          <small>Vencimento é obrigatório.</small>
         </div>
       </div>
 
@@ -48,11 +47,11 @@
         <label for="repeticoes">
           Digite abaixo a recorrência (0 a 11 meses):
         </label>
-        <input id="repeticoes" type="number" formControlName="repeticoes" placeholder="repeticões"
-          aria-label="repeticoes">
+        <input id="repeticoes" type="number" (keydown)="onKeyDown($event)" (input)="validarRepeticoes($event)"
+          formControlName="repeticoes" placeholder="repeticões" aria-label="repeticoes">
         <div *ngIf="despesaForm.get('repeticoes')?.invalid && despesaForm.get('repeticoes')?.touched"
           class="text-danger">
-          Repetição é obrigatório.
+          <small>Repetição é obrigatório.</small>
         </div>
       </div>
 

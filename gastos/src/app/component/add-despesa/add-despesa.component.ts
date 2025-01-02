@@ -27,6 +27,22 @@ export class AddDespesaComponent implements OnInit {
   mesSelecionado: number = this.currentMonth;
   anoSelecionado: number = new Date().getFullYear();
 
+  meses = [
+    { nome: 'Janeiro', value: 1 },
+    { nome: 'Fevereiro', value: 2 },
+    { nome: 'Março', value: 3 },
+    { nome: 'Abril', value: 4 },
+    { nome: 'Maio', value: 5 },
+    { nome: 'Junho', value: 6 },
+    { nome: 'Julho', value: 7 },
+    { nome: 'Agosto', value: 8 },
+    { nome: 'Setembro', value: 9 },
+    { nome: 'Outubro', value: 10 },
+    { nome: 'Novembro', value: 11 },
+    { nome: 'Dezembro', value: 12 },
+  ];
+  maxRepeticoes: number = 0; // Será atualizado conforme o mês selecionado
+
   /**
    * O usuário deve escolher uma categoria.
    */
@@ -60,16 +76,70 @@ export class AddDespesaComponent implements OnInit {
    */
   ngOnInit(): void {
     this.despesaForm = this.fb.group({
-      nome: ['', Validators.required],
+      // nome: ['', Validators.required],
+      nome: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(1),
+          Validators.maxLength(17),
+        ],
+      ],
       categoria: ['', Validators.required],
-      valor: ['', [Validators.required, Validators.min(0)]],
+      // valor: ['', [Validators.required, Validators.min(0)]],
+      valor: [
+        '',
+        [Validators.required, Validators.pattern(/^\d+([.,]?\d{0,2})?$/)],
+      ],
       vencimento: ['', Validators.required],
-      repeticoes: [0, [Validators.required, Validators.min(0)]],
+      repeticoes: [
+        0,
+        [Validators.required, Validators.min(0), Validators.max(11)],
+      ],
       mesSelecionado: [this.currentMonth, [Validators.required]],
       anoSelecionado: [new Date().getFullYear(), [Validators.required]],
     });
 
     this.despesaForm.updateValueAndValidity();
+    this.onVencimentoChange(); // Inicializa o valor de maxRepeticoes no início
+  }
+
+  onVencimentoChange() {
+    const vencimento = this.despesaForm.get('vencimento')?.value;
+
+    // Verifica se a data de vencimento é válida
+    if (vencimento) {
+      const vencimentoDate = parseISO(vencimento);
+      const mesSelecionado = vencimentoDate.getMonth() + 1; // Mês de 0 a 11, então somamos 1
+      const anoSelecionado = vencimentoDate.getFullYear();
+
+      // Calcula o número máximo de repetições até o final do ano
+      const mesesRestantes = 12 - mesSelecionado;
+      this.maxRepeticoes = mesesRestantes;
+
+      // Atualiza o campo mesSelecionado e anoSelecionado no formulário
+      this.despesaForm.patchValue({
+        mesSelecionado: mesSelecionado,
+        anoSelecionado: anoSelecionado,
+      });
+
+      // Atualiza a validação para o campo de repetições
+      const repeticoesControl = this.despesaForm.get('repeticoes');
+      repeticoesControl?.setValidators([
+        Validators.required,
+        Validators.min(0),
+        Validators.max(this.maxRepeticoes),
+      ]);
+      repeticoesControl?.updateValueAndValidity();
+    }
+  }
+
+  verificarRepeticoes() {
+    const repeticoesControl = this.despesaForm.get('repeticoes');
+    if (repeticoesControl?.value > this.maxRepeticoes) {
+      repeticoesControl?.setValue(this.maxRepeticoes);
+      alert(`O número máximo de repetições é ${this.maxRepeticoes}`);
+    }
   }
 
   private determinarStatusETipo(
@@ -106,6 +176,113 @@ export class AddDespesaComponent implements OnInit {
     return { status: 'vencido', tipo: TipoGasto.vencido };
   }
 
+  onNomeInput(event: Event) {
+    const input = event.target as HTMLInputElement;
+
+    // Limitar o número de caracteres a 30
+    if (input.value.length > 17) {
+      input.value = input.value.slice(0, 17); // Corta a string para 30 caracteres
+    }
+  }
+
+  validarRepeticoes(event: any) {
+    const valor = event.target.value;
+
+    // Verifica se o valor começa com mais de um 0
+    if (valor === '0') {
+      event.target.value = '0'; // Se for apenas um 0, mantém o valor como 0
+    } else if (valor.startsWith('00')) {
+      event.target.value = '0'; // Impede múltiplos zeros, mantendo apenas o primeiro
+    }
+  }
+
+  verificarInput(event: KeyboardEvent): void {
+    const regex = /^[0-9.,]$/; // Permite apenas números, ponto e vírgula
+    const inputChar = event.key;
+
+    if (!regex.test(inputChar)) {
+      event.preventDefault(); // Impede a entrada de caracteres inválidos
+      return;
+    }
+
+
+    const inputElement = event.target as HTMLInputElement;
+    const currentValue = inputElement.value;
+    const cursorPosition = inputElement.selectionStart || 0;
+
+    // Verifica se já existe um separador decimal no valor atual
+    const hasDot = currentValue.includes('.');
+    const hasComma = currentValue.includes(',');
+
+    // Permite apenas um separador decimal (ponto ou vírgula, mas não ambos)
+    if ((inputChar === '.' && hasDot) || (inputChar === ',' && hasComma)) {
+      event.preventDefault();
+      return;
+    }
+
+    // Impede a digitação de um separador adicional se já existir um diferente
+    if ((inputChar === '.' && hasComma) || (inputChar === ',' && hasDot)) {
+      event.preventDefault();
+      return;
+    }
+
+    // Se já existe um separador decimal, limita a parte decimal a dois dígitos
+    const separator = hasDot ? '.' : hasComma ? ',' : null;
+    if (separator) {
+      const [integerPart, decimalPart] = currentValue.split(separator);
+
+      // Verifica se o cursor está na parte decimal e impede mais de dois dígitos
+      if (
+        cursorPosition > currentValue.indexOf(separator) &&
+        decimalPart?.length >= 2
+      ) {
+        event.preventDefault();
+      }
+    }
+  }
+
+  // onKeyDown(event: KeyboardEvent) {
+  //   // Permitir as teclas de controle: Backspace (8), Tab (9), Enter (13), Delete (46)
+  //   const allowedKeys = ['Backspace', 'Tab', 'Enter', 'Delete'];
+
+  //   // Verificar se a tecla pressionada é um número ou uma tecla permitida
+  //   const isNumber = event.key >= '0' && event.key <= '9';
+
+  //   if (!isNumber && !allowedKeys.includes(event.key)) {
+  //     event.preventDefault(); // Impede a entrada de caracteres não numéricos
+  //   }
+
+  //   const value = (event.target as HTMLInputElement).value;
+  //   if (parseInt(value) > 11) {
+  //     event.preventDefault();
+  //   }
+  // }
+
+  onKeyDown(event: KeyboardEvent) {
+    // Permitir as teclas de controle: Backspace (8), Tab (9), Enter (13), Delete (46)
+    const allowedKeys = ['Backspace', 'Tab', 'Enter', 'Delete'];
+
+    // Se a tecla pressionada for uma tecla permitida, não bloqueie a ação
+    if (allowedKeys.includes(event.key)) {
+      return;
+    }
+
+    // Verificar se a tecla pressionada é um número
+    const isNumber = event.key >= '0' && event.key <= '9';
+    if (!isNumber) {
+      event.preventDefault(); // Impede a entrada de caracteres não numéricos
+    }
+
+    // Verificar o valor atual do campo após a tecla pressionada
+    const inputValue = (event.target as HTMLInputElement).value + event.key;
+    const inputNumber = parseInt(inputValue, 10);
+
+    // Bloquear se o valor digitado for maior que 11
+    if (inputNumber > 11) {
+      event.preventDefault();
+    }
+  }
+
   /**
    * A despesa é criada e enviada para o servidor.
    */
@@ -116,6 +293,11 @@ export class AddDespesaComponent implements OnInit {
       const { status, tipo } = this.determinarStatusETipo(vencimento, pago);
       const mesSelecionado = this.despesaForm.value.mesSelecionado;
       const anoSelecionado = this.despesaForm.value.anoSelecionado;
+
+      let valor = this.despesaForm.value.valor;
+
+      // Substituir vírgulas por pontos
+      valor = valor.replace(',', '.');
 
       const parsedDate = parseISO(vencimento);
 
@@ -131,9 +313,9 @@ export class AddDespesaComponent implements OnInit {
       const despesa: Gasto = {
         nome: this.despesaForm.value.nome,
         categoria: this.despesaForm.value.categoria,
-        valor: this.despesaForm.value.valor,
+        valor: valor,
         vencimento,
-        tipo: this.despesaForm.value.TipoGasto,
+        tipo: tipo,
         status,
         id: 0,
         repeticoes,
@@ -172,7 +354,13 @@ export class AddDespesaComponent implements OnInit {
   }
 
   criarDespesasRecorrentes(despesa: Gasto) {
-    const repeticoes = despesa.repeticoes || 0;
+    const repeticoes =
+      despesa.repeticoes === 0 ||
+      (despesa.repeticoes > 0 && despesa.repeticoes.toString().trim() !== '0')
+        ? despesa.repeticoes
+        : 0;
+
+    // const repeticoes = despesa.repeticoes || 0;
     let vencimentoOriginal = new Date(despesa.vencimento);
 
     for (let i = 0; i < repeticoes; i++) {
