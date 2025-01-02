@@ -28,7 +28,7 @@
       <div class="form-group">
         <input type="text" pattern="^\d+([.,]?\d{0,2})?$" id="valor" class="form-control" formControlName="valor"
           placeholder="Ex.: 123.99" aria-label="Valor da despesa" (keypress)="verificarInput($event)">
-        <div *ngIf="despesaForm.get('valor')?.invalid && despesaForm.get('valor')?.touched">
+        <div *ngIf="despesaForm.get('valor')?.invalid && despesaForm.get('valor')?.touched" class="text-danger">
           <small>Insira um valor válido! Ex.: 123.99</small>
         </div>
       </div>
