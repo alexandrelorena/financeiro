@@ -11,6 +11,7 @@ DESPESAS
     WHERE nome LIKE '%Nubank%'
     AND categoria = 'Cartão';
 
+- login 
 
 
 RECEITAS
