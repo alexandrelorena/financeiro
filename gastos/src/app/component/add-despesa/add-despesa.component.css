@@ -1,33 +1,74 @@
+/* Container */
 .container__add-despesa {
-  height: 42.125rem;
+  height: 500px;
+  width: 100%;
   max-width: 43.75rem;
   margin: 0 auto;
-  display: flex;
-  justify-content: center;
-  width: 90%;
-  max-width: 31.25rem;
-  /* margin-top: 1.25rem; */
+  display: block;
+  padding-top: none;
 }
 
+/* Form Controls */
 .form-control {
   width: 100%;
   margin-top: 1.25rem;
   margin-bottom: 0.3125rem;
-  padding: 0.5rem;
+  padding: 0.3rem;
   font-size: 1rem;
   font-family: Tahoma, Verdana, sans-serif, Arial;
   border-radius: 0.5rem;
   border: 0.0625rem solid grey;
-  border-style: double;
-  color: #726b6a;
+  color: gray;
 }
 
+/* Form Groups */
+.form-group,
+.form-group-botoes {
+  width: 90%;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.form-group-botoes {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  gap: 1.375rem;
+  width: 90%;
+  flex-wrap: wrap;
+}
+
+/* Buttons */
+button.btn-info {
+  background-color: transparent;
+  border: 0.0625rem solid grey;
+  border-style: double;
+  padding: 0.5rem;
+  color: var(--primary-bg-color);
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 0.3125rem;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  box-sizing: border-box;
+}
+
+button.btn-info:hover {
+  color: var(--button-menu-hover);
+  font-weight: bold;
+  padding: 0.5rem;
+  border-radius: 0.3125rem;
+  background-clip: padding-box;
+}
+
+/* Title */
 .add-title {
   background-color: #2290a1;
   height: 7.5%;
   border-radius: 0.2rem 0.2rem 0 0;
 }
 
+/* Paragraph */
 p {
   width: 100%;
   height: 7%;
@@ -40,88 +81,66 @@ p {
   justify-content: center;
 }
 
-button.btn-info {
-  background-color: transparent;
-  border: 0.0625rem solid grey;
-  border-style: double;
-  padding: 0.5rem;
-  color: var(--primary-bg-color);
-  font-size: 1rem;
-  font-weight: bold;
-  cursor: pointer;
-  border-radius: 0.3125rem;
-  transition: background-color 0.3s ease, color 0.3s ease;
+/* Span */
+span {
+  width: 100%;
+  color: white;
+  font-family: Tahoma, Verdana, sans-serif, Arial;
+  font-size: 12px;
 }
 
-button.btn-info:hover {
-  color: var(--button-menu-hover);
-  font-weight: bold;
-  padding: 0.5rem;
-  border-radius: 0.3125rem;
-  background-clip: padding-box;
-}
-
-/* Estilo para o texto de erro */
+/* Text Danger */
 .text-danger {
-  color: var(--bs-danger); /* Cor vermelha para o texto */
-  font-size: 14px; /* Tamanho da fonte */
-  font-weight: bold; /* Deixar o texto em negrito */
-  margin-top: none; /* Espaçamento acima da mensagem */
+  color: var(--bs-danger);
+  font-size: 16px;
+  margin-bottom: -5px;
+  margin-top: 5px;
 }
 
-/* .text-danger {
-  color: red;
-  margin-bottom: 0.625rem;
-} */
+.text-danger:last-child {
+  margin-top: -3px;
+  margin-bottom: 0;
+}
 
+/* Select */
 .form-group > select {
-  color: #726b6a;
+  background-color: #fff;
+  color: gray;
 }
 
-.form-group-checkbox-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 0.625rem;
-  border: 0.0625rem solid grey;
-  border-radius: 0.3125rem;
-  border-style: dotted;
-}
-
-.form-group-checkbox {
-  display: flex;
-  align-items: center;
-}
-
-.form-group-botoes {
-  margin-top: 10px;
-  display: flex;
-  justify-content: space-between;
-  gap: 1.375rem;
-}
-
+/* Repeticoes */
 #repeticoes {
+  height: 32px;
   margin-top: 10px;
-  margin-bottom: 10px;
-  width: 100%; /* Se desejar largura ajustável */
+  margin-bottom: 5px;
+  width: 100%;
   max-width: 100%;
-  border: 0.0625rem solid #726b6a;
-  border-radius: 0.3125rem;
-  border-style: double;
-  color: #726b6a;
-  /* box-sizing: border-box; */
+  border-radius: 0.5rem;
+  border: 0.0625rem solid grey;
+  color: gray;
   padding: 0.7rem;
   font-size: 1rem;
 }
 
+/* Inputs and Textareas */
 input.form-control,
 textarea.form-control {
   box-sizing: border-box;
-  color: #726b6a;
+  color: gray;
 }
 
 input.form-control:disabled {
   background-color: #f0f0f0;
   color: #999;
   cursor: not-allowed;
+}
+
+input::placeholder {
+  color: gray;
+  opacity: 1;
+}
+
+/* Small Text */
+small {
+  color: #2290a1;
 }

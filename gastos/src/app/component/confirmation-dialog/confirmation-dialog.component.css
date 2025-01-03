@@ -31,7 +31,7 @@
 /* Cor para o caso de não haver despesas */
 .custom-title-no-expenses {
   text-align: center;
-  color: var(--primary-color); /* Cor alternativa para não há despesas */
+  color: var(--primary-color);
   font-size: 1.2rem;
 }
 

@@ -20,11 +20,12 @@ import { EventService } from '../../service/event.service';
 import { EditDespesaModalComponent } from '../../edit-despesa-modal/edit-despesa-modal.component';
 
 @Component({
-  selector: 'app-month',
-  templateUrl: '../mes/month.component.html',
-  styleUrls: ['../mes/month.component.css'],
-  providers: [DatePipe],
-  encapsulation: ViewEncapsulation.None,
+    selector: 'app-month',
+    templateUrl: '../mes/month.component.html',
+    styleUrls: ['../mes/month.component.css'],
+    providers: [DatePipe],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class MonthComponent implements OnInit, OnDestroy {
   objectKeys = Object.keys;

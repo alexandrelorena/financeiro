@@ -1,31 +1,24 @@
 .container__content {
-  width: 70%; /* Ocupar a largura total */
-  height: 540px;
+  width: 70%;
+  height: 500px;
   margin: auto;
   margin-top: 10px;
   margin-bottom: 10px;
-  /* border: 1px solid red; */
   display: flex;
   flex-direction: row;
-  gap: 10px; /* Espaço menor entre os itens */
+  gap: 10px;
 }
 
 .app-menu {
-  flex: 0; /* O menu ocupará 1 parte do layout */
-  /* border: 1px solid grey;
-  border-style: dotted;
-  border-radius: 5px; */
+  flex: 0;
 }
 
 .app-month {
-  flex: 7; /* O conteúdo principal ocupará mais espaço (3 partes) */
-  /* border: 1px solid grey;
-  border-style: double;
-  border-radius: 5px; */
+  flex: 7;
 }
 
 .app-add-despesa {
-  flex: 3; /* A despesa ocupará 1 parte */
+  flex: 3;
   border: 1px solid grey;
   border-style: double;
   border-radius: 5px;

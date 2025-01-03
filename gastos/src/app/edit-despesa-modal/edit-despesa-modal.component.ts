@@ -5,9 +5,10 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
  * Componente de modal para editar as despesas.
  */
 @Component({
-  selector: 'app-edit-despesa-modal',
-  templateUrl: './edit-despesa-modal.component.html',
-  styleUrls: ['./edit-despesa-modal.component.css'],
+    selector: 'app-edit-despesa-modal',
+    templateUrl: './edit-despesa-modal.component.html',
+    styleUrls: ['./edit-despesa-modal.component.css'],
+    standalone: false
 })
 export class EditDespesaModalComponent {
   despesa: any;

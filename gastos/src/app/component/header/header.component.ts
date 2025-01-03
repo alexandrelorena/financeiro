@@ -8,9 +8,10 @@ import { MonthService } from '../../service/month.service';
  * e as interações relacionadas aos meses e despesas.
  */
 @Component({
-  selector: 'app-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css'],
+    selector: 'app-header',
+    templateUrl: './header.component.html',
+    styleUrls: ['./header.component.css'],
+    standalone: false
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   /** Indica se o tema escuro está ativado */

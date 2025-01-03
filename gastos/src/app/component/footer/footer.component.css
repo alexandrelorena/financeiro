@@ -6,18 +6,18 @@
   display: flex;
   flex-direction: row;
   justify-content: center;
-  align-items: center; /* Alinha verticalmente os itens ao centro */
-  padding: 0.625rem 0; /* Padding superior e inferior -> 10px -> 0.625rem */
+  align-items: center;
+  padding: 0.625rem 0;
   border-radius: 0.3125rem;
   border-style: double;
-  box-sizing: border-box; /* Inclui padding e borda no cálculo do tamanho total */
+  box-sizing: border-box;
 }
-/* Estilo dos links */
+
 a {
-  text-decoration: none; /* Remove o sublinhado */
+  text-decoration: none;
   padding: 0.3125rem;
-  color: var(--primary-text-color); /* Usa a variável para a cor do texto */
-  transition: color 0.3s ease; /* Suaviza a transição de cor */
+  color: var(--primary-text-color);
+  transition: color 0.3s ease;
 }
 
 .name {
@@ -25,27 +25,25 @@ a {
 }
 
 .name:hover {
-  color: var(--hover-color, #2290a1); /* Cor ao passar o mouse */
+  color: var(--hover-color, #2290a1);
 }
 
 a:hover .fab {
-  color: var(--hover-color, #2290a1); /* Cor ao passar o mouse */
+  color: var(--hover-color, #2290a1);
 }
 
-/* Estilo do texto no footer */
 .botton > p {
   margin-top: 0.625rem;
   font-size: 1rem;
-  font-family: Tahoma, Verdana, sans-serif, Arial; /* Fonte */
-  color: var(--primary-text-color); /* Cor do texto usando variável */
+  font-family: Tahoma, Verdana, sans-serif, Arial;
+  color: var(--primary-text-color);
 }
 
-/* Estilo para o modo escuro */
 .dark-theme .container__footer {
-  background-color: #1e1e1e; /* Cor de fundo para o modo escuro */
+  background-color: #1e1e1e;
 }
 
 .dark-theme .botton > p {
-  color: white; /* Cor do texto para o modo escuro */
-  opacity: 0.9; /* Aumenta a opacidade no modo escuro para melhor legibilidade */
+  color: white;
+  opacity: 0.9;
 }

@@ -10,9 +10,10 @@ import { parseISO, isValid, format } from 'date-fns';
  * Componente para criar novas despesas no sistema.
  */
 @Component({
-  selector: 'app-add-despesa',
-  templateUrl: './add-despesa.component.html',
-  styleUrls: ['./add-despesa.component.css'],
+    selector: 'app-add-despesa',
+    templateUrl: './add-despesa.component.html',
+    styleUrls: ['./add-despesa.component.css'],
+    standalone: false
 })
 export class AddDespesaComponent implements OnInit {
   /**

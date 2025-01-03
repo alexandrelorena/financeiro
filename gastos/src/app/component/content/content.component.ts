@@ -2,9 +2,10 @@ import { Component, ViewChild, AfterViewInit } from '@angular/core';
 import { MonthComponent } from '../mes/month.component';
 
 @Component({
-  selector: 'app-content',
-  templateUrl: './content.component.html',
-  styleUrls: ['./content.component.css'],
+    selector: 'app-content',
+    templateUrl: './content.component.html',
+    styleUrls: ['./content.component.css'],
+    standalone: false
 })
 export class ContentComponent implements AfterViewInit {
   @ViewChild('monthComponent') monthComponent!: MonthComponent;

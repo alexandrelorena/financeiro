@@ -4,66 +4,55 @@
 <div class="container__add-despesa">
   <div class="adiciona-despesa">
     <form [formGroup]="despesaForm" (ngSubmit)="onSubmit()">
-      <!-- Nome -->
       <div class="form-group">
-        <input type="text" (input)="onNomeInput($event)" id="nome" class="form-control" formControlName="nome"
-          placeholder="Nome da despesa" aria-label="Nome da despesa">
         <div *ngIf="despesaForm.get('nome')?.invalid && despesaForm.get('nome')?.touched" class="text-danger">
-          <small>O nome é obrigatório. Máximo 17 caracteres.</small>
+          <small> A despesa deve ter até 17 caracteres. </small>
         </div>
+        <input type="text" (input)="onNomeInput($event)" id="nome" class="form-control" formControlName="nome"
+          placeholder="despesa" aria-label="Nome da despesa."
+          [ngStyle]="{'color': despesaForm.get('nome')?.invalid && despesaForm.get('nome')?.touched}">
       </div>
 
-      <!-- Categoria -->
       <div class="form-group">
+        <div *ngIf="despesaForm.get('categoria')?.invalid && despesaForm.get('categoria')?.touched" class="text-danger">
+          <small>Escolha a categoria.</small>
+        </div>
         <select id="categoria" class="form-control" formControlName="categoria" aria-label="Categoria da despesa">
-          <option value="" disabled selected>Selecione uma categoria</option>
+          <option value="" disabled selected>selecione uma categoria</option>
           <option *ngFor="let categoria of categorias" [value]="categoria">{{ categoria }}</option>
         </select>
-        <div *ngIf="despesaForm.get('categoria')?.invalid && despesaForm.get('categoria')?.touched" class="text-danger">
-          <small>Categoria é obrigatória.</small>
-        </div>
       </div>
 
-      <!-- Valor -->
       <div class="form-group">
-        <input type="text" pattern="^\d+([.,]?\d{0,2})?$" id="valor" class="form-control" formControlName="valor"
-          placeholder="Ex.: 123.99" aria-label="Valor da despesa" (keypress)="verificarInput($event)">
         <div *ngIf="despesaForm.get('valor')?.invalid && despesaForm.get('valor')?.touched" class="text-danger">
           <small>Insira um valor válido! Ex.: 123.99</small>
         </div>
+        <input type="text" pattern="^\d+([.,]?\d{0,2})?$" id="valor" class="form-control" formControlName="valor"
+          placeholder="valor ex.: 123.99" aria-label="Valor da despesa" (keypress)="verificarInput($event)">
       </div>
 
-      <!-- Vencimento -->
       <div class="form-group">
-        <input type="date" id="vencimento" class="form-control" formControlName="vencimento"
-          aria-label="Data de vencimento">
         <div *ngIf="despesaForm.get('vencimento')?.invalid && despesaForm.get('vencimento')?.touched"
           class="text-danger">
           <small>Vencimento é obrigatório.</small>
         </div>
+        <input type="date" id="vencimento" class="form-control" formControlName="vencimento"
+          aria-label="data de vencimento">
       </div>
 
       <div class="form-group">
-        <label for="repeticoes">
-          Digite abaixo a recorrência (0 a 11 meses):
-        </label>
+        <small>Insira quantidade de meses: 0 a 11</small>
         <input id="repeticoes" type="number" (keydown)="onKeyDown($event)" (input)="validarRepeticoes($event)"
           formControlName="repeticoes" placeholder="repeticões" aria-label="repeticoes">
         <div *ngIf="despesaForm.get('repeticoes')?.invalid && despesaForm.get('repeticoes')?.touched"
           class="text-danger">
-          <small>Repetição é obrigatório.</small>
+          <small>Somente número positivo de 0 a 11.</small>
         </div>
       </div>
 
-      <!-- Botões -->
       <div class="form-group-botoes">
-        <button type="submit" class="btn btn-info" [disabled]="despesaForm.invalid">
-          Adicionar
-        </button>
-
-        <button type="button" class="btn btn-info" (click)="resetForm()">
-          Cancelar
-        </button>
+        <button type="submit" class="btn btn-info" [disabled]="despesaForm.invalid">Adicionar</button>
+        <button type="button" class="btn btn-info" (click)="resetForm()">Cancelar</button>
       </div>
     </form>
   </div>
