@@ -11,7 +11,7 @@ import { MonthComponent } from './component/mes/month.component';
 import { AddDespesaComponent } from './component/add-despesa/add-despesa.component';
 import { ContentComponent } from './component/content/content.component';
 import { FooterComponent } from './component/footer/footer.component';
-import { DespesasComponent } from './component/despesas/despesas.component';
+// import { DespesasComponent } from './component/despesas/despesas.component';
 import { ConfirmationDialogComponent } from './../app/component/confirmation-dialog/confirmation-dialog.component';
 import { RepeatComponent } from './component/repeat/repeat.component';
 import { EditDespesaModalComponent } from './edit-despesa-modal/edit-despesa-modal.component';
@@ -26,6 +26,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 // Outros módulos
 import { ReactiveFormsModule } from '@angular/forms';
@@ -45,7 +46,7 @@ import { DatePipe } from '@angular/common';
     AddDespesaComponent,
     ContentComponent,
     FooterComponent,
-    DespesasComponent,
+    // DespesasComponent,
     ConfirmationDialogComponent,
     RepeatComponent,
     EditDespesaModalComponent,
@@ -54,6 +55,7 @@ import { DatePipe } from '@angular/common';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    MatProgressSpinnerModule,
 
     // Módulos do Angular Material
     MatButtonModule,

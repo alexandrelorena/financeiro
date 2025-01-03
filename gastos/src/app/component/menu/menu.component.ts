@@ -2,9 +2,10 @@ import { Component, EventEmitter, Output, OnInit } from '@angular/core';
 import { DateService } from '../../service/date.service';
 
 @Component({
-  selector: 'app-menu',
-  templateUrl: './menu.component.html',
-  styleUrls: ['./menu.component.css'],
+    selector: 'app-menu',
+    templateUrl: './menu.component.html',
+    styleUrls: ['./menu.component.css'],
+    standalone: false
 })
 export class MenuComponent implements OnInit {
   // Lista dos meses abreviados

@@ -1,9 +1,10 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
-  selector: 'app-repeat',
-  templateUrl: './repeat.component.html',
-  styleUrls: ['./repeat.component.css'],
+    selector: 'app-repeat',
+    templateUrl: './repeat.component.html',
+    styleUrls: ['./repeat.component.css'],
+    standalone: false
 })
 export class RepeatComponent {
   @Output() repeatSelected = new EventEmitter<{

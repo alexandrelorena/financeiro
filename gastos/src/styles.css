@@ -19,6 +19,36 @@ ol {
   margin: 0;
 }
 
+#loading-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.spinner {
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #3498db;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 /* =============================== */
 /*        Variáveis Globais        */
 /* =============================== */
@@ -258,40 +288,37 @@ body.dark-theme {
   background-color: yellow;
 }
 
-/* Garantir tamanho uniforme para as células do calendário */
 .mat-calendar-body-cell {
   width: 40px;
   height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 50%; /* Deixa os números circulares */
+  border-radius: 50%;
   color: blue;
 }
 
-/* Uniformizar o texto dos dias */
 .mat-calendar-body-cell-content {
   font-size: 14px;
   font-weight: bold;
   background-color: white;
 }
 
-/* Seleção de data no modo claro */
 body.light-mode .mat-calendar-body-selected {
-  background-color: var(--selected); /* Azul primário */
+  background-color: var(--selected);
   color: white;
 }
 
 .mat-focus-indicator {
-  background-color: transparent; /* Azul primário */
+  background-color: transparent;
 }
 
 body.dark-mode .mat-calendar-body-selected {
-  background-color: var(--selected); /* Azul primário */
+  background-color: var(--selected);
   color: white;
 }
 
 body.dark-mode .mat-calendar-body-label {
-  background-color: var(--selected); /* Azul primário */
+  background-color: var(--selected);
   color: white;
 }

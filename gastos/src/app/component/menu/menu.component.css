@@ -2,58 +2,54 @@
 .menu__container {
   width: 80px;
   height: 700px;
-  /* justify-content: center;
-  align-items: center; */
-  color: var(--primary-text-color); /* Cor de texto para os temas */
+  color: var(--primary-text-color);
 }
 
 /* -------------------- Botões de Mês -------------------- */
 .month-buttons {
   width: 100%;
-  max-width: 300px; /* Limita a largura máxima do container */
+  max-width: 300px;
   margin-top: 0px;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start; /* Alinha os botões ao início do container */
-  align-items: flex-start; /* Alinha os itens à esquerda */
-  gap: 7.6px;
-  max-height: 100vh; /* Limita a altura máxima ao tamanho da janela */
-  box-sizing: border-box; /* Inclui padding e bordas no cálculo da largura e altura */
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 8.4px;
+  max-height: 100vh;
+  box-sizing: border-box;
 }
 
 /* -------------------- Estilo de Botões -------------------- */
 .month-buttons button {
-  background-color: var(--primary-bg-color); /* Cor de fundo do botão */
-  width: 100%; /* Tamanho dos botões */
-  margin-left: 0px; /* Margem à esquerda para alinhamento */
-  border: 1px solid grey; /* Borda dos botões */
-  border-style: double; /* Estilo da borda */
-  border-radius: 5px; /* Bordas arredondadas */
-  padding: 8px; /* Preenchimento interno */
-  cursor: pointer; /* Cursor de pointer para indicar que é clicável */
-  color: var(--primary-text-color); /* Cor do texto do botão */
-  font-size: 0.875rem; /* Tamanho da fonte */
+  background-color: var(--primary-bg-color);
+  width: 100%;
+  margin-left: 0px;
+  border: 1px solid grey;
+  border-style: double;
+  border-radius: 5px;
+  padding: 8px;
+  cursor: pointer;
+  color: var(--primary-text-color);
+  font-size: 0.875rem;
   font-weight: bold;
-  text-transform: capitalize; /* Letras maiúsculas */
-  transition: background-color 0.3s ease, color 0.3s ease; /* Transição suave ao mudar cores */
+  text-transform: capitalize;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* -------------------- Hover e Seleção -------------------- */
 .month-buttons button:hover {
-  color: var(--button-menu-hover); /* Cor do texto no hover */
-  font-weight: bold; /* Negrito no hover */
-  padding: 8px 16px; /* Ajuste o padding para ter um espaço adequado */
+  color: var(--button-menu-hover);
+  font-weight: bold;
+  padding: 8px 16px;
   border-radius: 5px;
   background-clip: padding-box;
 }
 
 .month-buttons button.selected {
-  background-color: var(
-    --button-menu-selected
-  ); /* Cor de fundo do mês selecionado */
-  color: var(--button-menu-color); /* Cor do texto no mês selecionado */
-  font-weight: bold; /* Negrito no mês selecionado */
-  padding: 8px 16px; /* Ajuste o padding para ter um espaço adequado */
+  background-color: var(--button-menu-selected);
+  color: var(--button-menu-color);
+  font-weight: bold;
+  padding: 8px 16px;
   border-radius: 5px;
   background-clip: padding-box;
 }

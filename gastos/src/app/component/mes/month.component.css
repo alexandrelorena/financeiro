@@ -3,43 +3,41 @@
 .container__month {
   background-color: transparent;
   color: var(--text-dark);
-  border-radius: 0.3125rem; /* 8px */
+  border-radius: 0.3125rem;
   width: 100%;
-  height: 33.75rem; /* 540px */
-  max-height: 50rem; /* 800px */
+  height: 33.75rem;
+  max-height: 50rem;
   overflow-y: auto;
 }
 
 .container__month > p {
-  margin-left: 0.625rem; /* 10px */
+  margin-left: 0.625rem;
 }
 
 /* -------------------- Estilizando a Barra de Rolagem -------------------- */
 
-/* Estilizando para Chrome, Safari e Edge */
 ::-webkit-scrollbar {
-  width: 12px; /* largura da barra de rolagem vertical */
-  height: 12px; /* altura da barra de rolagem horizontal */
+  width: 12px;
+  height: 12px;
 }
 
 ::-webkit-scrollbar-track {
-  background: transparent; /* cor do fundo da barra de rolagem */
-  border-radius: 10px; /* borda arredondada da track */
+  background: transparent;
+  border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #888; /* cor do "polegar" da barra de rolagem */
-  border-radius: 10px; /* borda arredondada do polegar */
+  background: #888;
+  border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #555; /* cor quando o polegar está sendo hoverizado */
+  background: #555;
 }
 
-/* Estilizando para Firefox */
 * {
-  scrollbar-width: auto; /* largura da barra de rolagem no Firefox */
-  scrollbar-color: var(--button-menu-selected) transparent; /* cor do polegar e do track */
+  scrollbar-width: auto;
+  scrollbar-color: var(--button-menu-selected) transparent;
 }
 
 /* -------------------- Estilizando Tabelas -------------------- */
@@ -51,11 +49,10 @@ table {
   border-radius: 5px;
 }
 
-/* Tabela com bordas arredondadas */
 table.month {
   border-collapse: separate;
   border-spacing: 0;
-  border-radius: 0.3125rem; /* Raio das bordas */
+  border-radius: 0.3125rem;
   border-style: double;
   overflow: hidden;
 }
@@ -63,16 +60,16 @@ table.month {
 thead {
   background-color: var(--month-title);
   color: var(--text-dark);
-  font-size: 0.875rem; /* 14px */
+  font-size: 0.875rem;
   text-transform: lowercase;
 }
 
 th,
 td {
   font-family: Tahoma, Verdana, sans-serif, Arial;
-  padding: 0.3125rem; /* 5px */
+  padding: 0.3125rem;
   text-align: center;
-  border-bottom: 0.0625rem solid gray; /* Borda inferior */
+  border-bottom: 0.0625rem solid gray;
   border-left: 0.0625rem solid var(--scrollbar-color);
   border-right: 0.0625rem solid var(--scrollbar-color);
 }
@@ -81,13 +78,11 @@ td {
   text-align: left;
 }
 
-/* Remover borda da última coluna */
 th:last-child,
 td:last-child {
   border-right: 1px solid var(--scrollbar-hover);
 }
 
-/* Botões dentro da tabela */
 .btn-apagar {
   color: var(--text-dark);
 }
@@ -100,49 +95,42 @@ td:last-child {
 }
 
 .month th:nth-child(1) {
-  /* Despesa */
   width: 9%;
   max-width: 9%;
   min-width: 9%;
 }
 
 .month th:nth-child(2) {
-  /* Despesa */
   width: 35%;
   max-width: 35%;
   min-width: 35%;
 }
 
 .month th:nth-child(3) {
-  /* Valor */
   width: 22%;
   max-width: 22%;
   min-width: 22%;
 }
 
 .month th:nth-child(4) {
-  /* Vencimento */
   width: 25%;
   max-width: 25%;
   min-width: 25%;
 }
 
 .month th:nth-child(5) {
-  /* Status */
   width: 16%;
   max-width: 16%;
   min-width: 16%;
 }
 
 .month th:nth-child(6) {
-  /* Despesa */
   width: 24%;
   max-width: 24%;
   min-width: 24%;
 }
 
 .month th:nth-child(7) {
-  /* Despesa */
   width: 20%;
   max-width: 20%;
   min-width: 20%;
@@ -150,7 +138,6 @@ td:last-child {
 
 /* -------------------- Tema -------------------- */
 
-/* Modo Escuro */
 .dark-theme tbody tr:nth-child(even) {
   background-color: rgb(44, 44, 44);
 }
@@ -159,7 +146,6 @@ td:last-child {
   background-color: black;
 }
 
-/* Modo Claro */
 .light-theme tbody tr:nth-child(even) {
   background-color: rgb(209, 208, 208);
 }
@@ -176,15 +162,14 @@ button {
   color: var(--text-light);
   cursor: pointer;
   transition: transform 0.3s ease;
-  padding: 0.3125rem 0.625rem; /* 5px 10px */
-  border-radius: 0.3125rem; /* 5px */
+  padding: 0.3125rem 0.625rem;
+  border-radius: 0.3125rem;
 }
 
 button:hover {
   transform: scale(1.1);
 }
 
-/* Ações Específicas */
 button.pagar {
   color: var(--button-paid);
 }
@@ -207,7 +192,6 @@ button.pagar {
   font-size: 0.84rem;
 }
 
-/* Botão Desabilitado */
 button.status-pago {
   color: var(--status-paid);
   cursor: not-allowed;
@@ -217,37 +201,35 @@ button.status-pago {
 /* -------------------- Filtro -------------------- */
 
 .filter-select {
-  background-color: var(--button-menu-selected); /* Fundo claro */
-  border: none; /* Borda cinza */
-  border-radius: 5px; /* Cantos arredondados */
+  background-color: var(--button-menu-selected);
+  border: none;
+  border-radius: 5px;
   font-family: Tahoma, Verdana, sans-serif, Arial;
-  font-size: 0.875rem; /* 14px */
+  font-size: 0.875rem;
   font-weight: bold;
-  color: var(--text-dark); /* Cor do texto */
+  color: var(--text-dark);
   cursor: pointer;
   text-align: center;
 }
 
 .filter-select:hover {
-  background-color: var(--button-menu-selected); /* Fundo ao passar o mouse */
+  background-color: var(--button-menu-selected);
 }
 
-/* Estilo das opções dentro do select */
 .filter-select option {
-  background-color: var(--text-dark); /* Cor de fundo das opções */
-  color: var(--text-light); /* Cor do texto das opções */
-  padding: 8px 12px; /* Ajuste no espaçamento */
+  background-color: var(--text-dark);
+  color: var(--text-light);
+  padding: 8px 12px;
 }
 
 .filter-select option:hover {
-  background-color: var(--button-menu-selected); /* Cor de fundo das opções */
-  color: var(--text-light); /* Cor do texto das opções */
+  background-color: var(--button-menu-selected);
+  color: var(--text-light);
 }
 
-/* Estilo para quando a opção é selecionada */
 .filter-select option:checked {
-  background-color: var(--text-dark); /* Cor de fundo da opção selecionada */
-  color: var(--button-menu-selected); /* Cor do texto da opção selecionada */
+  background-color: var(--text-dark);
+  color: var(--button-menu-selected);
   font-weight: bold;
 }
 
@@ -257,14 +239,13 @@ button.status-pago {
   color: gray;
 }
 
-/* Botões dentro das células da tabela */
 td button {
   margin: 0;
-  padding: 0.3125rem; /* 5px */
-  font-size: 0.875rem; /* 14px */
-  margin-right: 0.625rem; /* 10px */
+  padding: 0.3125rem;
+  font-size: 0.875rem;
+  margin-right: 0.625rem;
 }
 
 td button:last-child {
-  margin-right: 0; /* Remove o espaçamento do último botão */
+  margin-right: 0;
 }
