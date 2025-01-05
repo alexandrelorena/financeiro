@@ -5,7 +5,7 @@
   max-width: 43.75rem;
   margin: 0 auto;
   display: block;
-  padding-top: none;
+  padding-top: 0;
 }
 
 /* Form Controls */

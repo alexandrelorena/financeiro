@@ -35,11 +35,11 @@
   background: #555;
 }
 
+/* Estilizando a Barra de Rolagem para Firefox */
 * {
   scrollbar-width: auto;
   scrollbar-color: var(--button-menu-selected) transparent;
 }
-
 /* -------------------- Estilizando Tabelas -------------------- */
 
 table {
