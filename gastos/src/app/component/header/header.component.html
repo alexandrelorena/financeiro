@@ -2,10 +2,11 @@
   <!-- Texto com informações -->
   <div class="header__item">
     <p>
-      <span>Controle de finanças |</span> Total de despesas de {{ selectedMonthFullName }}:
+      Controle de finanças | Total de despesas de {{ selectedMonthFullName }}:
+      <span class="total-value">
+        {{ totalDespesas || 0 | currency:'BRL': 'symbol' }}
+      </span>
     </p>
-    <h1> {{ despesasTotal }}</h1>
-
   </div>
   <div class="header__item"></div>
   <!-- Botão de alternar tema -->
@@ -28,6 +29,5 @@
         </span>
       </ng-template>
     </button>
-
   </div>
 </div>

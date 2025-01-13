@@ -88,8 +88,8 @@
               }
             ],
             "styles": [
-              "src/styles.css",
-              "@angular/material/prebuilt-themes/azure-blue.css"
+              "@angular/material/prebuilt-themes/azure-blue.css",
+              "src/styles.css"
             ],
             "scripts": [],
             "sourceMap": true

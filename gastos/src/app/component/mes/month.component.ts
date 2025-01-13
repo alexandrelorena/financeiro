@@ -20,12 +20,12 @@ import { EventService } from '../../service/event.service';
 import { EditDespesaModalComponent } from '../../edit-despesa-modal/edit-despesa-modal.component';
 
 @Component({
-    selector: 'app-month',
-    templateUrl: '../mes/month.component.html',
-    styleUrls: ['../mes/month.component.css'],
-    providers: [DatePipe],
-    encapsulation: ViewEncapsulation.None,
-    standalone: false
+  selector: 'app-month',
+  templateUrl: '../mes/month.component.html',
+  styleUrls: ['../mes/month.component.css'],
+  providers: [DatePipe],
+  encapsulation: ViewEncapsulation.None,
+  standalone: false,
 })
 export class MonthComponent implements OnInit, OnDestroy {
   objectKeys = Object.keys;
@@ -34,9 +34,12 @@ export class MonthComponent implements OnInit, OnDestroy {
   @Input() selectedMonth: string = '';
   despesas: Gasto[] = [];
   totalDespesas: number = 0;
+  totalDespesasPagas: number = 0;
+  totalDespesasNaoPagas: number = 0;
   despesaEditando: Gasto | null = null;
-  despesasFiltradas: Gasto[] = []; // Despesas filtradas pelo status
-  statusSelecionado: string = 'Todos'; // Status selecionado para o filtro
+  despesasFiltradas: Gasto[] = [];
+  statusSelecionado: string = 'Todos';
+  totalDespesasFiltradas: number = 0;
 
   // Map de meses com os nomes e números
   monthNames: { [key: string]: [string, number] } = {
@@ -60,8 +63,6 @@ export class MonthComponent implements OnInit, OnDestroy {
 
   /**
    * Construtor do componente
-
-   * @param dialog Serviço Angular Material para gerenciamento de diálogos
    */
   constructor(
     private dateService: DateService,
@@ -89,7 +90,6 @@ export class MonthComponent implements OnInit, OnDestroy {
       this.cdr.detectChanges();
     });
 
-    // Enviar para o HeaderComponent
     this.sendDespesasToHeader();
 
     // Inscrição para o evento de mudança de status
@@ -108,7 +108,14 @@ export class MonthComponent implements OnInit, OnDestroy {
     );
   }
 
-  // Inscrição para atualizações de despesas
+  loadDespesas(): void {
+    const monthNumber = this.getMonthNumber(this.selectedMonth);
+    this.gastoService.getDespesas(monthNumber).subscribe((despesas) => {
+      this.despesas = despesas;
+      this.monthService.calculateDespesas(despesas);
+    });
+  }
+
   private subscribeToDespesaUpdates(): void {
     this.subscription.add(
       this.localService.despesas$.subscribe((despesas) => {
@@ -142,14 +149,18 @@ export class MonthComponent implements OnInit, OnDestroy {
         (despesa) => despesa.status === this.statusSelecionado
       );
     }
+
+    this.calcularTotalDespesasFiltradas();
+
+    this.monthService.updateDespesasFiltradasTotal(this.totalDespesasFiltradas);
   }
 
   alterarFiltro(status: string): void {
     this.statusSelecionado = status;
     this.filtrarDespesas();
+    this.calcularTotalDespesasFiltradas();
   }
 
-  // Formata o valor como moeda (BRL)
   public formatCurrency(value: number): string {
     return value.toLocaleString('pt-BR', {
       style: 'currency',
@@ -165,7 +176,6 @@ export class MonthComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  // Inscrição para atualizações do mês selecionado
   private subscribeToDateChanges(): void {
     this.subscription.add(
       this.dateService.selectedMonth$.subscribe((month) => {
@@ -178,19 +188,16 @@ export class MonthComponent implements OnInit, OnDestroy {
     );
   }
 
-  // Método para enviar o valor de despesas para o serviço
   sendDespesasToHeader(): void {
-    const formattedTotal = this.formatCurrency(this.totalDespesas);
-    this.monthService.setDespesasTotal(formattedTotal, this.selectedMonth);
+    const total = this.totalDespesas - this.totalDespesasPagas;
+    this.monthService.setDespesasTotal(total, this.selectedMonth);
   }
 
-  // Obtém o número do mês
   getMonthNumber(month: string): number {
     const sanitizedMonth = month.trim().toLowerCase();
     return this.monthNames[sanitizedMonth]?.[1] ?? -1;
   }
 
-  // Obtêm o nome do mês
   getFullMonthName(): string {
     return this.monthNames[this.selectedMonth]?.[0] ?? this.selectedMonth;
   }
@@ -199,10 +206,10 @@ export class MonthComponent implements OnInit, OnDestroy {
     if (month === -1) return;
 
     this.gastoService.getDespesas(month).subscribe((despesas: Gasto[]) => {
+      console.log('Despesas carregadas:', despesas);
       this.despesas = despesas;
       this.calcularTotalDespesas();
 
-      // Desabilitar botões para despesas pagas
       this.despesas.forEach((despesa) => {
         if (despesa.status === 'pago') {
           despesa.disableButtons = true;
@@ -212,22 +219,90 @@ export class MonthComponent implements OnInit, OnDestroy {
     });
   }
 
-  // Atualize o método para recalcular despesas ao alterar o status selecionado
   onStatusChange(): void {
     this.filtrarDespesas();
+    this.calcularTotalDespesasPorStatus();
   }
 
   calculateTotalDespesas(): number {
     return this.despesas.reduce((total, despesa) => total + despesa.valor, 0);
   }
 
+  calculateDespesas(despesas: any[]): {} {
+    let totalDespesas = 0;
+    let totalDespesasPagas = 0;
+    let totalDespesasNaoPagas = 0;
+
+    despesas.forEach((despesa) => {
+      totalDespesas += despesa.valor;
+
+      if (despesa.status === 'pago') {
+        totalDespesasPagas += despesa.valor;
+      } else {
+        totalDespesasNaoPagas += despesa.valor;
+      }
+    });
+    this.filtrarDespesas();
+    this.calcularTotalDespesasPorStatus();
+    this.sendDespesasToHeader();
+    return { totalDespesas, totalDespesasPagas, totalDespesasNaoPagas };
+  }
+
   private calcularTotalDespesas(): void {
-    this.totalDespesas = this.despesas.reduce(
-      (acc, despesa) => acc + despesa.valor,
+    this.totalDespesas = this.despesas.reduce((acc, despesa) => {
+      const valor = isNaN(despesa.valor) ? 0 : despesa.valor;
+      return acc + valor;
+    }, 0);
+
+    this.totalDespesasPagas = this.despesas.reduce((acc, despesa) => {
+      console.log(
+        `Despesa: ${despesa.nome}, Valor: ${despesa.valor}, Status: ${despesa.status}`
+      );
+
+      if (despesa.status && despesa.status.toLowerCase() === 'pago') {
+        return acc + (isNaN(despesa.valor) ? 0 : despesa.valor);
+      }
+      return acc;
+    }, 0);
+
+    const totalComDesconto = this.totalDespesas - this.totalDespesasPagas;
+    this.filtrarDespesas();
+    this.calcularTotalDespesasPorStatus();
+    this.sendDespesasToHeader();
+
+    console.log('Total Despesas Pagas:', this.totalDespesasPagas);
+    console.log('Total após desconto (não pagas):', totalComDesconto);
+
+    this.monthService.setDespesasTotal(totalComDesconto, this.selectedMonth);
+  }
+
+  calcularTotalDespesasPorStatus() {
+    if (
+      this.statusSelecionado === 'Status' ||
+      this.statusSelecionado === 'Todos'
+    ) {
+      const totalNaoPagas = this.despesas
+        .filter((despesa) => despesa.status !== 'pago')
+        .reduce((acc, despesa) => acc + despesa.valor, 0);
+
+      this.totalDespesas = totalNaoPagas;
+    } else {
+      const totalFiltrado = this.despesas
+        .filter((despesa) => despesa.status === this.statusSelecionado)
+        .reduce((acc, despesa) => acc + despesa.valor, 0);
+
+      this.totalDespesas = totalFiltrado;
+    }
+  }
+
+  private calcularTotalDespesasFiltradas(): void {
+    this.totalDespesasFiltradas = this.despesasFiltradas.reduce(
+      (acc, despesa) => {
+        const valor = despesa.valor;
+        return acc + (isNaN(valor) ? 0 : valor);
+      },
       0
     );
-
-    this.sendDespesasToHeader();
   }
 
   pagarDespesa(id: number): void {
@@ -242,6 +317,7 @@ export class MonthComponent implements OnInit, OnDestroy {
     this.gastoService.pagarDespesa(id).subscribe({
       next: () => {
         this.calcularTotalDespesas();
+        this.onStatusChange();
         this.cdr.detectChanges();
       },
       error: (error) => {
@@ -271,9 +347,8 @@ export class MonthComponent implements OnInit, OnDestroy {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        // Verifique se a categoria foi editada e atualize-a
         if (result.categoria !== despesa.categoria) {
-          despesa.categoria = result.categoria; // Atualiza a categoria
+          despesa.categoria = result.categoria;
         }
 
         this.gastoService
@@ -281,13 +356,12 @@ export class MonthComponent implements OnInit, OnDestroy {
           .pipe(take(1))
           .subscribe({
             next: (updatedDespesa) => {
-              // Atualiza o status e a classe CSS após a edição
+              this.onStatusChange();
               const infoDespesa = this.getStatus(updatedDespesa);
               updatedDespesa.status = infoDespesa.status;
               updatedDespesa.cssClass = infoDespesa.cssClass;
               updatedDespesa.disableButtons = infoDespesa.disableButtons;
 
-              // Atualiza a lista de despesas
               const index = this.despesas.findIndex(
                 (d) => d.id === updatedDespesa.id
               );
@@ -312,10 +386,8 @@ export class MonthComponent implements OnInit, OnDestroy {
       .pipe(take(1))
       .subscribe({
         next: (updatedDespesa) => {
-          // Atualiza o status e a classe CSS após a edição
           const infoDespesa = this.getStatus(updatedDespesa);
 
-          // Atribui o status e a classe CSS ao objeto da despesa
           updatedDespesa.status = infoDespesa.status;
           updatedDespesa.cssClass = infoDespesa.cssClass;
           updatedDespesa.disableButtons = infoDespesa.disableButtons;
@@ -324,12 +396,11 @@ export class MonthComponent implements OnInit, OnDestroy {
             (d) => d.id === updatedDespesa.id
           );
           if (index !== -1) {
-            // Atualiza a lista de despesas
             this.despesas[index] = updatedDespesa;
             this.calcularTotalDespesas();
             this.onStatusChange();
+            this.cdr.detectChanges();
           }
-
           this.despesaEditando = null;
         },
         error: (error) =>
@@ -342,7 +413,6 @@ export class MonthComponent implements OnInit, OnDestroy {
   }
 
   removerDespesa(despesa: Gasto): void {
-    // Abre o diálogo de confirmação
     const vencimentoFormatado = this.datePipe.transform(
       despesa.vencimento,
       'dd/MM'
@@ -362,7 +432,6 @@ export class MonthComponent implements OnInit, OnDestroy {
       },
     });
 
-    // Confirmar exclusão
     dialogRef.afterClosed().subscribe((result) => {
       if (result === 'confirm') {
         this.gastoService
@@ -391,14 +460,13 @@ export class MonthComponent implements OnInit, OnDestroy {
         data: {
           title: 'Erro!',
           message: 'Mês inválido. Por favor, tente novamente.',
-          type: 'info', // Apenas exibe o botão "Fechar"
+          type: 'info',
         },
       });
       return;
     }
 
     if (!this.totalDespesas) {
-      // Se não houver despesas, abre o diálogo informativo
       this.dialog.open(ConfirmationDialogComponent, {
         width: '500px',
         data: {
@@ -407,13 +475,12 @@ export class MonthComponent implements OnInit, OnDestroy {
         },
       });
     } else {
-      // Caso haja despesas, exibe o diálogo de confirmação
       const monthNumber = monthData[1];
       const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
         width: '500px',
         data: {
           title: `Deseja excluir as despesas de ${monthData[0]}?`,
-          type: 'confirmation', // Exibe os botões "Sim" e "Não"
+          type: 'confirmation',
         },
       });
 
@@ -464,14 +531,12 @@ export class MonthComponent implements OnInit, OnDestroy {
     const hoje = new Date();
     let vencimento: Date;
 
-    // Verifica e converte o vencimento se necessário
     if (typeof despesa.vencimento === 'string') {
       vencimento = new Date(despesa.vencimento);
     } else {
       vencimento = despesa.vencimento;
     }
 
-    // Normaliza as datas para comparar apenas ano, mês e dia
     const hojeSemHora = new Date(
       hoje.getFullYear(),
       hoje.getMonth(),

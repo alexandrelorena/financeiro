@@ -37,7 +37,6 @@
           Não foram encontradas despesas com este STATUS.
         </td>
       </tr>
-      <!-- <tr *ngFor="let despesa of despesas; let i = index"> -->
       <tr *ngFor="let despesa of despesasFiltradas; let i = index" [ngClass]="{
           'status-pago': despesa.status === 'pago',
           'status-pendente': despesa.status === 'pendente',
@@ -103,6 +102,17 @@
             <button class="remover" (click)="removerDespesa(despesa)" title="apagar a despesa">x</button>
           </td>
         </ng-template>
+      </tr>
+      <tr>
+        <td colspan="7">
+          <!-- Exibe o total abaixo da lista de despesas -->
+          <div class="total-container" *ngIf="totalDespesas > 0">
+            <p>
+              <strong>{{ statusSelecionado }}</strong>:
+              <span>{{ totalDespesas | currency: 'BRL' }}</span>
+            </p>
+          </div>
+        </td>
       </tr>
     </tbody>
   </table>

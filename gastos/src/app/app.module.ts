@@ -1,22 +1,12 @@
-import { NgModule } from '@angular/core';
+// Angular Core e Básicos
+import { NgModule, LOCALE_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
+import { provideHttpClient } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-// Componentes
-import { HeaderComponent } from './component/header/header.component';
-import { MenuComponent } from './component/menu/menu.component';
-import { MonthComponent } from './component/mes/month.component';
-import { AddDespesaComponent } from './component/add-despesa/add-despesa.component';
-import { ContentComponent } from './component/content/content.component';
-import { FooterComponent } from './component/footer/footer.component';
-// import { DespesasComponent } from './component/despesas/despesas.component';
-import { ConfirmationDialogComponent } from './../app/component/confirmation-dialog/confirmation-dialog.component';
-import { RepeatComponent } from './component/repeat/repeat.component';
-import { EditDespesaModalComponent } from './edit-despesa-modal/edit-despesa-modal.component';
-
-// Módulos do Angular Material
+// Angular Material
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatIconModule } from '@angular/material/icon';
@@ -27,16 +17,25 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-
-// Outros módulos
-import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 
 // Utilitários
-import { DatePipe } from '@angular/common';
+import { DatePipe, registerLocaleData } from '@angular/common';
+import localePt from '@angular/common/locales/pt';
 
+// Componentes
+import { AppComponent } from './app.component';
+import { HeaderComponent } from './component/header/header.component';
+import { MenuComponent } from './component/menu/menu.component';
+import { MonthComponent } from './component/mes/month.component';
+import { AddDespesaComponent } from './component/add-despesa/add-despesa.component';
+import { ContentComponent } from './component/content/content.component';
+import { FooterComponent } from './component/footer/footer.component';
+import { ConfirmationDialogComponent } from './component/confirmation-dialog/confirmation-dialog.component';
+import { RepeatComponent } from './component/repeat/repeat.component';
+import { EditDespesaModalComponent } from './edit-despesa-modal/edit-despesa-modal.component';
+
+registerLocaleData(localePt, 'pt-BR');
 @NgModule({
   declarations: [
     AppComponent,
@@ -46,7 +45,6 @@ import { DatePipe } from '@angular/common';
     AddDespesaComponent,
     ContentComponent,
     FooterComponent,
-    // DespesasComponent,
     ConfirmationDialogComponent,
     RepeatComponent,
     EditDespesaModalComponent,
@@ -74,9 +72,12 @@ import { DatePipe } from '@angular/common';
     FormsModule,
 
     // Outros módulos
-    HttpClientModule,
   ],
-  providers: [DatePipe],
+  providers: [
+    { provide: LOCALE_ID, useValue: 'pt-BR' },
+    DatePipe,
+    provideHttpClient(),
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

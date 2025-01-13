@@ -43,6 +43,11 @@ public class GastoService {
         atualizarStatusVencido();
     }
 
+    @Transactional
+    public void atualizarStatusDespesas() {
+        gastoRepository.callAtualizarStatusDespesas();
+    }
+
     // Método para salvar ou atualizar gastos
     @Transactional
     public Gasto salvarGasto(Gasto gasto) {
@@ -58,13 +63,4 @@ public class GastoService {
         // Salvar o gasto no banco
         return gastoRepository.save(gasto);
     }
-    // public void atualizarStatusGastos() {
-    // LocalDate hoje = LocalDate.now();
-
-    // // Atualizar para "Vencido"
-    // gastoRepository.atualizarStatusVencido(hoje);
-
-    // // Atualizar para "Vencendo"
-    // gastoRepository.atualizarStatusVencendo(hoje);
-    // }
 }

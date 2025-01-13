@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { MonthService } from '../../service/month.service';
+import { combineLatest } from 'rxjs';
 
 /**
  * HeaderComponent
@@ -8,29 +9,27 @@ import { MonthService } from '../../service/month.service';
  * e as interações relacionadas aos meses e despesas.
  */
 @Component({
-    selector: 'app-header',
-    templateUrl: './header.component.html',
-    styleUrls: ['./header.component.css'],
-    standalone: false
+  selector: 'app-header',
+  templateUrl: './header.component.html',
+  styleUrls: ['./header.component.css'],
+  standalone: false,
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-  /** Indica se o tema escuro está ativado */
   isDarkMode = false;
 
-  /** Total de despesas como string obtido do serviço */
-  despesasTotal: string = '';
+  despesasTotal: number = 0;
 
-  /** Total de despesas como número */
   totalDespesas: number = 0;
 
-  /** Abreviação do mês selecionado (ex.: "jan", "fev") */
   selectedMonthAbbreviation: string = '';
 
-  /** Nome completo do mês selecionado (ex.: "Janeiro") */
   selectedMonthFullName: string = '';
 
-  /** Número do mês selecionado (1 a 12) */
   selectedMonthNumber: number = 0;
+
+  totalFiltrado: number = 0;
+
+  totalNaoPagas: number = 0;
 
   /** Assinaturas de observáveis para gerenciamento de memória */
   private subscription: Subscription = new Subscription();
@@ -67,10 +66,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
    */
 
   ngOnInit(): void {
-    const isDarkTheme = localStorage.getItem('isDarkTheme') === 'true';
-    this.isDarkMode = isDarkTheme;
-    this.applyTheme(this.isDarkMode);
+    // Obtém o estado do tema do localStorage
+    this.isDarkMode = this.getThemeFromLocalStorage();
 
+    // Aplica o tema atual
+    this.applyTheme();
+
+    // Define a classe do corpo com base no tema
     this.renderer.addClass(
       document.body,
       this.isDarkMode ? 'dark-mode' : 'light-mode'
@@ -86,18 +88,30 @@ export class HeaderComponent implements OnInit, OnDestroy {
       console.error('Não foi possível determinar o mês atual.');
     }
 
-    this.subscription.add(
-      this.monthService.despesasTotal$.subscribe((total) => {
-        this.despesasTotal = total;
-        this.totalDespesas = parseFloat(total) || 0;
-      })
-    );
+    this.monthService.despesasTotal$.subscribe((total) => {
+      this.totalFiltrado = total;
+    });
 
-    this.subscription.add(
-      this.monthService.selectedMonth$.subscribe((monthKey) => {
-        this.updateSelectedMonth(monthKey);
-      })
-    );
+    this.monthService.despesasNaoPagasTotalSource.subscribe((totalNaoPagas) => {
+      this.totalNaoPagas = totalNaoPagas;
+    });
+
+    this.monthService.selectedMonth$.subscribe((month) => {
+      this.selectedMonthFullName = month;
+    });
+
+    const combinedSubscription = combineLatest([
+      this.monthService.despesasTotal$,
+      this.monthService.getDespesasFiltradasTotal(),
+      this.monthService.selectedMonth$,
+    ]).subscribe(([despesasTotal, despesasFiltradasTotal, selectedMonth]) => {
+      this.despesasTotal = despesasTotal;
+      this.totalDespesas = despesasTotal;
+      this.totalFiltrado = despesasFiltradasTotal;
+      this.updateSelectedMonth(selectedMonth);
+    });
+
+    this.subscription.add(combinedSubscription);
   }
 
   /**
@@ -116,21 +130,53 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.selectedMonthNumber = monthNumber;
   }
 
-  /**
-   * Alterna o tema entre claro e escuro
-   */
+  calculateDespesas(despesas: any[]): {
+    totalDespesas: number;
+    totalDespesasPagas: number;
+    totalDespesasNaoPagas: number;
+  } {
+    const totalDespesas = despesas.reduce((total, despesa) => {
+      const valor = parseFloat(despesa.valor || '0');
+      return total + (isNaN(valor) ? 0 : valor);
+    }, 0);
+
+    const totalDespesasPagas = despesas
+      .filter((despesa) => despesa.status === 'pago')
+      .reduce((total, despesa) => {
+        const valor = parseFloat(despesa.valor || '0');
+        return total + (isNaN(valor) ? 0 : valor);
+      }, 0);
+
+    const totalDespesasNaoPagas = totalDespesas - totalDespesasPagas;
+
+    return {
+      totalDespesas,
+      totalDespesasPagas,
+      totalDespesasNaoPagas,
+    };
+  }
+
+  private getThemeFromLocalStorage(): boolean {
+    return localStorage.getItem('isDarkTheme') === 'true';
+  }
+
   toggleMode(): void {
+    // Alterna o estado do tema
     this.isDarkMode = !this.isDarkMode;
+
+    // Atualiza o estado no localStorage
     localStorage.setItem('isDarkTheme', String(this.isDarkMode));
-    this.applyTheme(this.isDarkMode);
+
+    // Aplica o novo tema
+    this.applyTheme();
   }
 
   /**
    * Aplica o tema selecionado ao corpo do documento
    * @param isDark Indica se o tema escuro deve ser aplicado
    */
-  private applyTheme(isDark: boolean): void {
-    if (isDark) {
+  private applyTheme(): void {
+    if (this.isDarkMode) {
       this.renderer.addClass(document.body, 'dark-theme');
       this.renderer.removeClass(document.body, 'light-theme');
     } else {

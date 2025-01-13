@@ -14,6 +14,11 @@ import java.util.List;
 @Repository
 public interface GastoRepository extends JpaRepository<Gasto, Long> {
 
+        @Modifying
+        @Transactional
+        @Query(value = "CALL atualizar_status_despesas()", nativeQuery = true)
+        void callAtualizarStatusDespesas();
+
         /**
          * Retorna todos os gastos de um determinado mês, ordenados por data de
          * vencimento

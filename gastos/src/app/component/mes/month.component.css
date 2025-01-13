@@ -249,3 +249,33 @@ td button {
 td button:last-child {
   margin-right: 0;
 }
+
+/* -------------------- Total por status -------------------- */
+
+.total-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+  max-width: 600px;
+  margin: auto;
+  font-family: Tahoma, Verdana, sans-serif, Arial;
+  font-size: 0.875rem;
+  color: var(--button-menu-selected);
+}
+
+.total-container p {
+  margin: 0;
+  text-align: center;
+}
+
+.total-container strong {
+  font-weight: bold;
+  color: var(--button-menu-selected);
+}
+
+.total-container span {
+  font-weight: bold;
+  color: var(--button-menu-selected);
+}

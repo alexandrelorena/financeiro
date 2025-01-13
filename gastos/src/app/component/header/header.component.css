@@ -28,7 +28,7 @@
 }
 
 .header__item .toggle {
-  margin-right: 0.1rem;
+  margin-right: 0rem;
   margin-bottom: 10px;
 }
 
@@ -54,7 +54,6 @@
 }
 
 .header__item > p {
-  margin-top: 0.5rem;
   margin-left: 1.5rem;
 }
 
@@ -76,19 +75,6 @@
   transform: scale(1.1);
 }
 
-#toggle {
-  margin-top: -0.05rem;
-  margin-left: 13rem;
-}
-
-#lightMode {
-  color: #ffae00;
-}
-
-#darkMode {
-  color: white;
-}
-
 #lightMode,
 #darkMode {
   background-color: transparent;
@@ -99,4 +85,9 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+}
+
+.total-value {
+  display: inline-flex;
+  gap: 1rem;
 }

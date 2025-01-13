@@ -20,6 +20,7 @@
     "@angular/platform-browser": "^19.0.5",
     "@angular/platform-browser-dynamic": "^19.0.5",
     "@angular/router": "^19.0.5",
+    "@fortawesome/fontawesome-free": "^6.7.2",
     "angular-ng-autocomplete": "^2.0.12",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",

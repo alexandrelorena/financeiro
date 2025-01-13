@@ -213,4 +213,10 @@ public class GastoController {
         }
         return ResponseEntity.ok("Parâmetro válido!");
     }
+
+    @PostMapping("/atualizar-status-despesas")
+    public ResponseEntity<Void> atualizarStatusDespesas() {
+        gastoService.atualizarStatusDespesas();
+        return ResponseEntity.noContent().build();
+    }
 }
