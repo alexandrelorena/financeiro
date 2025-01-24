@@ -1,12 +1,10 @@
-# See https://docs.github.com/get-started/getting-started-with-git/ignoring-files for more about ignoring files.
-
-# Compiled output
+# Build output
 /dist
 /tmp
 /out-tsc
 /bazel-out
 
-# Node
+# Node modules
 /node_modules
 npm-debug.log
 yarn-error.log
@@ -28,15 +26,34 @@ yarn-error.log
 !.vscode/extensions.json
 .history/*
 
-# Miscellaneous
+# Angular cache e relatórios
 /.angular/cache
-.sass-cache/
-/connect.lock
 /coverage
+
+# Arquivos de logs e temporários
+*.log
+/connect.lock
 /libpeerconnection.log
 testem.log
-/typings
 
-# System files
+# Sass cache
+.sass-cache/
+
+# Arquivos de sistema
 .DS_Store
 Thumbs.db
+
+# Docker e builds locais
+/output/
+*.deb
+
+# Railway e Vercel (mantendo os essenciais para deploy)
+/.vercel/
+.vercelignore
+.railway/
+
+# Outros arquivos locais
+.env.local
+.env.development
+.env.production
+.env.*

@@ -61,6 +61,17 @@ public class GastoController {
      * Cria um novo gasto e atualiza seu status automaticamente.
      * 
      */
+
+    @RestController
+    @RequestMapping("/api")
+    public class GastosController {
+
+        @GetMapping("/hello")
+        public String hello() {
+            return "Hello, World!";
+        }
+    }
+
     @PostMapping
     public ResponseEntity<Gasto> createGasto(@RequestBody Gasto gasto) {
         try {

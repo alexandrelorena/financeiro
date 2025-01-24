@@ -3,7 +3,7 @@
   height: 500px;
   margin: auto;
   margin-top: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 55px;
   display: flex;
   flex-direction: row;
   gap: 10px;
@@ -19,6 +19,7 @@
 
 .app-add-despesa {
   flex: 3;
+  height: 548px;
   border: 1px solid grey;
   border-style: double;
   border-radius: 5px;

@@ -38,7 +38,7 @@ export class MonthComponent implements OnInit, OnDestroy {
   totalDespesasNaoPagas: number = 0;
   despesaEditando: Gasto | null = null;
   despesasFiltradas: Gasto[] = [];
-  statusSelecionado: string = 'Todos';
+  statusSelecionado: string = 'ainda não foram pagas';
   totalDespesasFiltradas: number = 0;
 
   // Map de meses com os nomes e números
@@ -142,7 +142,7 @@ export class MonthComponent implements OnInit, OnDestroy {
   }
 
   filtrarDespesas(): void {
-    if (this.statusSelecionado === 'Todos') {
+    if (this.statusSelecionado === 'ainda não foram pagas') {
       this.despesasFiltradas = [...this.despesas];
     } else {
       this.despesasFiltradas = this.despesas.filter(
@@ -279,7 +279,7 @@ export class MonthComponent implements OnInit, OnDestroy {
   calcularTotalDespesasPorStatus() {
     if (
       this.statusSelecionado === 'Status' ||
-      this.statusSelecionado === 'Todos'
+      this.statusSelecionado === 'ainda não foram pagas'
     ) {
       const totalNaoPagas = this.despesas
         .filter((despesa) => despesa.status !== 'pago')
