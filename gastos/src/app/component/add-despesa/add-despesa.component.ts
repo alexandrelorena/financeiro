@@ -10,10 +10,10 @@ import { parseISO, isValid, format } from 'date-fns';
  * Componente para criar novas despesas no sistema.
  */
 @Component({
-    selector: 'app-add-despesa',
-    templateUrl: './add-despesa.component.html',
-    styleUrls: ['./add-despesa.component.css'],
-    standalone: false
+  selector: 'app-add-despesa',
+  templateUrl: './add-despesa.component.html',
+  styleUrls: ['./add-despesa.component.css'],
+  standalone: false,
 })
 export class AddDespesaComponent implements OnInit {
   /**
@@ -206,7 +206,6 @@ export class AddDespesaComponent implements OnInit {
       return;
     }
 
-
     const inputElement = event.target as HTMLInputElement;
     const currentValue = inputElement.value;
     const cursorPosition = inputElement.selectionStart || 0;
@@ -241,23 +240,6 @@ export class AddDespesaComponent implements OnInit {
       }
     }
   }
-
-  // onKeyDown(event: KeyboardEvent) {
-  //   // Permitir as teclas de controle: Backspace (8), Tab (9), Enter (13), Delete (46)
-  //   const allowedKeys = ['Backspace', 'Tab', 'Enter', 'Delete'];
-
-  //   // Verificar se a tecla pressionada é um número ou uma tecla permitida
-  //   const isNumber = event.key >= '0' && event.key <= '9';
-
-  //   if (!isNumber && !allowedKeys.includes(event.key)) {
-  //     event.preventDefault(); // Impede a entrada de caracteres não numéricos
-  //   }
-
-  //   const value = (event.target as HTMLInputElement).value;
-  //   if (parseInt(value) > 11) {
-  //     event.preventDefault();
-  //   }
-  // }
 
   onKeyDown(event: KeyboardEvent) {
     // Permitir as teclas de controle: Backspace (8), Tab (9), Enter (13), Delete (46)

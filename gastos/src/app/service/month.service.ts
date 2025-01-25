@@ -17,7 +17,6 @@ export class MonthService {
   despesasTotal$ = this.despesasTotalSource.asObservable();
   selectedMonth$ = this.selectedMonthSource.asObservable();
   totalComDesconto = new BehaviorSubject<number>(0);
-  // private despesasFiltradasTotalSubject = new BehaviorSubject<number>(0);
 
   // Observable para o total das despesas filtradas
   getDespesasFiltradasTotal() {

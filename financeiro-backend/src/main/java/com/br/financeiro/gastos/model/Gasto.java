@@ -8,6 +8,8 @@ package com.br.financeiro.gastos.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
+
 import java.time.LocalDate;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -27,7 +29,7 @@ public class Gasto {
     private String categoria;
 
     @NotNull(message = "O valor não pode ser nulo")
-    @Positive(message = "O valor deve ser positivo")
+    @PositiveOrZero(message = "O valor deve ser positivo")
     private double valor;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")

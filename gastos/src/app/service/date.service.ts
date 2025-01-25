@@ -20,7 +20,6 @@ export class DateService {
 
   /**
    * Atualiza o mês selecionado.
-   * @param month - Mês no formato string.
    */
   selectMonth(month: string): void {
     this.selectedMonthSubject.next(month);
@@ -28,7 +27,6 @@ export class DateService {
 
   /**
    * Retorna a data atual como um objeto Date.
-   * @returns A data atual.
    */
   getCurrentDate(): Date {
     return new Date();
@@ -36,9 +34,6 @@ export class DateService {
 
   /**
    * Converte uma data para o formato ISO (yyyy-MM-dd).
-   * @param date - Objeto Date ou string representando uma data.
-   * @returns A data no formato ISO.
-   * @throws Erro caso a data seja inválida.
    */
   convertToISODate(date: Date | string): string {
     if (!date) {
@@ -58,8 +53,6 @@ export class DateService {
 
   /**
    * Formata uma data no formato dd/MM/yyyy.
-   * @param date - Objeto Date a ser formatado.
-   * @returns A data formatada como string.
    */
 
   formatDateFromDate(date: Date): string {
@@ -69,13 +62,6 @@ export class DateService {
     return `${day}/${month}/${year}`;
   }
 
-  // formatDate(date: Date): string {
-  //   const day = String(date.getDate()).padStart(2, '0');
-  //   const month = String(date.getMonth() + 1).padStart(2, '0');
-  //   const year = date.getFullYear();
-  //   return `${day}/${month}/${year}`;
-  // }
-
   formatDateFromStringOrDate(date: string | Date): string {
     // Garantir que a entrada seja um Date
     const validDate = typeof date === 'string' ? new Date(date) : date;
@@ -84,13 +70,4 @@ export class DateService {
     const day = String(validDate.getDate()).padStart(2, '0');
     return `${year}-${month}-${day}`;
   }
-
-  // formatDate(date: string | Date): string {
-  //    // Garantir que a entrada seja um Date
-  //   const validDate = typeof date === 'string' ? new Date(date) : date;
-  //   const year = validDate.getFullYear();
-  //   const month = String(validDate.getMonth() + 1).padStart(2, '0');
-  //   const day = String(validDate.getDate()).padStart(2, '0');
-  //   return `${year}-${month}-${day}`;
-  // }
 }

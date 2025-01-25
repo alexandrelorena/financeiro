@@ -14,38 +14,31 @@ export class EventService {
 
   /**
    * Observable da lista de despesas.
-   * @type {Observable<any[]>}
    */
   despesas$ = this.despesasSubject.asObservable();
 
   /**
    * Status atual selecionado.
-   * @private
    */
   private statusSelecionadoSubject = new BehaviorSubject<string>('Todos');
 
   /**
    * Observable do status atual.
-   * @type {Observable<string>}
    */
   statusSelecionado$ = this.statusSelecionadoSubject.asObservable();
 
   /**
    * Notificação de mudanças de status.
-   * @private
    */
   private statusChange = new Subject<void>();
 
   /**
    * Observable para escutar mudanças de status.
-   * @type {Observable<void>}
    */
   onStatusChange$ = this.statusChange.asObservable();
 
   /**
    * Lista local de despesas.
-   * @private
-   * @type {any[]}
    */
   private despesas: any[] = [];
 
@@ -54,14 +47,8 @@ export class EventService {
 
   /**
    * Construtor da classe EventService.
-   * @param {HttpClient} http Serviço para chamadas HTTP.
    */
   constructor(private http: HttpClient) {}
-
-  // Método para emitir mudanças
-  // emitStatusChange(): void {
-  //   this.statusChange.next();
-  // }
 
   emitirDespesaAdicionada(): void {
     console.log('Emitindo evento de despesa adicionada...');
@@ -70,7 +57,6 @@ export class EventService {
 
   /**
    * Atualiza a lista de despesas.
-   * @param {any[]} novasDespesas - Nova lista de despesas.
    */
   atualizarDespesas(novasDespesas: any[]): void {
     this.despesasSubject.next(novasDespesas);
@@ -79,14 +65,13 @@ export class EventService {
   }
 
   adicionarDespesa(despesa: any): void {
-    this.despesas.push(despesa); // Adiciona a despesa diretamente
-    this.despesas = [...this.despesas]; // Garante que o Angular detecte a mudança
-    this.despesaAdicionadaSource.next(); // Dispara o evento
+    this.despesas.push(despesa);
+    this.despesas = [...this.despesas];
+    this.despesaAdicionadaSource.next();
   }
 
   /**
    * Atualiza o status selecionado.
-   * @param {string} novoStatus - Novo status selecionado.
    */
   // atualizarStatusSelecionado(novoStatus: string): void {
   //   this.statusSelecionadoSubject.next(novoStatus);
@@ -95,7 +80,6 @@ export class EventService {
 
   /**
    * Retorna o status atual selecionado.
-   * @returns {string} Status atual.
    */
   // obterStatusSelecionado(): string {
   //   return this.statusSelecionadoSubject.getValue();
@@ -110,7 +94,6 @@ export class EventService {
 
   /**
    * Escuta mudanças no status.
-   * @returns {Observable<void>} Observable de mudanças de status.
    */
   onStatusChange(): Observable<void> {
     return this.statusChange.asObservable();

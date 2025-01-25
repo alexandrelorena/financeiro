@@ -49,8 +49,6 @@ export class GastoService {
 
   /**
    * Cria uma nova despesa no sistema.
-   * @param gasto Objeto Gasto a ser criado.
-   * @returns Observable com o gasto criado.
    */
   criarGasto(gasto: Gasto): Observable<Gasto> {
     this.formatarDataVencimento(gasto);
@@ -62,9 +60,6 @@ export class GastoService {
 
   /**
    * Atualiza uma despesa existente.
-   * @param id ID da despesa a ser atualizada.
-   * @param despesa Objeto Gasto com os dados atualizados.
-   * @returns Observable com a despesa atualizada.
    */
   updateDespesa(id: number, despesa: Gasto): Observable<Gasto> {
     despesa.vencimento = this.dateService.convertToISODate(despesa.vencimento);
@@ -81,8 +76,6 @@ export class GastoService {
 
   /**
    * Deleta uma despesa pelo ID.
-   * @param id ID da despesa a ser deletada.
-   * @returns Observable vazio.
    */
   deleteDespesa(id: number): Observable<void> {
     return this.http
@@ -94,8 +87,6 @@ export class GastoService {
 
   /**
    * Apaga todas as despesas de um mês específico.
-   * @param selectedMonth Número do mês para apagar despesas.
-   * @returns Observable vazio.
    */
   apagarDespesasDoMes(selectedMonth: number): Observable<void> {
     return this.http
@@ -112,8 +103,6 @@ export class GastoService {
 
   /**
    * Atualiza o status de uma despesa.
-   * @param id ID da despesa.
-   * @param status Novo status da despesa.
    * @returns Observable com o gasto atualizado.
    */
   updateStatus(id: number, status: string): Observable<Gasto> {
@@ -131,8 +120,6 @@ export class GastoService {
 
   /**
    * Marca uma despesa como paga.
-   * @param id ID da despesa.
-   * @returns Observable com o gasto atualizado.
    */
   pagarDespesa(id: number): Observable<Gasto> {
     return this.http
@@ -144,9 +131,6 @@ export class GastoService {
 
   /**
    * Define o status de uma despesa com base em sua data de vencimento e status atual.
-   * @param dataVencimento Data de vencimento da despesa.
-   * @param statusAtual Status atual da despesa.
-   * @returns Objeto com status atualizado e tipo correspondente.
    */
   definirStatusDespesa(
     dataVencimento: string | Date,
@@ -174,8 +158,6 @@ export class GastoService {
 
   /**
    * Mapeia o status de uma despesa para um tipo numérico.
-   * @param status Status da despesa.
-   * @returns Número correspondente ao status.
    */
   mapStatusToTipo(status: string): TipoGasto {
     switch (status) {
@@ -194,7 +176,6 @@ export class GastoService {
 
   /**
    * Formata a data de vencimento de uma despesa.
-   * @param despesa Objeto Gasto a ser formatado.
    */
   formatarDataVencimento(despesa: Gasto): void {
     if (despesa.vencimento instanceof Date) {
@@ -206,8 +187,6 @@ export class GastoService {
 
   /**
    * Normaliza o formato da data de vencimento de um gasto.
-   * @param gasto Objeto Gasto a ser normalizado.
-   * @returns Objeto Gasto com data normalizada.
    */
   normalizeGasto(gasto: Gasto): Gasto {
     if (typeof gasto.vencimento === 'string') {
@@ -223,9 +202,6 @@ export class GastoService {
 
   /**
    * Trata erros ocorridos em requisições HTTP.
-   * @param userMessage Mensagem de erro para o usuário.
-   * @param method Método onde o erro ocorreu.
-   * @returns Função que retorna um Observable com o erro.
    */
   private handleError(
     userMessage: string,

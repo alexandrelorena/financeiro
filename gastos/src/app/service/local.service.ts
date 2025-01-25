@@ -6,26 +6,23 @@ import { Gasto } from '../models/gasto.model';
   providedIn: 'root',
 })
 export class LocalService {
-  private despesasSubject = new BehaviorSubject<Gasto[]>([]); // Estado inicial
-  despesas$ = this.despesasSubject.asObservable(); // Expondo como Observable
+  private despesasSubject = new BehaviorSubject<Gasto[]>([]);
+  despesas$ = this.despesasSubject.asObservable();
 
-  constructor() {
-    // Inicialização do BehaviorSubject com valores já existentes (se houver)
-    // Se você tiver um serviço para obter as despesas inicialmente, você pode fazer isso aqui
-  }
+  constructor() {}
 
   // Método para adicionar uma nova despesa
   adicionarDespesa(despesa: Gasto) {
     const despesasAtuais = this.despesasSubject.value;
-    this.despesasSubject.next([...despesasAtuais, despesa]); // Atualiza a lista de despesas
+    this.despesasSubject.next([...despesasAtuais, despesa]);
   }
 
   // Método para atualizar as despesas (antes estava no GastoService)
   atualizarDespesas(despesas: Gasto[]): void {
-    this.despesasSubject.next(despesas); // Atualiza o estado com a nova lista
+    this.despesasSubject.next(despesas);
   }
 
-  // Método para obter as despesas (caso precise)
+  // Método para obter as despesas
   getDespesas(): Observable<Gasto[]> {
     return this.despesas$;
   }
