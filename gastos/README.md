@@ -1,27 +1,182 @@
-# Gastos
+# Finanças
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.6.
+Aplicação de controle de finanças
 
-## Development server
+- Gastos
+- Receitas (em breve...)
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+### 📚 Tecnologias Utilizadas
 
-## Code scaffolding
+- **Backend:** Java | Spring Boot | MySQL
+- **Frontend:** Angular 17+ | Typescript | Node.js
+- **Empacotamento:** Arquivo `.tar.gz` para distribuição
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+&nbsp;&nbsp;
 
-## Build
+## Pré-requisitos
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Antes de iniciar, verifique se você possui as seguintes ferramentas instaladas:
 
-## Running unit tests
+- [Java 8 ou superior](https://www.java.com/pt-BR/download/)
+- [Maven](https://maven.apache.org/)
+- [Node.js](https://nodejs.org/)
+- [Angular CLI](https://angular.io/cli)
+- [MySQL](https://dev.mysql.com/downloads/)
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Verifique se as variáveis de ambiente estão configuradas corretamente.
 
-## Running end-to-end tests
+&nbsp;
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+## Release
 
-## Further help
+### Arquivos Disponíveis para Download
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Faça o downloas do arquivo compactado:
+
+- [Gastos - Linux](/download/gastos-linux.tar.xz)
+- [Gastos - Windows](/download/gastos-windows.tar.xz)
+
+### Versão Atual
+
+- **Versão**: 1.0.0
+- **Data de Lançamento**: 26/01/2025
+
+### Histórico de Versões
+
+| Versão | Data       | Descrição                                       |
+| ------ | ---------- | ----------------------------------------------- |
+| 1.0.0  | 26/01/2025 | Primeira versão lançada com suporte completo.   |
+| 0.9.0  | 20/01/2025 | Versão de teste inicial com recursos limitados. |
+
+&nbsp;
+
+## Instruções para o Usuário Final - Linux
+
+&nbsp;
+
+> Opção 1: Usando o Script
+
+&nbsp;
+
+1.  **Descompacte o Instalador**
+
+    - No terminal, execute:
+
+      ```bash
+      tar -xzvf instalador-gastos.tar.gz
+      cd instalador
+      ```
+
+2.  **Execute a Aplicação**
+
+    - Inicie a aplicação com:
+
+      ```bash
+      ./gastos.sh
+      ```
+
+&nbsp;
+
+A aplicação estará disponível em `http://localhost:8080`.
+
+&nbsp;
+
+> Opção 2: Use o instalador
+
+&nbsp;
+
+- **Instale o pacote**
+
+  - Instale o pacote com o comando:
+
+    ```bash
+     sudo dpkg -i gastos-1.0.0.deb
+    ```
+
+&nbsp;
+
+A aplicação estará disponível em `http://localhost:8080`.
+
+&nbsp;&nbsp;
+
+## Instruções para o Usuário Final - Windows
+
+> Opção 1: Usando o Script
+
+1.  **Descompacte o Instalador**
+
+    - No terminal, execute:
+
+      ```bash
+      tar -xzvf instalador-gastos.tar.gz
+      cd instalador
+      ```
+
+2.  **Execute a Aplicação**
+
+    - No cmd ou shell, execute:
+
+      ```bash
+      ./gastos.sh
+      ```
+
+> Opção 2: Usando o instalador
+
+    - Instale o pacote exe:
+
+&nbsp;
+
+A aplicação estará disponível em `http://localhost:8080`.
+
+&nbsp;
+
+### 🚀 Gastos - clique nas imagems
+
+[![Gastos](/readme/img-small/controle-de-financas_1.png)](/readme/controle-de-financas_1.png)
+[![Gastos](/readme/img-small/controle-de-financas_2.png)](/readme/controle-de-financas_2.png)
+
+[![Gastos](/readme/img-small/controle-de-financas_3.png)](/readme/controle-de-financas_3.png)
+[![Gastos](/readme/img-small/controle-de-financas_4.png)](/readme/controle-de-financas_4.png)
+
+[![Gastos](/readme/img-small/controle-de-financas_5.png)](/readme/controle-de-financas_5.png)
+[![Gastos](/readme/img-small/controle-de-financas_6.png)](/readme/controle-de-financas_6.png)
+
+[![Gastos](/readme/img-small/controle-de-financas_7.png)](/readme/controle-de-financas_7.png)
+[![Gastos](/readme/img-small/controle-de-financas_8.png)](/readme/controle-de-financas_8.png)
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="estilo.css">
+</head>
+<body>
+
+<img src="https://i.imgur.com/h1q7oo1.jpg" width="785" height="5">
+
+<div align="left">
+  <img src="https://github-readme-stats.vercel.app/api/wakatime?username=@alexandrelorena&v=2&theme=react" height="125" alt="languages graph"/>
+  <img src="https://github-readme-stats.vercel.app/api/top-langs?username=alexandrelorena&locale=en&hide_title=false&layout=compact&card_width=320&langs_count=5&theme=react&hide_border=false&order=2" height="125" alt="languages graph" />
+  <img src="https://github-readme-stats.vercel.app/api?username=alexandrelorena&hide_title=false&hide_rank=false&show_icons=true&include_all_commits=true&count_private=true&disable_animations=false&theme=react&locale=en&hide_border=false&order=1" height="125" alt="stats graph"/>
+</div>
+<img src="https://i.imgur.com/h1q7oo1.jpg" width="785" height="5">
+
+<div>
+  <a href="mailto:alexandre.lorena@gmail.com" style="text-decoration: none;">
+    <img src="https://cdn.simpleicons.org/gmail" alt="Gmail" width="32" height="32"></a>&nbsp;&nbsp;
+  <a href="https://www.instagram.com/alexandre_lorena/" style="text-decoration: none;">
+    <img src="https://cdn.simpleicons.org/instagram" alt="Instagram" width="32" height="32"></a>&nbsp;&nbsp;
+  <a href="https://www.linkedin.com/in/alexandrelorena-developer/" style="text-decoration: none;">
+    <img src="https://cdn.simpleicons.org/linkedin" alt="LinkedIn" width="32" height="32"></a>&nbsp;&nbsp;
+  <a href="https://x.com/alefaith" style="text-decoration: none;">
+    <img src="https://cdn.simpleicons.org/x" alt="Twitter" width="32" height="32"></a>&nbsp;&nbsp;
+  <a href="https://www.youtube.com/@AleDevJavaPython" style="text-decoration: none;">
+    <img src="https://cdn.simpleicons.org/youtube" width="32" height="32"></a>&nbsp;&nbsp;
+  <a href="https://steamcommunity.com/id/alexandrelorena/" style="text-decoration: none;">
+    <img src="https://cdn.simpleicons.org/steam/gray" width="32" height="32"></a>&nbsp;&nbsp;
+  <a href="https://discord.com/channels/alelorena" style="text-decoration: none;">
+    <img src="https://cdn.simpleicons.org/discord" width="32" height="32"></a>
+</div>
+</body>
+</html>
