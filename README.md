@@ -94,7 +94,11 @@ A aplicação estará disponível em `http://localhost:8080`.
 
 ## Instruções para o Usuário Final - Windows
 
+&nbsp;
+
 > Opção 1: Usando o Script
+
+&nbsp;
 
 1.  **Descompacte o Instalador**
 
@@ -113,7 +117,11 @@ A aplicação estará disponível em `http://localhost:8080`.
       ./gastos.sh
       ```
 
+&nbsp;
+
 > Opção 2: Usando o instalador
+
+&nbsp;
 
     - Instale o pacote exe:
 
