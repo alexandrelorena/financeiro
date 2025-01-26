@@ -41,13 +41,6 @@ Faça o downloas do arquivo compactado:
 - **Versão**: 1.0.0
 - **Data de Lançamento**: 26/01/2025
 
-### Histórico de Versões
-
-| Versão | Data       | Descrição                                       |
-| ------ | ---------- | ----------------------------------------------- |
-| 1.0.0  | 26/01/2025 | Primeira versão lançada com suporte completo.   |
-| 0.9.0  | 20/01/2025 | Versão de teste inicial com recursos limitados. |
-
 &nbsp;
 
 ## Instruções para o Usuário Final - Linux
