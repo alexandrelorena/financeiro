@@ -133,17 +133,17 @@ A aplicação estará disponível em `http://localhost:8080`.
 
 ### 🚀 Gastos - clique nas imagems
 
-[![Gastos](/readme/img-small/controle-de-financas_1.png)](/readme/controle-de-financas_1.png)
-[![Gastos](/readme/img-small/controle-de-financas_2.png)](/readme/controle-de-financas_2.png)
+[![Gastos](/prints/img-small/controle-de-financas_1.png)](/readme/controle-de-financas_1.png)
+[![Gastos](/prints/img-small/controle-de-financas_2.png)](/readme/controle-de-financas_2.png)
 
-[![Gastos](/readme/img-small/controle-de-financas_3.png)](/readme/controle-de-financas_3.png)
-[![Gastos](/readme/img-small/controle-de-financas_4.png)](/readme/controle-de-financas_4.png)
+[![Gastos](/prints/img-small/controle-de-financas_3.png)](/readme/controle-de-financas_3.png)
+[![Gastos](/prints/img-small/controle-de-financas_4.png)](/readme/controle-de-financas_4.png)
 
-[![Gastos](/readme/img-small/controle-de-financas_5.png)](/readme/controle-de-financas_5.png)
-[![Gastos](/readme/img-small/controle-de-financas_6.png)](/readme/controle-de-financas_6.png)
+[![Gastos](/prints/img-small/controle-de-financas_5.png)](/readme/controle-de-financas_5.png)
+[![Gastos](/prints/img-small/controle-de-financas_6.png)](/readme/controle-de-financas_6.png)
 
-[![Gastos](/readme/img-small/controle-de-financas_7.png)](/readme/controle-de-financas_7.png)
-[![Gastos](/readme/img-small/controle-de-financas_8.png)](/readme/controle-de-financas_8.png)
+[![Gastos](/prints/img-small/controle-de-financas_7.png)](/readme/controle-de-financas_7.png)
+[![Gastos](/prints/img-small/controle-de-financas_8.png)](/readme/controle-de-financas_8.png)
 
 <!DOCTYPE html>
 <html lang="pt-br">
