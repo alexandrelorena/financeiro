@@ -1,7 +1,3 @@
-# financeiro
-
-Projeto de controle de finanças
-
 # Finanças
 
 Aplicação de controle de finanças
