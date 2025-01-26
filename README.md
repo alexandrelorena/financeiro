@@ -31,7 +31,7 @@ Verifique se as variáveis de ambiente estão configuradas corretamente.
 
 ### Arquivos Disponíveis para Download
 
-Faça o downloas do arquivo compactado:
+Faça o download do arquivo compactado:
 
 - [Gastos - Linux](https://drive.google.com/file/d/11VVZCACWcZuyfMNqDkQTjDc2zF_xOEml/view?usp=drive_link)
 - [Gastos - Windows](https://drive.google.com/file/d/1KXCwM17vp2Av7VS9aZyYRG7-CqYxwd9C/view?usp=drive_link)
