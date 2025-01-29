@@ -45,32 +45,24 @@ Faça o download do arquivo compactado:
 
 ## Instruções para o Usuário Final - Linux
 
-&nbsp;
-
 > Opção 1: Usando o Script
 
-&nbsp;
+- - DESCOMPACTAR
 
-1.  **Descompacte o Instalador**
+  - No terminal, execute:
 
-    - No terminal, execute:
+    ```bash
+    tar -xzvf instalador-gastos.tar.gz
+    cd instalador
+    ```
 
-      ```bash
-      tar -xzvf instalador-gastos.tar.gz
-      cd instalador
-      ```
+  - Inicie a aplicação com:
 
-2.  **Execute a Aplicação**
+    ```bash
+    ./gastos.sh
+    ```
 
-    - Inicie a aplicação com:
-
-      ```bash
-      ./gastos.sh
-      ```
-
-&nbsp;
-
-A aplicação estará disponível em `http://localhost:8080`.
+    A aplicação estará disponível em `http://localhost:8080`.
 
 &nbsp;
 
@@ -86,50 +78,53 @@ A aplicação estará disponível em `http://localhost:8080`.
      sudo dpkg -i gastos-1.0.0.deb
     ```
 
-&nbsp;
-
-A aplicação estará disponível em `http://localhost:8080`.
+    A aplicação estará disponível em `http://localhost:8080`.
 
 &nbsp;&nbsp;
 
-## Instruções para o Usuário Final - Windows
+<!-- ## Instruções para o Usuário Final - Windows
 
-&nbsp;
+---
 
 > Opção 1: Usando o Script
 
-&nbsp;
+- DESCOMPACTAR
 
-1.  **Descompacte o Instalador**
+  - [Instale o 7zip](https://www.7-zip.org/)
+  - [Instale o git bash](https://git-scm.com/downloads/win)
 
-    - No terminal, execute:
+    Obs: Em variáveis de ambiente do sistema (path) adicionar o caminho do 7zip, geralmente ‘C:\Program Files (x86)\7-Zip’.
 
-      ```bash
-      tar -xzvf instalador-gastos.tar.gz
-      cd instalador
-      ```
+  - Abra o git bash, na pasta onde está o arquivo .7z, execute o comando para:
 
-2.  **Execute a Aplicação**
+    ```bash
+    7z x script-gastos.7z
+    ```
 
-    - No cmd ou shell, execute:
+  - Execute a Aplicação
+
+    - Inicie a aplicação via git bash com o comando:
 
       ```bash
       ./gastos.sh
       ```
 
-&nbsp;
-
-> Opção 2: Usando o instalador
+      A aplicação estará disponível em: http://localhost:8080
 
 &nbsp;
 
-    - Instale o pacote exe:
+> Opção 2: Instale o pacote
 
-&nbsp;
+- ARQUIVO EXECUTÁVEL
 
-A aplicação estará disponível em `http://localhost:8080`.
+  - Instale o pacote ‘GastosSetup.exe’
+  - Crie o atalho de ‘gastos.bat’
+  - Troque o ícone do atalho pelo ícone ‘pagamento’.
+  - Execute o atalho.
 
-&nbsp;
+    A aplicação estará disponível em `http://localhost:8080`. -->
+
+---
 
 ### 🚀 Gastos - clique nas imagems
 
