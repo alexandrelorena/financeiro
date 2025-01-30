@@ -34,7 +34,7 @@ Verifique se as variáveis de ambiente estão configuradas corretamente.
 Faça o download do arquivo compactado:
 
 - [Gastos - Linux](https://drive.google.com/file/d/11VVZCACWcZuyfMNqDkQTjDc2zF_xOEml/view?usp=drive_link)
-<!-- - [Gastos - Windows](https://drive.google.com/file/d/1KXCwM17vp2Av7VS9aZyYRG7-CqYxwd9C/view?usp=drive_link) -->
+- [Gastos - Windows](https://drive.google.com/file/d/1kgzozoEx0XZ3OEjKxafz76r7IYBS6ft9/view?usp=drive_link)
 
 ### Versão Atual
 
@@ -82,7 +82,7 @@ Faça o download do arquivo compactado:
 
 &nbsp;&nbsp;
 
-<!-- ## Instruções para o Usuário Final - Windows
+## Instruções para o Usuário Final - Windows
 
 ---
 
@@ -122,7 +122,7 @@ Faça o download do arquivo compactado:
   - Troque o ícone do atalho pelo ícone ‘pagamento’.
   - Execute o atalho.
 
-    A aplicação estará disponível em `http://localhost:8080`. -->
+    A aplicação estará disponível em `http://localhost:8080`.
 
 ---
 
