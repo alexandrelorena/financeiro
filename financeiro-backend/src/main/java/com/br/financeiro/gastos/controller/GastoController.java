@@ -20,14 +20,23 @@ import java.util.Optional;
 public class GastoController {
 
     private final GastoService gastoService;
+    private final GastoRepository gastoRepository;
 
     @Autowired
-    public GastoController(GastoService gastoService) {
+    public GastoController(GastoService gastoService, GastoRepository gastoRepository) {
         this.gastoService = gastoService;
+        this.gastoRepository = gastoRepository;
     }
 
-    @Autowired
-    private GastoRepository gastoRepository;
+    // private final GastoService gastoService;
+
+    // @Autowired
+    // public GastoController(GastoService gastoService) {
+    // this.gastoService = gastoService;
+    // }
+
+    // @Autowired
+    // private GastoRepository gastoRepository;
 
     /**
      * Retorna uma lista de gastos com base no status informado.
@@ -61,16 +70,6 @@ public class GastoController {
      * Cria um novo gasto e atualiza seu status automaticamente.
      * 
      */
-
-    @RestController
-    @RequestMapping("/api")
-    public class GastosController {
-
-        @GetMapping("/hello")
-        public String hello() {
-            return "Hello, World!";
-        }
-    }
 
     @PostMapping
     public ResponseEntity<Gasto> createGasto(@RequestBody Gasto gasto) {

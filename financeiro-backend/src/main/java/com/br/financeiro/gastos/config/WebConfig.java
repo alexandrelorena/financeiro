@@ -9,7 +9,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(@NonNull CorsRegistry registry) {
-        registry.addMapping("/api/**") // Adiciona configuração para todas as rotas que começam com /api
+        registry.addMapping("/**") // Adiciona configuração para todas as rotas que começam com /api
                 .allowedOrigins("http://localhost:4200") // Permita apenas seu front-end
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") // Métodos permitidos
                 .allowedHeaders("*"); // Permite todos os cabeçalhos

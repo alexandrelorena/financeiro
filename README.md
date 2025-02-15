@@ -1,53 +1,61 @@
-# Finanças
+# 📌 Controle financeiro
 
 Aplicação de controle de finanças
 
 - Gastos
 - Receitas (em breve...)
 
-### 📚 Tecnologias Utilizadas
+---
+
+> 📜 Copyright (c) 2025 Alexandre Lorena.
+>
+> - Licensed under the MIT License.
+>
+> - See LICENSE file for details.
+
+---
+
+## 📚 Tecnologias Utilizadas
 
 - **Backend:** Java | Spring Boot | MySQL
 - **Frontend:** Angular 17+ | Typescript | Node.js
 - **Empacotamento:** Arquivo `.tar.gz` para distribuição
 
-&nbsp;&nbsp;
+---
 
-## Pré-requisitos
+## 🖥️ Pré-requisitos
 
-Antes de iniciar, verifique se você possui as seguintes ferramentas instaladas:
+Antes de iniciar, verifique se você possui as seguintes ferramentas:
 
-- [Java 8 ou superior](https://www.java.com/pt-BR/download/)
-- [Maven](https://maven.apache.org/)
-- [Node.js](https://nodejs.org/)
-- [Angular CLI](https://angular.io/cli)
-- [MySQL](https://dev.mysql.com/downloads/)
+![Java](https://img.shields.io/badge/Java-8%2B-orange?style=for-the-badge&logo=java&logoColor=white)
+![Maven](https://img.shields.io/badge/Maven-C71A36?style=for-the-badge&logo=apache-maven&logoColor=white)
+![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=node.js&logoColor=white)
+![Angular CLI](https://img.shields.io/badge/Angular_CLI-DD0031?style=for-the-badge&logo=angular&logoColor=white)
+![MySQL](https://img.shields.io/badge/MySQL-005C84?style=for-the-badge&logo=mysql&logoColor=white)
 
 Verifique se as variáveis de ambiente estão configuradas corretamente.
 
-&nbsp;
+---
 
-## Release
-
-### Arquivos Disponíveis para Download
-
-Faça o download do arquivo compactado:
-
-- [Gastos - Linux](https://drive.google.com/file/d/11VVZCACWcZuyfMNqDkQTjDc2zF_xOEml/view?usp=drive_link)
-- [Gastos - Windows](https://drive.google.com/file/d/1kgzozoEx0XZ3OEjKxafz76r7IYBS6ft9/view?usp=drive_link)
+## 🛠️ Release
 
 ### Versão Atual
 
 - **Versão**: 1.0.0
 - **Data de Lançamento**: 26/01/2025
 
-&nbsp;
+#### Download (pacote compactado)
 
-## Instruções para o Usuário Final - Linux
+- [Gastos - Linux](https://drive.google.com/file/d/11VVZCACWcZuyfMNqDkQTjDc2zF_xOEml/view?usp=drive_link)
+- [Gastos - Windows](https://drive.google.com/file/d/1kgzozoEx0XZ3OEjKxafz76r7IYBS6ft9/view?usp=drive_link)
+
+---
+
+## 🐧 Instruções para o Usuário Final - Linux
 
 > Opção 1: Usando o Script
 
-- - DESCOMPACTAR
+- Descompactar
 
   - No terminal, execute:
 
@@ -64,31 +72,27 @@ Faça o download do arquivo compactado:
 
     A aplicação estará disponível em `http://localhost:8080`.
 
-&nbsp;
+  &nbsp;
 
-> Opção 2: Use o instalador
-
-&nbsp;
+> Opção 2: Usando o instalador
 
 - **Instale o pacote**
 
   - Instale o pacote com o comando:
 
     ```bash
-     sudo dpkg -i gastos-1.0.0.deb
+     sudo dpkg -i gastos.deb
     ```
 
     A aplicação estará disponível em `http://localhost:8080`.
 
-&nbsp;&nbsp;
+&nbsp;
 
-## Instruções para o Usuário Final - Windows
-
----
+## 🖥️ Instruções para o Usuário Final - Microsoft Windows
 
 > Opção 1: Usando o Script
 
-- DESCOMPACTAR
+- Descompactar
 
   - [Instale o 7zip](https://www.7-zip.org/)
   - [Instale o git bash](https://git-scm.com/downloads/win)
@@ -101,30 +105,54 @@ Faça o download do arquivo compactado:
     7z x script-gastos.7z
     ```
 
-  - Execute a Aplicação
+  - Execute a aplicação via git bash com o comando:
 
-    - Inicie a aplicação via git bash com o comando:
+    ```bash
+    ./gastos.sh
+    ```
 
-      ```bash
-      ./gastos.sh
-      ```
-
-      A aplicação estará disponível em: http://localhost:8080
+    A aplicação estará disponível em: http://localhost:8080
 
 &nbsp;
 
-> Opção 2: Instale o pacote
+> Opção 2: Usando o instalador
 
-- ARQUIVO EXECUTÁVEL
+- Arquivo executável
 
   - Instale o pacote ‘GastosSetup.exe’
   - Crie o atalho de ‘gastos.bat’
   - Troque o ícone do atalho pelo ícone ‘pagamento’.
   - Execute o atalho.
 
-    A aplicação estará disponível em `http://localhost:8080`.
+  A aplicação estará disponível em `http://localhost:8080`.
 
 ---
+
+## 🛠 Como Usar
+
+- 📊 Acesse o painel no navegador: http://localhost:8080
+- 🔍 Consulte seus gastos mensais
+- 📅 Agende lembretes de pagamento
+
+---
+
+## 🤝 Contribuição
+
+Contribuições são bem-vindas!
+
+- Abra um Pull Request ou relate um problema.
+
+---
+
+> 📜 Copyright (c) 2025 Alexandre Lorena.
+>
+> - Licensed under the MIT License.
+>
+> - See LICENSE file for details.
+
+---
+
+🔗 Dúvidas? <a href="mailto:alexandre.lorena@gmail.com" style="text-decoration: none;">Entre em contato</a>
 
 ### 🚀 Gastos - clique nas imagems
 

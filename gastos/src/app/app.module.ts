@@ -1,10 +1,16 @@
+/*
+ * Copyright (c) 2025 Alexandre Lorena
+ * Licensed under the MIT License. See LICENSE file for details.
+ */
+
 // Angular Core e Básicos
 import { NgModule, LOCALE_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
-import { provideHttpClient } from '@angular/common/http';
+import { HttpClient, provideHttpClient } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 // Angular Material
 import { MatButtonModule } from '@angular/material/button';
@@ -54,6 +60,7 @@ registerLocaleData(localePt, 'pt-BR');
     AppRoutingModule,
     BrowserAnimationsModule,
     MatProgressSpinnerModule,
+    HttpClientModule,
 
     // Módulos do Angular Material
     MatButtonModule,
