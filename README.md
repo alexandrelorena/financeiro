@@ -70,7 +70,7 @@ Verifique se as variáveis de ambiente estão configuradas corretamente.
     ./gastos.sh
     ```
 
-    A aplicação estará disponível em `http://localhost:8080`.
+  A aplicação estará disponível em `http://localhost:8080`.
 
   &nbsp;
 
@@ -84,7 +84,7 @@ Verifique se as variáveis de ambiente estão configuradas corretamente.
      sudo dpkg -i gastos.deb
     ```
 
-    A aplicação estará disponível em `http://localhost:8080`.
+  A aplicação estará disponível em `http://localhost:8080`.
 
 &nbsp;
 
@@ -111,7 +111,7 @@ Verifique se as variáveis de ambiente estão configuradas corretamente.
     ./gastos.sh
     ```
 
-    A aplicação estará disponível em: http://localhost:8080
+  A aplicação estará disponível em `http://localhost:8080`.
 
 &nbsp;
 
