@@ -7,7 +7,7 @@ Aplicação de controle de finanças
 
 ---
 
-> 📜 Copyright (c) 2025 Alexandre Lorena.
+> ⚖️ Copyright (c) 2025 Alexandre Lorena.
 >
 > - Licensed under the MIT License.
 >
@@ -144,7 +144,7 @@ Contribuições são bem-vindas!
 
 ---
 
-> 📜 Copyright (c) 2025 Alexandre Lorena.
+> ⚖️ Copyright (c) 2025 Alexandre Lorena.
 >
 > - Licensed under the MIT License.
 >
