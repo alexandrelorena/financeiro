@@ -148,7 +148,7 @@ Contribuições são bem-vindas!
 >
 > - Licensed under the MIT License.
 >
-> - See LICENSE file for details.
+> - See <a href="LICENSE" style="text-decoration: none;">LICENSE</a> file for details.
 
 ---
 
