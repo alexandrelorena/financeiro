@@ -21,11 +21,5 @@ public class GastosApplication {
 
 		System.out.println("Banco de dados: " + System.getProperty("DB_URL"));
 		System.out.println("Usuário: " + System.getProperty("DB_USERNAME"));
-		System.out.println("DB_PASSWORD: " + System.getProperty("DB_PASSWORD"));
-		System.out.println("DB_URL: " + dotenv.get("DB_URL"));
-		System.out.println("DB_USERNAME: " + dotenv.get("DB_USERNAME"));
-		System.out.println("DB_PASSWORD: " + dotenv.get("DB_PASSWORD"));
-
 	}
-
 }
