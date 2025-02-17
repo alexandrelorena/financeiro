@@ -55,22 +55,25 @@ Verifique se as variáveis de ambiente estão configuradas corretamente.
 
 > Opção 1: Usando o Script
 
-- Descompactar
+- Descompacte o ‘linux.zip’
 
-  - No terminal, execute:
-
-    ```bash
-    tar -xzvf instalador-gastos.tar.gz
-    cd instalador
-    ```
-
-  - Inicie a aplicação com:
+  - No terminal, execute os seguintes comandos:
 
     ```bash
-    ./gastos.sh
+    unzip linux.zip
+
+    cd linux/gastos-launcher/opt/gastos
     ```
 
-  A aplicação estará disponível em `http://localhost:8080`.
+- Execute a Aplicação
+
+  - Inicie a aplicação com um dos comandos:
+
+    ```bash
+    ./gastos.sh  ou  java -jar gastos-0.0.1-SNAPSHOT.jar
+    ```
+
+    A aplicação estará disponível em `http://localhost:8080`.
 
   &nbsp;
 
@@ -78,13 +81,15 @@ Verifique se as variáveis de ambiente estão configuradas corretamente.
 
 - **Instale o pacote**
 
-  - Instale o pacote com o comando:
+  - Instale o pacote gastos-launcher.deb e siga as orientações
 
     ```bash
-     sudo dpkg -i gastos.deb
+     sudo dpkg -i gastos-launcher.deb
     ```
 
-  A aplicação estará disponível em `http://localhost:8080`.
+    Após concluir a instalação digite gastos no terminal em qualquer local
+
+    A aplicação estará disponível em `http://localhost:8080`.
 
 &nbsp;
 
