@@ -137,7 +137,7 @@ Verifique se as variáveis de ambiente estão configuradas corretamente.
 
 - 📊 Acesse o painel no navegador: http://localhost:8080
 - 🔍 Consulte seus gastos mensais
-- 📅 Agende lembretes de pagamento
+- 📅 Cadastre, altere, pague ou remova seus gastos
 
 ---
 
