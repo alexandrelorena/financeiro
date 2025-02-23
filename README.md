@@ -39,8 +39,7 @@ Verifique se as variáveis de ambiente estão configuradas corretamente.
 
 ## <span style="color:yellow;">❗ Release</span>
 
-> [!NOTE]
-> **Versão**: 1.0.0
+> [!NOTE] > **Versão**: 1.0.0
 >
 > **Data de Lançamento**: 26/01/2025
 
@@ -151,10 +150,10 @@ Contribuições são bem-vindas!
 
 ---
 
+> [!WARNING]
 > ⚖️ Copyright (c) 2025 Alexandre Lorena.
 >
 > - Licensed under the MIT License.
->
 > - See <a href="LICENSE" style="text-decoration: none;">LICENSE</a> file for details.
 
 ---
