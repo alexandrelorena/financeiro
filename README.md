@@ -39,10 +39,9 @@ Verifique se as variáveis de ambiente estão configuradas corretamente.
 
 ## <span style="color:yellow;">❗ Release</span>
 
-> [!NOTE]
-> **Versão**: 1.0.0
+> [!NOTE] > **Versão**: 1.0.0
 >
-> **Data de Lançamento**: 26/01/202
+> **Data de Lançamento**: 26/01/2025
 
 > [!IMPORTANT]
 >
