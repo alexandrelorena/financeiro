@@ -1,21 +1,21 @@
-# 📌 Controle financeiro
+# 📌 <span style="color:blue;">Controle financeiro</span>
 
-Aplicação de controle de finanças
+#### <span style="color:yellow;">Aplicação de controle de finanças</span>
 
 - Gastos
 - Receitas (em breve...)
 
 ---
 
+> [!WARNING]
 > ⚖️ Copyright (c) 2025 Alexandre Lorena.
 >
 > - Licensed under the MIT License.
->
 > - See <a href="LICENSE" style="text-decoration: none;">LICENSE</a> file for details.
 
 ---
 
-## 📚 Tecnologias Utilizadas
+## <span style="color:yellow;">⚡ Tecnologias Utilizadas</span>
 
 - **Backend:** Java | Spring Boot | MySQL
 - **Frontend:** Angular 17+ | Typescript | Node.js
@@ -23,7 +23,7 @@ Aplicação de controle de finanças
 
 ---
 
-## 🖥️ Pré-requisitos
+## <span style="color:yellow;">⚙️ Pré-requisitos</span>
 
 Antes de iniciar, verifique se você possui as seguintes ferramentas:
 
@@ -37,21 +37,23 @@ Verifique se as variáveis de ambiente estão configuradas corretamente.
 
 ---
 
-## 🛠️ Release
+## <span style="color:yellow;">❗ Release</span>
 
-### Versão Atual
+> [!NOTE]
+> **Versão**: 1.0.0
+>
+> **Data de Lançamento**: 26/01/202
 
-- **Versão**: 1.0.0
-- **Data de Lançamento**: 26/01/2025
-
-#### Download (pacote compactado)
-
-- [Gastos - Linux](https://drive.google.com/file/d/1njSEitVp_gjIB4E-rV_MbUm7SQteJx_v/view?usp=drive_link)
-- [Gastos - Windows](https://drive.google.com/file/d/1kgzozoEx0XZ3OEjKxafz76r7IYBS6ft9/view?usp=drive_link)
+> [!IMPORTANT]
+>
+> #### Download (pacote compactado)
+>
+> - [Gastos - Linux](https://drive.google.com/file/d/1njSEitVp_gjIB4E-rV_MbUm7SQteJx_v/view?usp=drive_link)
+> - [Gastos - Windows](https://drive.google.com/file/d/1kgzozoEx0XZ3OEjKxafz76r7IYBS6ft9/view?usp=drive_link)
 
 ---
 
-## 🐧 Instruções para o Usuário Final - Linux
+## 🐧 <span style="color:yellow;">Instruções para o Usuário Final - Linux</span>
 
 > Opção 1: Usando o Script
 
@@ -93,7 +95,7 @@ Verifique se as variáveis de ambiente estão configuradas corretamente.
 
 &nbsp;
 
-## 🖥️ Instruções para o Usuário Final - Microsoft Windows
+## 🖥️ <span style="color:yellow;">Instruções para o Usuário Final - Microsoft Windows <span>
 
 > Opção 1: Usando o Script
 
@@ -133,7 +135,7 @@ Verifique se as variáveis de ambiente estão configuradas corretamente.
 
 ---
 
-## 🛠 Como Usar
+## <span style="color:yellow;">📚 Como Usar<span>
 
 - 📊 Acesse o painel no navegador: http://localhost:8080
 - 🔍 Consulte seus gastos mensais
@@ -141,7 +143,7 @@ Verifique se as variáveis de ambiente estão configuradas corretamente.
 
 ---
 
-## 🤝 Contribuição
+## <span style="color:yellow;">🤝 Contribuição<span>
 
 Contribuições são bem-vindas!
 
@@ -157,7 +159,7 @@ Contribuições são bem-vindas!
 
 ---
 
-🔗 Dúvidas? <a href="mailto:alexandre.lorena@gmail.com" style="text-decoration: none;">Entre em contato</a>
+🤔 Dúvidas? <a href="mailto:alexandre.lorena@gmail.com" style="text-decoration: none;">Entre em contato</a>
 
 ### 🚀 Gastos - clique nas imagems
 
