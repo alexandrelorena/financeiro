@@ -4,6 +4,7 @@ import { Gasto, TipoGasto } from '../../models/gasto.model';
 import { GastoService } from '../../service/gasto.service';
 import { LocalService } from '../../service/local.service';
 import { EventService } from '../../service/event.service';
+import { CategoriaService } from '../../service/categoria.service';
 import { parseISO, isValid, format } from 'date-fns';
 
 /**
@@ -47,27 +48,13 @@ export class AddDespesaComponent implements OnInit {
   /**
    * O usuário deve escolher uma categoria.
    */
-  categorias: string[] = [
-    'Alimentação',
-    'Aluguel',
-    'Água',
-    'Cartão',
-    'Celular',
-    'Empréstimo',
-    'Internet',
-    'Lazer',
-    'Luz',
-    'IPTU',
-    'Outros',
-    'Pets',
-    'Saúde',
-    'Transporte',
-  ];
+  categorias: string[] = [];
 
   constructor(
     private fb: FormBuilder,
     private gastoService: GastoService,
     private localService: LocalService,
+    private categoriaService: CategoriaService,
     private cdr: ChangeDetectorRef,
     private eventService: EventService
   ) {}
@@ -76,6 +63,7 @@ export class AddDespesaComponent implements OnInit {
    * Inicializa o formulário e define o que é obrigatório em cada campo.
    */
   ngOnInit(): void {
+    this.categorias = this.categoriaService.getCategorias();
     this.despesaForm = this.fb.group({
       // nome: ['', Validators.required],
       nome: [

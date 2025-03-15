@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Inject, Output } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { CategoriaService } from '../service/categoria.service';
 
 /**
  * Componente de modal para editar as despesas.
@@ -12,6 +13,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 })
 export class EditDespesaModalComponent {
   despesa: any;
+  categorias: string[] = [];
 
   @Output() edicaoSalva = new EventEmitter<any>();
 
@@ -27,23 +29,9 @@ export class EditDespesaModalComponent {
       ...data.despesa,
       vencimento: data.despesa.vencimento || null, // Inclui o vencimento se existir
     };
+
+    this.categorias = new CategoriaService().getCategorias();
   }
-  categorias: string[] = [
-    'Alimentação',
-    'Aluguel',
-    'Água',
-    'Cartão',
-    'Celular',
-    'Empréstimo',
-    'Internet',
-    'Lazer',
-    'Luz',
-    'IPTU',
-    'Outros',
-    'Pets',
-    'Saúde',
-    'Transporte',
-  ];
 
   /**
    * Método para salvar a edição da despesa e emitir os dados para o componente pai.
