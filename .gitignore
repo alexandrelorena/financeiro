@@ -1,5 +1,6 @@
 # See https://docs.github.com/get-started/getting-started-with-git/ignoring-files for more about ignoring files.
 
+
 # Compiled output
 /dist
 /tmp
@@ -22,6 +23,7 @@ yarn-error.log
 
 # Visual Studio Code
 .vscode/*
+.vscode/
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
@@ -40,3 +42,84 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+
+gastos/node_modules/
+gastos/dist/
+gastos/.angular/
+gastos/.vercel/
+gastos/.vercelignore
+gastos/all/
+gastos/vercel.json
+railway.json
+financeiro-backend/start.sh
+financeiro-backend/gastos.sh
+EMOJIS.md
+Procfile
+docker-compose.yml
+
+# Ignorar arquivos gerados
+financeiro-backend/src/main/resources/static/*.js
+financeiro-backend/src/main/resources/static/*.css
+financeiro-backend/src/main/resources/static/*.map
+financeiro-backend/src/main/resources/static/assets/fonts/
+financeiro-backend/src/main/resources/static/assets/images/
+financeiro-backend/src/main/resources/static/assets/favicon-*
+financeiro-backend/src/main/resources/.env
+financeiro-backend/src/main/resources/static/assets/
+financeiro-backend/src/main/resources/static/favicon.ico
+financeiro-backend/src/test/java/com/br/financeiro/gastos/application-test.properties
+financeiro-backend/output/
+financeiro-backend/target/
+
+# Ignorar favicons e imagens desnecessárias
+**/assets/favicon-*
+**/assets/favicon.ico
+**/assets/images/despesas.*
+**/assets/pixels-x-rem*
+**/assets/fonts/font-awesome/*
+
+
+
+# Ignorar arquivos de passo a passo de configuração
+1- INSTALAR-MYSQL.md
+1- INSTALAR-MYSQL.pdf
+2- CONFIGURAR-O-BANCO.md
+2- CONFIGURAR-O-BANCO.pdf
+3- INSTALAR-APLICACAO-LINUX.md
+3- INSTALAR-APLICACAO-LINUX.pdf
+CRIAR-PACOTE-DEB.md
+CRIAR-PACOTE-DEB.pdf
+.deb.txt
+financas.txt
+
+# --------------------------------------------------
+
+# Ignorar imagens e favicon antigos
+gastos/src/app/assets/financas-opcao2.png
+gastos/src/app/assets/images/404-illustration.png
+gastos/src/assets/favicon.ico_
+gastos/src/assets/financas-opcao2.png
+
+# Ignorar spinner e temas personalizados
+gastos/src/app/spinner/
+gastos/src/app/service/theme.service.ts
+gastos/src/custom-theme.scss
+
+# Ignorar environments
+gastos/src/environments/
+
+# Ignorar arquivos de configuração (caso queira)
+package-lock.json
+package.json
+
+# Ignorar Dockerfiles (se não forem para o repositório)
+Dockerfile
+Dockerfile.backend
+Dockerfile.frontend
+
+# Ignorar documentação
+INSTALL.md
+.gitattributes
+
+# Ignorar pasta criada no backend
+financeiro-backend/Financeiro/
