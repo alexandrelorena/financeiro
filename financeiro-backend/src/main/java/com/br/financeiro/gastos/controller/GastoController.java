@@ -28,16 +28,6 @@ public class GastoController {
         this.gastoRepository = gastoRepository;
     }
 
-    // private final GastoService gastoService;
-
-    // @Autowired
-    // public GastoController(GastoService gastoService) {
-    // this.gastoService = gastoService;
-    // }
-
-    // @Autowired
-    // private GastoRepository gastoRepository;
-
     /**
      * Retorna uma lista de gastos com base no status informado.
      * .

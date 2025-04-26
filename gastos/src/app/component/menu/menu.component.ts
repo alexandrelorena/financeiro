@@ -2,10 +2,10 @@ import { Component, EventEmitter, Output, OnInit } from '@angular/core';
 import { DateService } from '../../service/date.service';
 
 @Component({
-    selector: 'app-menu',
-    templateUrl: './menu.component.html',
-    styleUrls: ['./menu.component.css'],
-    standalone: false
+  selector: 'app-menu',
+  templateUrl: './menu.component.html',
+  styleUrls: ['./menu.component.css'],
+  standalone: false,
 })
 export class MenuComponent implements OnInit {
   // Lista dos meses abreviados
@@ -33,21 +33,21 @@ export class MenuComponent implements OnInit {
   constructor(private dateService: DateService) {}
 
   ngOnInit() {
-    this.setCurrentMonth(); // Inicializa com o mês atual
+    this.setCurrentMonth();
   }
 
   // Define o mês atual como selecionado
   setCurrentMonth() {
-    const currentMonthIndex = new Date().getMonth(); // Obtém o mês atual
-    const currentMonth = this.months[currentMonthIndex]; // Obtém o nome do mês
-    this.selectMonth(currentMonth); // Atualiza o mês selecionado
+    const currentMonthIndex = new Date().getMonth();
+    const currentMonth = this.months[currentMonthIndex];
+    this.selectMonth(currentMonth);
   }
 
   // Seleciona o mês
   selectMonth(month: string) {
-    this.selectedMonth = month; // Atualiza o mês localmente
-    this.dateService.selectMonth(month); // Atualiza o mês no serviço
-    this.monthSelected.emit(month); // Emite o mês selecionado para o componente pai
-    console.log('Mês selecionado:', month); // Exibe no console o mês selecionado
+    this.selectedMonth = month;
+    this.dateService.selectMonth(month);
+    this.monthSelected.emit(month);
+    console.log('Mês selecionado:', month);
   }
 }

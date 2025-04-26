@@ -1,6 +1,7 @@
 package com.br.financeiro.gastos;
 
 /*
+
  * Copyright (c) 2025 Alexandre Lorena
  * Licensed under the MIT License. See LICENSE file for details.
  */

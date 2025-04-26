@@ -1,35 +1,63 @@
-<h2>Editar Despesa</h2>
-<form (ngSubmit)="salvarEdicao()">
-  <mat-form-field>
+<h2 mat-dialog-title>Editar Despesa</h2>
+
+<form (ngSubmit)="salvarEdicao()" #form="ngForm" class="form-container">
+  <mat-form-field appearance="fill" class="full-width">
     <mat-label>Nome</mat-label>
-    <input matInput [(ngModel)]="despesa.nome" name="nome">
+    <input matInput [(ngModel)]="despesa.nome" name="nome" required autofocus />
+    <mat-error *ngIf="form.submitted && !despesa.nome"
+      >Nome é obrigatório.</mat-error
+    >
   </mat-form-field>
 
-  <mat-form-field>
+  <mat-form-field appearance="fill" class="full-width">
     <mat-label>Categoria</mat-label>
     <mat-select [(ngModel)]="despesa.categoria" name="categoria" required>
-      <mat-option value="" disabled>Selecione a Categoria da Despesa</mat-option>
+      <mat-option value="" disabled
+        >Selecione a Categoria da Despesa</mat-option
+      >
       <mat-option *ngFor="let categoria of categorias" [value]="categoria">
         {{ categoria }}
       </mat-option>
     </mat-select>
-    <mat-error *ngIf="!despesa.categoria">Categoria é obrigatória.</mat-error>
+    <mat-error *ngIf="form.submitted && !despesa.categoria"
+      >Categoria é obrigatória.</mat-error
+    >
   </mat-form-field>
 
-
-  <mat-form-field>
+  <mat-form-field appearance="fill" class="full-width">
     <mat-label>Valor</mat-label>
-    <input matInput type="text" [(ngModel)]="despesa.valor" name="valor" (input)="formatarValor($event)"
-      placeholder="Ex.: 123.45">
+    <input
+      matInput
+      type="text"
+      [(ngModel)]="despesa.valor"
+      name="valor"
+      (input)="formatarValor($event)"
+      placeholder="Ex.: 123.45"
+      required
+    />
+    <mat-error *ngIf="form.submitted && !despesa.valor"
+      >Valor é obrigatório.</mat-error
+    >
   </mat-form-field>
 
-  <mat-form-field>
+  <mat-form-field appearance="fill" class="full-width">
     <mat-label>Vencimento</mat-label>
-    <input matInput type="date" [(ngModel)]="despesa.vencimento" name="vencimento">
+    <input
+      matInput
+      [matDatepicker]="picker"
+      [(ngModel)]="despesa.vencimento"
+      name="vencimento"
+      required
+    />
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+    <mat-error *ngIf="form.submitted && !despesa.vencimento"
+      >Vencimento é obrigatório.</mat-error
+    >
   </mat-form-field>
 
   <div class="modal-actions">
     <button mat-raised-button type="button" (click)="fechar()">Cancelar</button>
-    <button mat-raised-button color="primary" type="submit">Salvar</button>
+    <button mat-raised-button type="submit">Salvar</button>
   </div>
 </form>

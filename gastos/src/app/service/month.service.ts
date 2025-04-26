@@ -18,6 +18,14 @@ export class MonthService {
   selectedMonth$ = this.selectedMonthSource.asObservable();
   totalComDesconto = new BehaviorSubject<number>(0);
 
+  // Observable para o array de despesas
+  public despesas$ = new BehaviorSubject<any[]>([]);
+
+  getDespesas() {
+    // Retorna um Observable com o array de despesas
+    return this.despesas$.asObservable();
+  }
+
   // Observable para o total das despesas filtradas
   getDespesasFiltradasTotal() {
     return this.despesasFiltradasTotal$.asObservable();
@@ -44,6 +52,16 @@ export class MonthService {
     }
   }
 
+  setDespesas(despesas: any[]) {
+    this.despesas$.next(despesas);
+    this.calculateDespesas(despesas);
+  }
+
+  // Método para obter o total das despesas
+  getDespesasTotal(): number {
+    return this.totalDespesas;
+  }
+
   private getCurrentMonthKey(): string {
     const monthKeys = [
       'jan',
@@ -64,39 +82,26 @@ export class MonthService {
   }
 
   calculateDespesas(despesas: any[]): void {
-    console.log('Despesas carregadas:', despesas);
-
-    // Somando todas as despesas
+    console.log('CALCULATE DESPESAS', despesas);
     this.totalDespesas = despesas.reduce(
       (total, despesa) => total + parseFloat(despesa.valor || 0),
       0
     );
 
-    // Calculando o total de despesas pagas
     this.totalDespesasPagas = despesas
-      .filter(
-        (despesa) => despesa.status && despesa.status.toLowerCase() === 'pago'
-      ) // Ajuste para comparar corretamente o status
+      .filter((despesa) => despesa.status?.toLowerCase() === 'pago')
       .reduce((total, despesa) => total + parseFloat(despesa.valor || 0), 0);
-    console.log('Total Despesas Pagas:', this.totalDespesasPagas);
 
-    // Calculando o total de despesas não pagas (vencendo ou pendente)
     this.totalDespesasNaoPagas = despesas
-      .filter(
-        (despesa) => despesa.status && despesa.status.toLowerCase() !== 'pago'
-      ) // Filtra as despesas não pagas
+      .filter((despesa) => despesa.status?.toLowerCase() !== 'pago')
       .reduce((total, despesa) => total + parseFloat(despesa.valor || 0), 0);
-    console.log('Total Despesas Não Pagas:', this.totalDespesasNaoPagas);
 
-    // Subtraindo as despesas pagas do total de despesas para obter as não pagas
-    const totalDespesasNaoPagasFinal =
-      this.totalDespesas - this.totalDespesasPagas;
-
-    // Enviando os resultados para os observables
     this.despesasTotalSource.next(this.totalDespesas);
     this.despesasPagasTotalSource.next(this.totalDespesasPagas);
     this.despesasNaoPagasTotalSource.next(this.totalDespesasNaoPagas);
 
-    console.log('Total Despesas:', this.totalDespesas);
+    console.log('TOTAL:', this.totalDespesas);
+    console.log('TOTAL PAGAS:', this.totalDespesasPagas);
+    console.log('TOTAL NÃO PAGAS:', this.totalDespesasNaoPagas);
   }
 }

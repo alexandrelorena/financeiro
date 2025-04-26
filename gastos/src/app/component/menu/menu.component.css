@@ -31,7 +31,6 @@
   cursor: pointer;
   color: var(--primary-text-color);
   font-size: 0.875rem;
-  font-weight: bold;
   text-transform: capitalize;
   transition: background-color 0.3s ease, color 0.3s ease;
 }

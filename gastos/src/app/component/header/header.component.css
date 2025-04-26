@@ -6,69 +6,110 @@
   grid-template-columns: auto 1fr auto auto;
   align-items: center;
   gap: 1.25rem;
-  border: 0.0625rem solid grey;
+  padding: 0 1rem;
+  border: double 0.0625rem grey;
   border-radius: 0.3125rem;
-  border-style: double;
-  color: var(--primary-text-color);
+  background-color: transparent;
   font-weight: bold;
   box-sizing: border-box;
-  background-color: transparent;
 }
 
-.header__container > button {
-  background-color: transparent;
-  border: none;
-  padding: 0.3125rem;
-  width: 3.125rem;
-  height: 3.125rem;
-  cursor: pointer;
-  color: var(--primary-text-color);
-  border-radius: 50%;
-  transition: background-color 0.3s ease;
-}
-
-.header__item .toggle {
-  margin-right: 0rem;
-  margin-bottom: 10px;
-}
-
-.header__item {
-  display: flex;
-  font-size: 1rem;
-  font-family: Tahoma, Verdana, sans-serif, Arial;
-  white-space: nowrap;
-  color: var(--primary-text-color);
-}
-
-.header__item > p > span {
-  color: #2290a1;
-  font-weight: bold;
-}
-
-.header__item > h1 {
-  margin-top: 4px;
-  margin-left: 10px;
-  font-size: 1rem;
-  font-weight: bold;
-  color: #2290a1;
-}
-
-.header__item > p {
-  margin-left: 1.5rem;
-}
-
+.header__container > button,
 .header__item > button {
   background-color: transparent;
   border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.header__item > button {
+  width: 4rem;
+  height: 4rem;
   padding: 0;
   margin: 0;
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.header__container > button {
+  padding: 0.3125rem;
+  width: 3.125rem;
+  height: 3.125rem;
+  border-radius: 50%;
+}
+
+.header__item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.25rem;
+  white-space: nowrap;
+}
+
+.header__item > p {
+  /* Gastos de abril */
+  margin: 0;
+  margin-left: 1.55rem;
+  font-size: 1rem;
+  font-weight: bold;
+  font-family: "Segoe UI", Tahoma, Verdana, sans-serif, Arial;
+  color: #2290a1;
+  position: relative;
+  top: -10px;
+}
+
+.header__item > h3 {
+  /* total, pago e à pagar */
+  font-size: 0.9rem;
+  font-weight: bold;
+  font-family: "Segoe UI", Tahoma, Verdana, sans-serif, Arial;
+  color: #505050;
+  text-align: left;
+  padding: 5px;
+  position: relative;
+  top: -2px;
+}
+
+.header__item > span {
+  /* valores */
+  color: #2290a1;
+  font-weight: bold;
+  font-size: 0.9rem;
+  font-family: "Segoe UI", Tahoma, Verdana, sans-serif, Arial;
+  position: relative;
+  top: -10px;
+}
+
+.header__item > img {
+  width: 3.4rem;
+  height: 3.4rem;
+  /* border-radius: 30%; */
+  margin-top: -10px;
+  margin-right: 0.4rem;
+  margin-left: -0.1rem;
+  margin-bottom: 10px;
+  background-color: transparent;
+}
+.header__item .toggle {
+  transform: translateX(-1px);
+  margin-bottom: 18px;
+  /* margin-right: 0.4rem;  */
+  margin-left: 0.3rem;
+}
+
+.header__item > button {
   width: 2.5rem;
   height: 2.5rem;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .header__item > button:hover svg {
@@ -80,11 +121,11 @@
   background-color: transparent;
   border: none;
   box-shadow: none;
-  padding: 0;
   margin-left: 0.9375rem;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  padding: 0;
 }
 
 .total-value {

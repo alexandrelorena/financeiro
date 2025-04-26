@@ -1,4 +1,10 @@
-import { Component, EventEmitter, Inject, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Inject,
+  Output,
+  ViewEncapsulation,
+} from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { CategoriaService } from '../service/categoria.service';
 
@@ -6,10 +12,12 @@ import { CategoriaService } from '../service/categoria.service';
  * Componente de modal para editar as despesas.
  */
 @Component({
-    selector: 'app-edit-despesa-modal',
-    templateUrl: './edit-despesa-modal.component.html',
-    styleUrls: ['./edit-despesa-modal.component.css'],
-    standalone: false
+  selector: 'app-edit-despesa-modal',
+  templateUrl: './edit-despesa-modal.component.html',
+  styleUrls: ['./edit-despesa-modal.component.css'],
+  // encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.Emulated,
+  standalone: false,
 })
 export class EditDespesaModalComponent {
   despesa: any;

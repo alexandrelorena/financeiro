@@ -10,10 +10,9 @@ const routes: Routes = [
   { path: 'add-despesa', component: AddDespesaComponent },
   { path: 'content', component: ContentComponent },
   { path: 'page-not-found', component: PageNotFoundComponent },
-  { path: '**', redirectTo: '/page-not-found' }, // Rota de fallback para URLs inválidas
+  { path: '**', redirectTo: '/page-not-found' },
 ];
 
-// Configura o módulo de rotas
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],

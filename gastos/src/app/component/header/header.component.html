@@ -1,33 +1,61 @@
 <div class="header__container">
   <!-- Texto com informações -->
   <div class="header__item">
-    <p>
-      Controle de finanças | Total de despesas de {{ selectedMonthFullName }}:
-      <span class="total-value">
-        {{ totalDespesas || 0 | currency:'BRL': 'symbol' }}
-      </span>
-    </p>
-  </div>
-  <div class="header__item"></div>
-  <!-- Botão de alternar tema -->
-  <div class="header__item">
-    <button id="toggle" (click)="toggleMode()" class="toggle">
-      <span *ngIf="isDarkMode; else lightMode" id="darkMode" class="material-icons">
-        <svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 0 24 24" width="40px" fill="#fff">
-          <path d="M0 0h24v24H0z" fill="none" />
-          <path
-            d="M17 7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h10c2.76 0 5-2.24 5-5s-2.24-5-5-5zM7 15c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3z" />
-        </svg>
-      </span>
-      <ng-template #lightMode>
-        <span id="lightMode" class="material-icons">
-          <svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 0 24 24" width="40px" fill="#2290a1">
+    <!-- Botão de alternar tema -->
+    <div class="header__item">
+      <button
+        id="toggle"
+        (click)="toggleMode()"
+        class="toggle"
+        aria-label="Alternar tema"
+      >
+        <span *ngIf="isDarkMode; else lightMode">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="40px"
+            viewBox="0 0 24 24"
+            width="40px"
+            fill="#fff"
+          >
             <path d="M0 0h24v24H0z" fill="none" />
             <path
-              d="M17 7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h10c2.76 0 5-2.24 5-5s-2.24-5-5-5zm0 8c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3z" />
+              d="M17 7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h10c2.76 0 5-2.24 5-5s-2.24-5-5-5zM7 15c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3z"
+            />
           </svg>
         </span>
-      </ng-template>
-    </button>
+        <ng-template #lightMode>
+          <span class="icon--light">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              height="40px"
+              viewBox="0 0 24 24"
+              width="40px"
+              fill="#2290a1"
+            >
+              <path d="M0 0h24v24H0z" fill="none" />
+              <path
+                d="M17 7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h10c2.76 0 5-2.24 5-5s-2.24-5-5-5zm0 8c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3z"
+              />
+            </svg>
+          </span>
+        </ng-template>
+      </button>
+    </div>
+    <p>Gastos de {{ selectedMonthFullName }}:</p>
+    <h3>total:</h3>
+    <span>
+      {{ totalDespesas | currency : "BRL" : "symbol" }}
+    </span>
+    <h3>pago:</h3>
+    <span>
+      {{ totalPagas | currency : "BRL" : "symbol" }}
+    </span>
+    <h3>à pagar:</h3>
+    <span>
+      {{ totalNaoPagas | currency : "BRL" : "symbol" }}
+    </span>
   </div>
+  <div class="valores"></div>
+
+  <div class="header__item"></div>
 </div>

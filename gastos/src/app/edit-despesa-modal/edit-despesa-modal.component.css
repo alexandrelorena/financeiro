@@ -8,7 +8,7 @@
   padding: 2rem;
   width: 100%;
   box-sizing: border-box;
-  background-color: var(--modal-edit-bg);
+  background-color: var(--modal-background) !important;
 }
 
 ::ng-deep .modal-content {
@@ -20,18 +20,21 @@
 }
 
 .modal.edit-despesa {
-  background-color: var(--modal-edit-bg);
+  background-color: white;
   border-radius: 0.5rem;
   padding: 1rem;
 }
 
 /* -------------------- Estilização do Título -------------------- */
 
-h2 {
-  text-align: center;
-  margin-bottom: 1.5rem;
+/* Estilo para o título do modal */
+h2[mat-dialog-title] {
   font-size: 1.8rem;
+  font-weight: normal;
+  text-align: center;
   color: var(--modal-edit-title-color);
+  margin-top: -2rem;
+  margin-bottom: 1.5rem;
 }
 
 /* -------------------- Estilização do Formulário -------------------- */
@@ -52,7 +55,8 @@ form {
 .modal-actions {
   display: flex;
   justify-content: space-between;
-  margin-top: 2rem;
+  gap: 10px;
+  margin-top: 1px;
 }
 
 button {
@@ -61,41 +65,123 @@ button {
   transition: background-color 0.3s;
 }
 
-button[type="button"] {
-  background-color: var(--modal-btn-edit-cancel-bg);
-  color: var(--modal-btn-edit-cancel-text);
+/* Botão "Cancelar" */
+.modal-actions button[type="button"].mat-mdc-raised-button {
+  background-color: var(--edit-dialog-btn-cancel-bg) !important;
+  color: var(--edit-dialog-btn-cancel-text) !important;
+  transition: background-color 0.3s, color 0.3s;
 }
 
-button[type="button"]:hover {
-  background-color: var(--modal-btn-edit-cancel-bg-hover);
-  color: var(--modal-btn-edit-cancel-text-hover);
+.modal-actions button[type="button"].mat-mdc-raised-button:hover {
+  background-color: var(--edit-dialog-btn-cancel-bg-hover) !important;
+  color: var(--edit-dialog-btn-cancel-text-hover) !important;
 }
 
-button[type="submit"] {
-  background-color: var(--modal-btn-edit-confirm-bg);
-  color: var(--modal-btn-edit-confirm-text);
+/* Botão "Salvar" */
+.modal-actions button[type="submit"].mat-mdc-raised-button {
+  background-color: var(--edit-dialog-btn-confirm-bg) !important;
+  color: var(--edit-dialog-btn-confirm-text) !important;
+  transition: background-color 0.3s, color 0.3s;
 }
 
-button[type="submit"]:hover {
-  background-color: var(--modal-btn-edit-confirm-bg-hover);
-  color: var(--modal-btn-edit-confirm-text-hover);
+.modal-actions button[type="submit"].mat-mdc-raised-button:hover {
+  background-color: var(--edit-dialog-btn-confirm-bg-hover) !important;
+  color: var(--edit-dialog-btn-confirm-text-hover) !important;
 }
 
-.mat-calendar-body-cell {
-  width: 40px;
-  height: 40px;
+.form-container {
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+/* Tema Claro */
+:host-context(body.light-theme) {
+  --edit-dialog-btn-cancel-bg: #686666;
+  --edit-dialog-btn-cancel-bg-hover: crimson;
+
+  --edit-dialog-btn-cancel-text: #4b4a4a;
+  --edit-dialog-btn-cancel-text-hover: #e0e0e0;
+
+  --edit-dialog-btn-confirm-bg: #686666;
+  --edit-dialog-btn-confirm-bg-hover: #2290a1;
+
+  --edit-dialog-btn-confirm-text: #4b4a4a;
+  --edit-dialog-btn-confirm-text-hover: #e0e0e0;
+
+  --modal-background: #ffffff;
+  --modal-content-color: #333333;
+}
+
+/* Tema Escuro */
+:host-context(body.dark-theme) {
+  --edit-dialog-btn-cancel-bg: #686666;
+  --edit-dialog-btn-cancel-bg-hover: crimson;
+
+  --edit-dialog-btn-cancel-text: #e0e0e0;
+  --edit-dialog-btn-cancel-text-hover: #e0e0e0;
+
+  --edit-dialog-btn-confirm-bg: #686666;
+  --edit-dialog-btn-confirm-bg-hover: #2290a1;
+
+  --edit-dialog-btn-confirm-text: #e0e0e0;
+  --edit-dialog-btn-confirm-text-hover: #e0e0e0;
+
+  --modal-background: #000;
+  --modal-content-color: #ffffff;
+}
+
+/* Estilo para o botão de alternar do calendário */
+
+::ng-deep .mat-datepicker-toggle-default-icon {
+  color: #2290a1;
+}
+
+.mat-datepicker-toggle {
+  color: #2290a1;
+}
+
+.mat-datepicker-toggle:hover {
+  color: #007380;
+}
+
+/* Estilo para o calendário */
+::ng-deep .mat-datepicker-content {
+  background-color: #f9f9f9;
+  color: #333;
+  font-family: Tahoma, sans-serif;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+::ng-deep .mat-calendar-header {
+  background-color: #2290a1;
+  color: white;
+}
+
+::ng-deep .mat-calendar-previous-button,
+::ng-deep .mat-calendar-next-button {
+  color: white;
+}
+
+::ng-deep .mat-calendar-body-selected {
+  background-color: #2290a1 !important;
+  color: white !important;
   border-radius: 50%;
 }
 
-.mat-calendar-body-cell-content {
-  font-size: 14px;
-  font-weight: bold;
+::ng-deep .mat-calendar-body-cell:not(.mat-calendar-body-disabled):hover {
+  background-color: #e0e0e0;
+  border-radius: 50%;
 }
 
-body.light-mode .mat-calendar-body-selected {
-  background-color: var(--selected);
-  color: var(--bs-info);
+/* Estilo para o erro */
+mat-error {
+  color: crimson;
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
 }

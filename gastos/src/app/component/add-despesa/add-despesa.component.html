@@ -1,59 +1,122 @@
 <div class="add-title">
   <p>Adicionar Despesa</p>
 </div>
+
 <div class="container__add-despesa">
-  <div class="adiciona-despesa">
-    <form [formGroup]="despesaForm" (ngSubmit)="onSubmit()">
-      <div class="form-group">
-        <div *ngIf="despesaForm.get('nome')?.invalid && despesaForm.get('nome')?.touched" class="text-danger">
-          <small> A despesa deve ter até 17 caracteres. </small>
-        </div>
-        <input type="text" (input)="onNomeInput($event)" id="nome" class="form-control" formControlName="nome"
-          placeholder="despesa" aria-label="Nome da despesa."
-          [ngStyle]="{'color': despesaForm.get('nome')?.invalid && despesaForm.get('nome')?.touched}">
-      </div>
+  <form [formGroup]="despesaForm" (ngSubmit)="onSubmit()" novalidate>
+    <!-- Nome -->
+    <mat-form-field appearance="fill" class="form-group full-width">
+      <mat-label>Despesa</mat-label>
+      <input
+        matInput
+        type="text"
+        id="nome"
+        formControlName="nome"
+        (input)="onNomeInput($event)"
+        aria-label="Nome da despesa"
+      />
+      <mat-error
+        *ngIf="
+          despesaForm.get('nome')?.invalid &&
+          (despesaForm.get('nome')?.touched || formEnviado)
+        "
+      ></mat-error>
+    </mat-form-field>
 
-      <div class="form-group">
-        <div *ngIf="despesaForm.get('categoria')?.invalid && despesaForm.get('categoria')?.touched" class="text-danger">
-          <small>Escolha a categoria.</small>
-        </div>
-        <select id="categoria" class="form-control" formControlName="categoria" aria-label="Categoria da despesa">
-          <option value="" disabled selected>selecione uma categoria</option>
-          <option *ngFor="let categoria of categorias" [value]="categoria">{{ categoria }}</option>
-        </select>
-      </div>
+    <!-- Categoria -->
+    <mat-form-field appearance="fill" class="form-group full-width">
+      <mat-label>Categoria</mat-label>
+      <mat-select
+        id="categoria"
+        formControlName="categoria"
+        aria-label="Categoria da despesa"
+      >
+        <mat-option value="" disabled></mat-option>
+        <mat-option *ngFor="let categoria of categorias" [value]="categoria">{{
+          categoria
+        }}</mat-option>
+      </mat-select>
+      <mat-error
+        *ngIf="
+          despesaForm.get('categoria')?.invalid &&
+          (despesaForm.get('categoria')?.touched || formEnviado)
+        "
+      ></mat-error>
+    </mat-form-field>
 
-      <div class="form-group">
-        <div *ngIf="despesaForm.get('valor')?.invalid && despesaForm.get('valor')?.touched" class="text-danger">
-          <small>Insira um valor válido! Ex.: 123.99</small>
-        </div>
-        <input type="text" pattern="^\d+([.,]?\d{0,2})?$" id="valor" class="form-control" formControlName="valor"
-          placeholder="valor ex.: 123.99" aria-label="Valor da despesa" (keypress)="verificarInput($event)">
-      </div>
+    <!-- Valor -->
+    <mat-form-field appearance="fill" class="form-group full-width">
+      <mat-label>Valor - Ex.: 123.99</mat-label>
+      <input
+        matInput
+        type="text"
+        id="valor"
+        formControlName="valor"
+        aria-label="Valor da despesa"
+        (keypress)="verificarInput($event)"
+      />
+      <mat-error
+        *ngIf="
+          despesaForm.get('valor')?.invalid &&
+          (despesaForm.get('valor')?.touched || formEnviado)
+        "
+      ></mat-error>
+    </mat-form-field>
 
-      <div class="form-group">
-        <div *ngIf="despesaForm.get('vencimento')?.invalid && despesaForm.get('vencimento')?.touched"
-          class="text-danger">
-          <small>Vencimento é obrigatório.</small>
-        </div>
-        <input type="date" id="vencimento" class="form-control" formControlName="vencimento"
-          aria-label="data de vencimento">
-      </div>
+    <!-- Vencimento -->
+    <mat-form-field appearance="fill" class="form-group full-width">
+      <mat-label>Data de vencimento</mat-label>
+      <input
+        matInput
+        [matDatepicker]="picker"
+        formControlName="vencimento"
+        aria-label="Data de vencimento"
+      />
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+      <mat-error
+        *ngIf="
+          despesaForm.get('vencimento')?.invalid &&
+          (despesaForm.get('vencimento')?.touched || formEnviado)
+        "
+      ></mat-error>
+    </mat-form-field>
 
-      <div class="form-group">
-        <small>Insira quantidade de meses: 0 a 11</small>
-        <input id="repeticoes" type="number" (keydown)="onKeyDown($event)" (input)="validarRepeticoes($event)"
-          formControlName="repeticoes" placeholder="repeticões" aria-label="repeticoes">
-        <div *ngIf="despesaForm.get('repeticoes')?.invalid && despesaForm.get('repeticoes')?.touched"
-          class="text-danger">
-          <small>Somente número positivo de 0 a 11.</small>
-        </div>
-      </div>
+    <!-- Repetições -->
+    <mat-form-field appearance="fill" class="form-group full-width">
+      <mat-label>Repetições (0 a 11)</mat-label>
+      <input
+        matInput
+        type="number"
+        id="repeticoes"
+        formControlName="repeticoes"
+        placeholder="Repetições"
+        (keydown)="onKeyDown($event)"
+        (input)="validarRepeticoes($event)"
+        min="0"
+        max="11"
+      />
+      <mat-error
+        *ngIf="
+          despesaForm.get('repeticoes')?.invalid &&
+          (despesaForm.get('repeticoes')?.touched || formEnviado)
+        "
+      ></mat-error>
+    </mat-form-field>
 
-      <div class="form-group-botoes">
-        <button type="submit" class="btn btn-info" [disabled]="despesaForm.invalid">Adicionar</button>
-        <button type="button" class="btn btn-info" (click)="resetForm()">Cancelar</button>
-      </div>
-    </form>
-  </div>
+    <!-- Botões -->
+    <div class="form-group-botoes">
+      <button
+        mat-raised-button
+        type="button"
+        (click)="resetForm()"
+        aria-label="Cancelar preenchimento"
+      >
+        Cancelar
+      </button>
+      <button mat-raised-button type="submit" aria-label="Adicionar despesa">
+        Adicionar
+      </button>
+    </div>
+  </form>
 </div>

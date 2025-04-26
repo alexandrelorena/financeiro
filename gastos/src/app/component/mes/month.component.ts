@@ -38,8 +38,16 @@ export class MonthComponent implements OnInit, OnDestroy {
   totalDespesasNaoPagas: number = 0;
   despesaEditando: Gasto | null = null;
   despesasFiltradas: Gasto[] = [];
-  statusSelecionado: string = 'ainda não foram pagas';
+  statusSelecionado: string = 'à pagar';
   totalDespesasFiltradas: number = 0;
+
+  // Paginação
+  currentPage: number = 1;
+  itemsPerPage: number = 11;
+
+  get totalPages(): number {
+    return Math.ceil(this.despesasFiltradas.length / this.itemsPerPage);
+  }
 
   // Map de meses com os nomes e números
   monthNames: { [key: string]: [string, number] } = {
@@ -61,9 +69,6 @@ export class MonthComponent implements OnInit, OnDestroy {
   atualizarDespesa: any;
   carregarDespesas: any;
 
-  /**
-   * Construtor do componente
-   */
   constructor(
     private dateService: DateService,
     private gastoService: GastoService,
@@ -75,10 +80,39 @@ export class MonthComponent implements OnInit, OnDestroy {
     private eventService: EventService
   ) {}
 
+  // Remover a propriedade totalPages duplicada
+
+  get despesasPaginadas(): Gasto[] {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    return this.despesasFiltradas.slice(
+      startIndex,
+      startIndex + this.itemsPerPage
+    );
+  }
+
+  irParaPaginaAnterior(): void {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+    }
+  }
+
+  irParaProximaPagina(): void {
+    const totalPages = Math.ceil(
+      this.despesasFiltradas.length / this.itemsPerPage
+    );
+    if (this.currentPage < totalPages) {
+      this.currentPage++;
+    }
+  }
+
   ngOnInit(): void {
+    this.monthService.getDespesas().subscribe((despesas) => {
+      this.monthService.calculateDespesas(despesas);
+    });
+
     this.subscribeToDateChanges();
     this.subscribeToDespesaUpdates();
-    this.totalDespesas = this.calculateTotalDespesas();
+    this.calcularTotalDespesas();
 
     this.gastoService.despesaAdicionada$.subscribe(() => {
       // Recarrega as despesas quando uma nova despesa for adicionada
@@ -89,8 +123,6 @@ export class MonthComponent implements OnInit, OnDestroy {
 
       this.cdr.detectChanges();
     });
-
-    this.sendDespesasToHeader();
 
     // Inscrição para o evento de mudança de status
     this.eventService.onStatusChange().subscribe(() => {
@@ -142,7 +174,7 @@ export class MonthComponent implements OnInit, OnDestroy {
   }
 
   filtrarDespesas(): void {
-    if (this.statusSelecionado === 'ainda não foram pagas') {
+    if (this.statusSelecionado === 'à pagar') {
       this.despesasFiltradas = [...this.despesas];
     } else {
       this.despesasFiltradas = this.despesas.filter(
@@ -153,6 +185,9 @@ export class MonthComponent implements OnInit, OnDestroy {
     this.calcularTotalDespesasFiltradas();
 
     this.monthService.updateDespesasFiltradasTotal(this.totalDespesasFiltradas);
+
+    // Resetar para a primeira página ao filtrar
+    this.currentPage = 1;
   }
 
   alterarFiltro(status: string): void {
@@ -170,6 +205,8 @@ export class MonthComponent implements OnInit, OnDestroy {
 
   atualizarDespesas(novasDespesas: Gasto[]): void {
     this.despesas = [...novasDespesas];
+    this.calcularTotalDespesas();
+    this.filtrarDespesas();
   }
 
   ngOnDestroy(): void {
@@ -189,8 +226,12 @@ export class MonthComponent implements OnInit, OnDestroy {
   }
 
   sendDespesasToHeader(): void {
-    const total = this.totalDespesas - this.totalDespesasPagas;
-    this.monthService.setDespesasTotal(total, this.selectedMonth);
+    const totalGeral = this.totalDespesas;
+
+    // Envia todas as despesas para que o MonthService possa recalcular
+    this.monthService.setDespesas(this.despesas);
+
+    this.monthService.setDespesasTotal(totalGeral, this.selectedMonth);
   }
 
   getMonthNumber(month: string): number {
@@ -206,7 +247,7 @@ export class MonthComponent implements OnInit, OnDestroy {
     if (month === -1) return;
 
     this.gastoService.getDespesas(month).subscribe((despesas: Gasto[]) => {
-      console.log('Despesas carregadas:', despesas);
+      // console.log('Despesas carregadas:', despesas);
       this.despesas = despesas;
       this.calcularTotalDespesas();
 
@@ -234,17 +275,17 @@ export class MonthComponent implements OnInit, OnDestroy {
     let totalDespesasNaoPagas = 0;
 
     despesas.forEach((despesa) => {
-      totalDespesas += despesa.valor;
+      const valor = isNaN(despesa.valor) ? 0 : despesa.valor;
+
+      totalDespesas += valor;
 
       if (despesa.status === 'pago') {
-        totalDespesasPagas += despesa.valor;
+        totalDespesasPagas += valor;
       } else {
-        totalDespesasNaoPagas += despesa.valor;
+        totalDespesasNaoPagas += valor;
       }
     });
-    this.filtrarDespesas();
-    this.calcularTotalDespesasPorStatus();
-    this.sendDespesasToHeader();
+
     return { totalDespesas, totalDespesasPagas, totalDespesasNaoPagas };
   }
 
@@ -255,11 +296,7 @@ export class MonthComponent implements OnInit, OnDestroy {
     }, 0);
 
     this.totalDespesasPagas = this.despesas.reduce((acc, despesa) => {
-      console.log(
-        `Despesa: ${despesa.nome}, Valor: ${despesa.valor}, Status: ${despesa.status}`
-      );
-
-      if (despesa.status && despesa.status.toLowerCase() === 'pago') {
+      if (despesa.status?.trim().toLowerCase() === 'pago') {
         return acc + (isNaN(despesa.valor) ? 0 : despesa.valor);
       }
       return acc;
@@ -269,40 +306,55 @@ export class MonthComponent implements OnInit, OnDestroy {
     this.filtrarDespesas();
     this.calcularTotalDespesasPorStatus();
     this.sendDespesasToHeader();
-
-    console.log('Total Despesas Pagas:', this.totalDespesasPagas);
-    console.log('Total após desconto (não pagas):', totalComDesconto);
-
-    this.monthService.setDespesasTotal(totalComDesconto, this.selectedMonth);
+    this.monthService.setDespesasTotal(this.totalDespesas, this.selectedMonth);
+    this.sendDespesasToHeader();
   }
 
-  calcularTotalDespesasPorStatus() {
+  calcularTotalDespesasPorStatus(): void {
     if (
       this.statusSelecionado === 'Status' ||
-      this.statusSelecionado === 'ainda não foram pagas'
+      this.statusSelecionado === 'à pagar'
     ) {
-      const totalNaoPagas = this.despesas
-        .filter((despesa) => despesa.status !== 'pago')
-        .reduce((acc, despesa) => acc + despesa.valor, 0);
-
-      this.totalDespesas = totalNaoPagas;
-    } else {
-      const totalFiltrado = this.despesas
-        .filter((despesa) => despesa.status === this.statusSelecionado)
-        .reduce((acc, despesa) => acc + despesa.valor, 0);
-
-      this.totalDespesas = totalFiltrado;
+      // Soma as despesas NÃO pagas
+      this.totalDespesasNaoPagas = this.despesas
+        .filter((despesa) => despesa.status?.trim().toLowerCase() !== 'pago')
+        .reduce(
+          (acc, despesa) => acc + (isNaN(despesa.valor) ? 0 : despesa.valor),
+          0
+        );
+    } else if (this.statusSelecionado === 'pago') {
+      // Soma as despesas pagas
+      this.totalDespesasPagas = this.despesas
+        .filter((despesa) => despesa.status?.trim().toLowerCase() === 'pago')
+        .reduce(
+          (acc, despesa) => acc + (isNaN(despesa.valor) ? 0 : despesa.valor),
+          0
+        );
     }
   }
 
-  private calcularTotalDespesasFiltradas(): void {
-    this.totalDespesasFiltradas = this.despesasFiltradas.reduce(
-      (acc, despesa) => {
-        const valor = despesa.valor;
-        return acc + (isNaN(valor) ? 0 : valor);
-      },
-      0
-    );
+  calcularTotalDespesasFiltradas(): void {
+    const statusSelecionado = this.statusSelecionado?.trim().toLowerCase();
+
+    if (statusSelecionado === 'pago') {
+      // Soma despesas com status === "pago"
+      this.totalDespesasFiltradas = this.despesasFiltradas
+        .filter((despesa) => despesa.status?.trim().toLowerCase() === 'pago')
+        .reduce(
+          (acc, despesa) =>
+            acc + (isNaN(Number(despesa.valor)) ? 0 : Number(despesa.valor)),
+          0
+        );
+    } else {
+      // Soma todas as despesas com status !== "pago"
+      this.totalDespesasFiltradas = this.despesasFiltradas
+        .filter((despesa) => despesa.status?.trim().toLowerCase() !== 'pago')
+        .reduce(
+          (acc, despesa) =>
+            acc + (isNaN(Number(despesa.valor)) ? 0 : Number(despesa.valor)),
+          0
+        );
+    }
   }
 
   pagarDespesa(id: number): void {
@@ -319,9 +371,9 @@ export class MonthComponent implements OnInit, OnDestroy {
         this.calcularTotalDespesas();
         this.onStatusChange();
         this.cdr.detectChanges();
+        this.sendDespesasToHeader();
       },
       error: (error) => {
-        // Se falhar, reverte para o estado anterior
         despesa.tipo = 0;
         despesa.status = 'pendente';
         despesa.cssClass = 'status-pendente';
@@ -329,6 +381,9 @@ export class MonthComponent implements OnInit, OnDestroy {
         console.error('Erro ao pagar despesa:', error);
       },
     });
+
+    this.monthService.setDespesas(this.despesas);
+    this.monthService.calculateDespesas(this.despesas);
   }
 
   editarDespesa(despesa: Gasto): void {
@@ -369,13 +424,17 @@ export class MonthComponent implements OnInit, OnDestroy {
                 this.despesas[index] = updatedDespesa;
                 this.calcularTotalDespesas();
                 this.onStatusChange();
+                this.sendDespesasToHeader();
               }
+              window.location.reload();
             },
             error: (error) =>
               console.error('Erro ao salvar edição:', error.message || error),
           });
       }
     });
+    this.monthService.setDespesas(this.despesas);
+    this.monthService.calculateDespesas(this.despesas);
   }
 
   salvarEdicao(): void {
@@ -400,127 +459,156 @@ export class MonthComponent implements OnInit, OnDestroy {
             this.calcularTotalDespesas();
             this.onStatusChange();
             this.cdr.detectChanges();
+            this.sendDespesasToHeader();
           }
           this.despesaEditando = null;
         },
         error: (error) =>
           console.error('Erro ao salvar edição:', error.message || error),
       });
+    this.monthService.setDespesas(this.despesas);
+    this.monthService.calculateDespesas(this.despesas);
   }
 
   cancelarEdicao(): void {
     this.despesaEditando = null;
   }
 
-  removerDespesa(despesa: Gasto): void {
-    const vencimentoFormatado = this.datePipe.transform(
-      despesa.vencimento,
-      'dd/MM'
-    );
+  // Função para abrir um dialog
+  openDialog(title: string, message: string, width: string = '500px'): void {
+    this.dialog.open(ConfirmationDialogComponent, {
+      width,
+      data: { title, message, type: 'info' },
+    });
+  }
 
+  // Função para remover uma despesa
+  removerDespesa(despesa: Gasto): void {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      width: '500px',
+      width: '350px',
       data: {
+        type: 'confirmation',
         title: 'Deseja apagar esta despesa?',
-        message: `despesa: <strong>${despesa.nome}</strong><br>
-        valor: <strong>${despesa.valor.toLocaleString('pt-BR', {
-          style: 'currency',
-          currency: 'BRL',
-        })}</strong><br>
-        vencimento: <strong>${vencimentoFormatado}</strong>`,
+        expense: {
+          nome: despesa.nome,
+          valor: despesa.valor,
+          vencimento: despesa.vencimento,
+        },
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result === 'confirm') {
+        this.excluirDespesa(despesa.id!);
+        this.sendDespesasToHeader();
+      }
+    });
+    this.monthService.setDespesas(this.despesas);
+    this.monthService.calculateDespesas(this.despesas);
+  }
+
+  // Função para excluir despesa
+  excluirDespesa(id: number): void {
+    this.gastoService
+      .deleteDespesa(id)
+      .pipe(take(1))
+      .subscribe({
+        next: () => {
+          this.despesas = this.despesas.filter((d) => d.id !== id);
+          this.calcularTotalDespesas();
+          this.onStatusChange();
+          this.openDialog('Sucesso!', 'Despesa excluída com sucesso!');
+          this.sendDespesasToHeader();
+        },
+        error: (error) => {
+          console.error('Erro ao excluir despesa:', error.message || error);
+          this.openDialog(
+            'Erro!',
+            'Não foi possível excluir a despesa. Tente novamente.'
+          );
+        },
+      });
+    this.monthService.setDespesas(this.despesas);
+    this.monthService.calculateDespesas(this.despesas);
+  }
+
+  // Função para apagar as despesas do mês
+  apagarDespesasDoMes(monthKey: string): void {
+    const monthData = this.monthNames[monthKey];
+
+    if (!monthData) {
+      this.openDialog('Erro!', 'Mês inválido. Por favor, tente novamente.');
+      return;
+    }
+
+    // Se houver qualquer despesa pendente
+    if (
+      this.totalDespesas !== 0 &&
+      this.totalDespesas !== this.totalDespesasPagas
+    ) {
+      this.openDialog(
+        'Não é permitido excluir!',
+        `Há despesas pendentes no mês de ${monthData[0].toLowerCase()}.`
+      );
+      return;
+    }
+
+    // Se não houver despesas no mês
+    if (this.despesas.length === 0) {
+      this.openDialog(
+        'Não há despesas!',
+        `Não há despesas registradas para o mês de ${monthData[0].toLowerCase()}.`
+      );
+      return;
+    }
+
+    // Abrir o diálogo de confirmação
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      width: '420px',
+      data: {
+        title: `Excluir as despesas de ${monthData[0].toLowerCase()}?`,
         type: 'confirmation',
       },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result === 'confirm') {
-        this.gastoService
-          .deleteDespesa(despesa.id!)
-          .pipe(take(1))
-          .subscribe({
-            next: () => {
-              this.despesas = this.despesas.filter((d) => d.id !== despesa.id);
-              this.calcularTotalDespesas();
-              this.onStatusChange();
-            },
-            error: (error) =>
-              console.error('Erro ao excluir despesa:', error.message || error),
-          });
+        this.confirmarExclusao(monthData[1], monthData);
+      } else {
+        console.log('Ação de exclusão cancelada.');
       }
     });
+
+    this.monthService.setDespesas(this.despesas);
+    this.monthService.calculateDespesas(this.despesas);
   }
 
-  apagarDespesasDoMes(monthKey: string): void {
-    const monthData = this.monthNames[monthKey];
-
-    if (!monthData) {
-      console.error('Mês inválido:', monthKey);
-      this.dialog.open(ConfirmationDialogComponent, {
-        width: '500px',
-        data: {
-          title: 'Erro!',
-          message: 'Mês inválido. Por favor, tente novamente.',
-          type: 'info',
+  // Função para confirmar a exclusão das despesas do mês
+  confirmarExclusao(monthNumber: number, monthData: [string, number]): void {
+    this.gastoService
+      .apagarDespesasDoMes(monthNumber)
+      .pipe(take(1))
+      .subscribe(
+        () => {
+          this.despesas = [];
+          this.despesasFiltradas = [];
+          this.calcularTotalDespesas();
+          this.onStatusChange();
+          this.openDialog(
+            'Sucesso!',
+            `As despesas de ${monthData[0].toLowerCase()} foram excluídas!`
+          );
         },
-      });
-      return;
-    }
-
-    if (!this.totalDespesas) {
-      this.dialog.open(ConfirmationDialogComponent, {
-        width: '500px',
-        data: {
-          title: `Não há despesas registradas para ${monthData[0].toLowerCase()}.`,
-          type: 'info',
-        },
-      });
-    } else {
-      const monthNumber = monthData[1];
-      const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-        width: '500px',
-        data: {
-          title: `Deseja excluir as despesas de ${monthData[0]}?`,
-          type: 'confirmation',
-        },
-      });
-
-      dialogRef.afterClosed().subscribe((result) => {
-        if (result === 'confirm') {
-          this.gastoService
-            .apagarDespesasDoMes(monthNumber)
-            .pipe(take(1))
-            .subscribe(
-              () => {
-                this.despesas = [];
-                this.despesasFiltradas = [];
-                this.calcularTotalDespesas();
-                this.dialog.open(ConfirmationDialogComponent, {
-                  width: '500px',
-                  data: {
-                    title: 'Sucesso!',
-                    message: `As despesas de ${monthData[0].toLowerCase()} foram excluídas!`,
-                    type: 'info',
-                  },
-                });
-              },
-              (erro) => {
-                console.error('Erro ao excluir despesas:', erro);
-                this.dialog.open(ConfirmationDialogComponent, {
-                  width: '500px',
-                  data: {
-                    title: 'Erro!',
-                    message:
-                      'Não foi possível excluir as despesas. Por favor, tente novamente.',
-                    type: 'info',
-                  },
-                });
-              }
-            );
-        } else {
-          console.log('Ação de exclusão cancelada.');
+        (erro) => {
+          console.error('Erro ao excluir despesas:', erro);
+          this.openDialog(
+            'Erro!',
+            `Não foi possível excluir as despesas de ${monthData[0].toLowerCase()}. Por favor, tente novamente.`
+          );
         }
-      });
-    }
+      );
+    this.monthService.setDespesas(this.despesas);
+    this.monthService.calculateDespesas(this.despesas);
   }
 
   getStatus(despesa: Gasto): {

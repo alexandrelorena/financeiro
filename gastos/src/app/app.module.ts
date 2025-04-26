@@ -40,6 +40,7 @@ import { FooterComponent } from './component/footer/footer.component';
 import { ConfirmationDialogComponent } from './component/confirmation-dialog/confirmation-dialog.component';
 import { RepeatComponent } from './component/repeat/repeat.component';
 import { EditDespesaModalComponent } from './edit-despesa-modal/edit-despesa-modal.component';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 registerLocaleData(localePt, 'pt-BR');
 @NgModule({
@@ -84,6 +85,7 @@ registerLocaleData(localePt, 'pt-BR');
     { provide: LOCALE_ID, useValue: 'pt-BR' },
     DatePipe,
     provideHttpClient(),
+    provideAnimationsAsync(),
   ],
   bootstrap: [AppComponent],
 })

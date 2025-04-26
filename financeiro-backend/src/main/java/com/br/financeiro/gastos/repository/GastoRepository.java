@@ -93,11 +93,6 @@ public interface GastoRepository extends JpaRepository<Gasto, Long> {
                         "(g.status = 'vencendo' AND g.vencimento < :hoje AND g.status != 'pago') OR " +
                         "(g.status = 'pendente' AND g.vencimento < :hoje AND g.status != 'pago')")
         void atualizarStatusVencido(@Param("hoje") LocalDate hoje);
-        // @Query("UPDATE Gasto g SET g.status = 'vencido' WHERE " +
-        // "(g.status = 'vencendo' AND g.vencimento < :hoje AND g.status != 'pago') OR "
-        // +
-        // "(g.status = 'pendente' AND g.vencimento < :hoje AND g.status != 'pago')")
-        // void atualizarStatusVencido(@Param("hoje") LocalDate hoje);
 
         // ----------------------------------------------------------------------------------------------------------------------
 
@@ -114,9 +109,6 @@ public interface GastoRepository extends JpaRepository<Gasto, Long> {
         @Query("UPDATE Gasto g SET g.status = 'vencendo', g.tipo = 2 WHERE " +
                         "(g.status = 'pendente' AND g.vencimento = :hoje AND g.status != 'pago')")
         void atualizarStatusVencendo(@Param("hoje") LocalDate hoje);
-        // @Query("UPDATE Gasto g SET g.status = 'vencendo' WHERE " +
-        // "(g.status = 'pendente' AND g.vencimento = :hoje AND g.status != 'pago')")
-        // void atualizarStatusVencendo(@Param("hoje") LocalDate hoje);
 
         // ----------------------------------------------------------------------------------------------------------------------
 
@@ -133,7 +125,5 @@ public interface GastoRepository extends JpaRepository<Gasto, Long> {
         @Query("UPDATE Gasto g SET g.status = 'pendente', g.tipo = 0 WHERE " +
                         "(g.status = 'pendente' AND g.vencimento > :hoje AND g.status != 'pago')")
         void atualizarStatusPendente(@Param("hoje") LocalDate hoje);
-        // @Query("UPDATE Gasto g SET g.status = 'pendente' WHERE " +
-        // "(g.status = 'pendente' AND g.vencimento > :hoje AND g.status != 'pago')")
-        // void atualizarStatusPendente(@Param("hoje") LocalDate hoje);
+
 }

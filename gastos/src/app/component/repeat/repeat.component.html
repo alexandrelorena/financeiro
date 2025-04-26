@@ -1,13 +1,22 @@
 <div class="repeat-container">
   <label>
-    <input type="checkbox" [(ngModel)]="repeat" (change)="onRepeatChange($event)" />
+    <input
+      type="checkbox"
+      [(ngModel)]="repeat"
+      (change)="onRepeatChange($event)"
+    />
     Repetir despesa
   </label>
 
   <div *ngIf="repeat">
     <label>
       Quantidade de meses:
-      <input type="number" [(ngModel)]="months" [min]="1" (input)="onMonthChange($event)" />
+      <input
+        type="number"
+        [(ngModel)]="months"
+        [min]="1"
+        (input)="onMonthChange($event)"
+      />
     </label>
   </div>
 </div>

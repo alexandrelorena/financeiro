@@ -16,5 +16,5 @@ export interface Gasto {
   tipo: TipoGasto;
   cssClass?: string;
   repeticoes: number;
-  origem: string; // 'original' ou 'recorrente'
+  origem: string;
 }

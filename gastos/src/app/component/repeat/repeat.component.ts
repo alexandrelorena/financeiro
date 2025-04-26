@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
-    selector: 'app-repeat',
-    templateUrl: './repeat.component.html',
-    styleUrls: ['./repeat.component.css'],
-    standalone: false
+  selector: 'app-repeat',
+  templateUrl: './repeat.component.html',
+  styleUrls: ['./repeat.component.css'],
+  standalone: false,
 })
 export class RepeatComponent {
   @Output() repeatSelected = new EventEmitter<{
@@ -18,7 +18,7 @@ export class RepeatComponent {
   onRepeatChange(event: any): void {
     this.repeat = event.target.checked;
     if (!this.repeat) {
-      this.months = 1; // Reset months to 1 if repeat is unchecked
+      this.months = 1;
     }
     this.emitRepeatSelection();
   }

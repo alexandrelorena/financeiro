@@ -7,7 +7,7 @@
   width: 100%;
   height: 33.75rem;
   max-height: 50rem;
-  overflow-y: auto;
+  overflow-y: none;
 }
 
 .container__month > p {
@@ -67,7 +67,7 @@ thead {
 th,
 td {
   font-family: Tahoma, Verdana, sans-serif, Arial;
-  padding: 0.3125rem;
+  padding: 0.3rem;
   text-align: center;
   border-bottom: 0.0625rem solid gray;
   border-left: 0.0625rem solid var(--scrollbar-color);
@@ -85,6 +85,22 @@ td:last-child {
 
 .btn-apagar {
   color: var(--text-dark);
+}
+
+/* Estilo de células */
+th,
+td {
+  font-family: Tahoma, Verdana, sans-serif, Arial;
+  padding: 0.3rem;
+  text-align: center;
+  border-bottom: 0.0625rem solid gray;
+  border-left: 0.0625rem solid var(--divisorias-hover);
+}
+
+/* Garantir que a última célula tenha a borda direita */
+th:last-child,
+td:last-child {
+  border-right: 1px solid var(--divisorias-hover);
 }
 
 /* -------------------- Largura de Colunas -------------------- */
@@ -256,7 +272,6 @@ td button:last-child {
   display: flex;
   justify-content: center;
   align-items: center;
-
   width: 100%;
   max-width: 600px;
   margin: auto;
@@ -271,11 +286,63 @@ td button:last-child {
 }
 
 .total-container strong {
-  font-weight: bold;
-  color: var(--button-menu-selected);
+  font-weight: normal;
+  color: var(--text-light);
 }
 
 .total-container span {
+  font-weight: normal;
+  color: #2290a1;
+}
+
+.mensagem-alerta {
+  text-align: center;
+}
+
+.mensagem-destaque {
+  font-weight: bold;
+  color: dimgrey;
+  font-size: 18px;
+}
+
+.mensagem-normal {
+  color: grey;
+  font-size: 15px;
+}
+
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 0.4rem;
+  font-family: Tahoma, Verdana, sans-serif, Arial;
+  font-size: 0.5rem;
+  color: var(--text-dark);
+}
+
+.pagination-container button {
+  background-color: var(--seta-paginacao);
+  border: none;
+  color: var(--text-dark);
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 0.5rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 0.3rem;
+  transition: background-color 0.3s ease;
+}
+
+.pagination-container button:hover:not(:disabled) {
+  background-color: var(--button-menu-hover);
+}
+
+.pagination-container button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.pagination-container span {
   font-weight: bold;
   color: var(--button-menu-selected);
 }

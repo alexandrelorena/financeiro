@@ -33,22 +33,31 @@
 .page-not-found p {
   font-size: 1.2em;
   color: #6c757d;
-  margin: 10px 0;
+  margin: 10px 0 20px 0;
+  max-width: 400px;
 }
 
-/* Link para voltar */
-.page-not-found a {
+/* Imagem ilustrativa */
+.not-found-image {
+  width: 200px;
+  max-width: 80vw;
+  margin-bottom: 20px;
+}
+
+/* Botão para voltar */
+.btn-home {
   display: inline-block;
-  margin-top: 20px;
-  padding: 10px 20px;
+  padding: 12px 24px;
   font-size: 1em;
   color: #ffffff;
-  background-color: #007bff;
+  background-color: #2290a1;
   text-decoration: none;
   border-radius: 5px;
   transition: background-color 0.3s ease;
 }
 
-.page-not-found a:hover {
+.btn-home:hover,
+.btn-home:focus {
   background-color: #0056b3;
+  outline: none;
 }

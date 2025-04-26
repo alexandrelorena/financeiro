@@ -1,4 +1,4 @@
-@import "@angular/material/prebuilt-themes/indigo-pink.css";
+@import "@angular/material/prebuilt-themes/deeppurple-amber.css";
 
 /* =============================== */
 /*          Reset Geral            */
@@ -62,6 +62,7 @@ ol {
   --bs-danger: #dc3545;
   --bs-light: #f8f9fa;
   --bs-dark: #212529;
+  --button-confirm: #2290a1;
 
   --bs-primary-text-emphasis: #052c65;
   --bs-secondary-text-emphasis: #2b2f32;
@@ -116,8 +117,8 @@ ol {
   --bs-dark-border-subtle: #adb5bd;
 
   --month-title: #2290a1;
-  --scrollbar-color: #888;
-  --scrollbar-hover: #555;
+  --divisorias: #888;
+  --divisorias-hover: #555;
   --input-focus-border: #4caf50;
   --button-menu-hover: #2290a1;
   --button-menu-selected: #2290a1;
@@ -125,6 +126,9 @@ ol {
   --button-paid: rgb(37, 150, 37);
   --button-pending: rgb(1, 114, 180);
   --button-remove: crimson;
+
+  --seta-paginacao: #2290a1;
+
   --text-light: grey;
   --text-dark: whitesmoke;
 
@@ -192,6 +196,8 @@ ol {
 button.status-pago {
   color: #353b48;
   cursor: not-allowed;
+  opacity: 0.7;
+  pointer-events: none;
 }
 
 /* =============================== */
@@ -210,80 +216,48 @@ body {
 /*       Tema Claro e Escuro       */
 /* =============================== */
 .dark-theme {
-  background-color: black;
-  color: var(--text-dark);
+  background-color: var(--background-dark);
 }
 
 .light-theme {
   background-color: var(--background-light);
-  color: var(--text-light);
 }
 
 /* =============================== */
 /*         Ajustes de Modal        */
 /* =============================== */
 body.light-theme {
-  --modal-edit-title-color: #2290a1;
-  --modal-del-title-color: crimson;
-  --modal-content-color: #333333;
-  --modal-btn-edit-cancel-bg: #e0e0e0;
-  --modal-btn-edit-cancel-text: #6c757d;
-  --modal-btn-edit-cancel-bg-hover: #f8f9fa;
-  --modal-btn-edit-cancel-text-hover: #2290a1;
-  --modal-btn-edit-confirm-bg: #e0e0e0;
-  --modal-btn-edit-confirm-text: #6c757d;
-  --modal-btn-edit-confirm-bg-hover: #f8f9fa;
-  --modal-btn-edit-confirm-text-hover: #2290a1;
-  --modal-btn-del-cancel-bg: #424242;
-  --modal-btn-del-cancel-text: #bbbbbb;
-  --modal-btn-del-cancel-bg-hover: #333333;
-  --modal-btn-del-cancel-text-hover: #ffffff;
-  --modal-btn-del-confirm-bg: crimson;
-  --modal-btn-del-confirm-text: #ffffff;
-  --modal-btn-del-confirm-bg-hover: crimson;
-  --modal-btn-del-confirm-text-hover: #ffffff;
+  --background-light: #fff;
+
+  --modal-background: #fff;
+  --modal-text-color: #333;
+
+  --modal-edit-title-color: #4b4a4a;
 }
 
 body.dark-theme {
-  --background-dark: #353b48;
-  --modal-edit-bg: #2290a1;
+  --background-dark: #000;
+
+  --modal-background: #000;
+  --modal-text-color: #fff;
+
   --modal-edit-title-color: #fff;
-  --modal-edit-content-color: #fff;
-  --modal-del-bg: black;
-  --modal-del-title-color: crimson;
-  --modal-del-content-color: white;
-  --modal-btn-edit-cancel-bg: #e0e0e0;
-  --modal-btn-edit-cancel-text: #6c757d;
-  --modal-btn-edit-cancel-bg-hover: #f8f9fa;
-  --modal-btn-edit-cancel-text-hover: #2290a1;
-  --modal-btn-edit-confirm-bg: #e0e0e0;
-  --modal-btn-edit-confirm-text: #6c757d;
-  --modal-btn-edit-confirm-bg-hover: #f8f9fa;
-  --modal-btn-edit-confirm-text-hover: #2290a1;
-  --modal-btn-del-cancel-bg: #424242;
-  --modal-btn-del-cancel-text: #bbbbbb;
-  --modal-btn-del-cancel-bg-hover: #333333;
-  --modal-btn-del-cancel-text-hover: #ffffff;
-  --modal-btn-del-confirm-bg: crimson;
-  --modal-btn-del-confirm-text: #ffffff;
-  --modal-btn-del-confirm-bg-hover: crimson;
-  --modal-btn-del-confirm-text-hover: #ffffff;
 }
 
-.modal-content {
-  background-color: var(--background-dark);
+.mat-mdc-raised-button {
+  background-color: var(--modal-background) !important;
+  color: var(--modal-text-color) !important;
 }
 
-.modal-footer .btn {
-  background-color: var(--modal-btn-edit-confirm-bg);
-  color: var(--modal-btn-edit-confirm-text);
-  cursor: pointer;
+.mat-mdc-dialog-surface {
+  background-color: var(--modal-background) !important;
+  color: var(--modal-text-color) !important;
+  border-radius: 8px;
+  border: 1px solid #5c5c5c;
+  padding: 16px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.19);
 }
 
-.modal-footer .btn:hover {
-  background-color: var(--modal-btn-edit-confirm-bg-hover);
-  color: var(--modal-btn-edit-confirm-text-hover);
-}
 .mat-form-field.mat-datepicker {
   background-color: yellow;
 }
@@ -311,14 +285,4 @@ body.light-mode .mat-calendar-body-selected {
 
 .mat-focus-indicator {
   background-color: transparent;
-}
-
-body.dark-mode .mat-calendar-body-selected {
-  background-color: var(--selected);
-  color: white;
-}
-
-body.dark-mode .mat-calendar-body-label {
-  background-color: var(--selected);
-  color: white;
 }

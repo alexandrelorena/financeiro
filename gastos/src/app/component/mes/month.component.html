@@ -3,8 +3,12 @@
     <thead>
       <tr>
         <th>
-          <button id="apagar" class="btn-apagar" (click)="apagarDespesasDoMes(selectedMonth)"
-            title="Apagar as despesas do mês">
+          <button
+            id="apagar"
+            class="btn-apagar"
+            (click)="apagarDespesasDoMes(selectedMonth)"
+            title="Apagar as despesas do mês"
+          >
             <i class="fa-solid fa-trash-can"></i>
           </button>
         </th>
@@ -13,8 +17,13 @@
         <th>valor</th>
         <th>vcto</th>
         <th>
-          <select id="statusFilter" class="filter-select" [(ngModel)]="statusSelecionado" (change)="onStatusChange()">
-            <option value="ainda não foram pagas">status</option>
+          <select
+            id="statusFilter"
+            class="filter-select"
+            [(ngModel)]="statusSelecionado"
+            (change)="onStatusChange()"
+          >
+            <option value="à pagar">status</option>
             <option value="pago">pago</option>
             <option value="pendente">pendente</option>
             <option value="vencido">vencido</option>
@@ -37,29 +46,49 @@
           Não foram encontradas despesas com este STATUS.
         </td>
       </tr>
-      <tr *ngFor="let despesa of despesasFiltradas; let i = index" [ngClass]="{
+      <tr
+        *ngFor="let despesa of despesasPaginadas; let i = index"
+        [ngClass]="{
           'status-pago': despesa.status === 'pago',
           'status-pendente': despesa.status === 'pendente',
           'status-vencido': despesa.status === 'vencido',
           'status-hoje': despesa.status === 'vencendo'
-        }">
-
+        }"
+      >
         <td>{{ i + 1 }}</td>
         <!-- Alterna entre visualização e edição -->
         <ng-container *ngIf="despesaEditando?.id === despesa.id; else viewMode">
           <!-- Modo de Edição -->
           <td *ngIf="despesaEditando">
-            <input [(ngModel)]="despesaEditando.nome" required class="input-nome" />
+            <input
+              [(ngModel)]="despesaEditando.nome"
+              required
+              class="input-nome"
+            />
           </td>
           <td *ngIf="despesaEditando">
-            <input [(ngModel)]="despesaEditando.categoria" required class="input-categoria" />
+            <input
+              [(ngModel)]="despesaEditando.categoria"
+              required
+              class="input-categoria"
+            />
           </td>
           <td *ngIf="despesaEditando">
-            <input type="number" [(ngModel)]="despesaEditando.valor" required class="input-valor" />
+            <input
+              type="number"
+              [(ngModel)]="despesaEditando.valor"
+              required
+              class="input-valor"
+            />
           </td>
           <td *ngIf="despesaEditando">
-            <input type="date" [(ngModel)]="despesaEditando.vencimento" [ngModelOptions]="{ updateOn: 'blur' }" required
-              class="input-vencimento" />
+            <input
+              type="date"
+              [(ngModel)]="despesaEditando.vencimento"
+              [ngModelOptions]="{ updateOn: 'blur' }"
+              required
+              class="input-vencimento"
+            />
           </td>
           <td>
             <span>#</span>
@@ -70,36 +99,72 @@
           </td>
         </ng-container>
 
-        <cdk-virtual-scroll-viewport appendOnly itemSize="50" class="example-viewport">
-          <div *cdkVirtualFor="let despesa of despesasFiltradas" class="example-item">{{despesa}}</div>
-        </cdk-virtual-scroll-viewport>
-
-
         <!-- Modo de Visualização -->
         <ng-template #viewMode class="tabela-despesas">
           <td class="nome">{{ despesa.nome }}</td>
           <td class="categoria">{{ despesa.categoria }}</td>
           <td>{{ formatCurrency(despesa.valor) }}</td>
-          <td>{{ despesa.vencimento | date: 'dd/MM' }}</td>
+          <td>{{ despesa.vencimento | date : "dd/MM" }}</td>
 
-          <td [ngClass]="{
-            'status-pago': despesa.status === 'pago',
-            'status-pendente': despesa.status === 'pendente',
-            'status-vencido': despesa.status === 'vencido',
-            'status-hoje': despesa.status === 'vencendo'
-          }">
-            {{ despesa.status }}
+          <td
+            [ngClass]="{
+              'status-pago': despesa.status === 'pago',
+              'status-pendente': despesa.status === 'pendente',
+              'status-vencido': despesa.status === 'vencido',
+              'status-hoje': despesa.status === 'vencendo'
+            }"
+          >
+            <i
+              *ngIf="despesa.status === 'pago'"
+              class="fa-solid fa-check-circle"
+              title="Pago"
+            ></i>
+            <i
+              *ngIf="despesa.status === 'pendente'"
+              class="fa-regular fa-clock"
+              title="Pendente"
+            ></i>
+            <i
+              *ngIf="despesa.status === 'vencido'"
+              class="fa-solid fa-circle-exclamation"
+              title="Vencido"
+            ></i>
+            <i
+              *ngIf="despesa.status === 'vencendo'"
+              class="fa-solid fa-hourglass-half"
+              title="Vence hoje"
+            ></i>
+            &nbsp;{{ despesa.status }}
           </td>
 
           <td>
             <!-- Exibe o botão "Pagar" caso a despesa esteja pendente ou vencida -->
-            <button class="pagar" (click)="pagarDespesa(despesa.id)"
+            <button
+              class="pagar"
+              (click)="pagarDespesa(despesa.id)"
               [disabled]="despesa.status === 'pago' || despesa.disableButtons"
-              [class.status-pago]="despesa.status === 'pago'" title="pagar a despesa">$</button>
+              [class.status-pago]="despesa.status === 'pago'"
+              title="pagar a despesa"
+            >
+              $
+            </button>
             <!-- Botão de edição, desabilitado se a despesa estiver paga -->
-            <button class="editar" (click)="editarDespesa(despesa)" [disabled]="despesa.status === 'pago'"
-              [class.status-pago]="despesa.status === 'pago'" title="editar a despesa">↻</button>
-            <button class="remover" (click)="removerDespesa(despesa)" title="apagar a despesa">x</button>
+            <button
+              class="editar"
+              (click)="editarDespesa(despesa)"
+              [disabled]="despesa.status === 'pago'"
+              [class.status-pago]="despesa.status === 'pago'"
+              title="editar a despesa"
+            >
+              ↻
+            </button>
+            <button
+              class="remover"
+              (click)="removerDespesa(despesa)"
+              title="apagar a despesa"
+            >
+              x
+            </button>
           </td>
         </ng-template>
       </tr>
@@ -108,14 +173,37 @@
           <!-- Exibe o total abaixo da lista de despesas -->
           <div class="total-container" *ngIf="totalDespesas > 0">
             <p>
-              <strong>{{ statusSelecionado }}</strong>:
-              <span>{{ totalDespesas | currency: 'BRL' }}</span>
+              <strong>{{ statusSelecionado }}: </strong>
+              <span>{{ totalDespesasFiltradas | currency : "BRL" }}</span>
             </p>
           </div>
         </td>
       </tr>
     </tbody>
   </table>
+  <div
+    class="pagination-container"
+    *ngIf="despesasFiltradas.length > itemsPerPage"
+  >
+    <button
+      *ngIf="currentPage > 1"
+      (click)="irParaPaginaAnterior()"
+      title="Página anterior"
+    >
+      <
+    </button>
+    <!-- <span>Página {{ currentPage }} de {{ totalPages }}</span> -->
+    <button
+      *ngIf="currentPage < totalPages"
+      (click)="irParaProximaPagina()"
+      title="Próxima página"
+    >
+      >
+    </button>
+  </div>
   <!-- Modal de edição -->
-  <app-edit-despesa-modal (edicaoSalva)="atualizarDespesa($event)" *ngIf="despesaEditando"></app-edit-despesa-modal>
+  <app-edit-despesa-modal
+    (edicaoSalva)="atualizarDespesa($event)"
+    *ngIf="despesaEditando"
+  ></app-edit-despesa-modal>
 </div>

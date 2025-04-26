@@ -1,20 +1,28 @@
-<div>
+<ng-container *ngIf="data.type === 'confirmation'">
+  <!-- Bloco de confirmação com dados da despesa -->
   <h2 class="custom-title">{{ data.title }}</h2>
-
-  <p [innerHTML]="data.message" class="custom-message"></p>
-
-  <mat-dialog-actions>
-
-    <button *ngIf="data.type === 'confirmation'" mat-raised-button class="cancel" (click)="onCancel()">
-      Não
-    </button>
-    <button *ngIf="data.type === 'confirmation'" mat-raised-button color="primary" class="confirm"
-      (click)="onConfirm()">
-      Sim
-    </button>
-
-    <button *ngIf="data.type === 'info'" mat-raised-button color="primary" class="close" (click)="onClose()">
-      Fechar
-    </button>
+  <div class="expense-info" *ngIf="data.expense">
+    <div><strong>Despesa:</strong> {{ data.expense.nome }}</div>
+    <div>
+      <strong>Valor:</strong>
+      {{ data.expense.valor | currency : "BRL" : "symbol" : "1.2-2" : "pt-BR" }}
+    </div>
+    <div>
+      <strong>Vencimento:</strong>
+      {{ data.expense.vencimento | date : "dd/MM/yyyy" }}
+    </div>
+  </div>
+  <mat-dialog-actions class="botoes">
+    <button mat-raised-button class="cancel" (click)="onCancel()">Não</button>
+    <button mat-raised-button class="confirm" (click)="onConfirm()">Sim</button>
   </mat-dialog-actions>
-</div>
+</ng-container>
+
+<ng-container *ngIf="data.type === 'info'">
+  <!-- Bloco de informação -->
+  <h2 class="custom-title">{{ data.title }}</h2>
+  <div class="message-content" [innerHTML]="data.message"></div>
+  <mat-dialog-actions class="center-actions">
+    <button class="close" (click)="onClose()">Fechar</button>
+  </mat-dialog-actions>
+</ng-container>

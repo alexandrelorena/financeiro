@@ -1,11 +1,23 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  ViewEncapsulation,
+  Component,
+  OnInit,
+} from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Gasto, TipoGasto } from '../../models/gasto.model';
 import { GastoService } from '../../service/gasto.service';
 import { LocalService } from '../../service/local.service';
 import { EventService } from '../../service/event.service';
 import { CategoriaService } from '../../service/categoria.service';
-import { parseISO, isValid, format } from 'date-fns';
+import {
+  parseISO,
+  startOfDay,
+  isAfter,
+  isEqual,
+  isValid,
+  format,
+} from 'date-fns';
 
 /**
  * Componente para criar novas despesas no sistema.
@@ -14,6 +26,7 @@ import { parseISO, isValid, format } from 'date-fns';
   selector: 'app-add-despesa',
   templateUrl: './add-despesa.component.html',
   styleUrls: ['./add-despesa.component.css'],
+  encapsulation: ViewEncapsulation.Emulated,
   standalone: false,
 })
 export class AddDespesaComponent implements OnInit {
@@ -21,6 +34,7 @@ export class AddDespesaComponent implements OnInit {
    * Formulário com as informações da despesa.
    */
   despesaForm!: FormGroup;
+  formEnviado = false;
 
   /**
    * Variáveis para controlar o mês e ano selecionado na hora de criar uma despesa.
@@ -43,7 +57,7 @@ export class AddDespesaComponent implements OnInit {
     { nome: 'Novembro', value: 11 },
     { nome: 'Dezembro', value: 12 },
   ];
-  maxRepeticoes: number = 0; // Será atualizado conforme o mês selecionado
+  maxRepeticoes: number = 0;
 
   /**
    * O usuário deve escolher uma categoria.
@@ -65,7 +79,6 @@ export class AddDespesaComponent implements OnInit {
   ngOnInit(): void {
     this.categorias = this.categoriaService.getCategorias();
     this.despesaForm = this.fb.group({
-      // nome: ['', Validators.required],
       nome: [
         '',
         [
@@ -75,7 +88,6 @@ export class AddDespesaComponent implements OnInit {
         ],
       ],
       categoria: ['', Validators.required],
-      // valor: ['', [Validators.required, Validators.min(0)]],
       valor: [
         '',
         [Validators.required, Validators.pattern(/^\d+([.,]?\d{0,2})?$/)],
@@ -90,7 +102,7 @@ export class AddDespesaComponent implements OnInit {
     });
 
     this.despesaForm.updateValueAndValidity();
-    this.onVencimentoChange(); // Inicializa o valor de maxRepeticoes no início
+    this.onVencimentoChange();
   }
 
   onVencimentoChange() {
@@ -99,7 +111,7 @@ export class AddDespesaComponent implements OnInit {
     // Verifica se a data de vencimento é válida
     if (vencimento) {
       const vencimentoDate = parseISO(vencimento);
-      const mesSelecionado = vencimentoDate.getMonth() + 1; // Mês de 0 a 11, então somamos 1
+      const mesSelecionado = vencimentoDate.getMonth() + 1;
       const anoSelecionado = vencimentoDate.getFullYear();
 
       // Calcula o número máximo de repetições até o final do ano
@@ -135,30 +147,20 @@ export class AddDespesaComponent implements OnInit {
     vencimento: string | Date,
     pago: boolean
   ): { status: string; tipo: TipoGasto } {
-    const hoje = new Date();
-    const hojeSemHora = new Date(
-      hoje.getFullYear(),
-      hoje.getMonth(),
-      hoje.getDate()
-    );
-
+    const hojeSemHora = startOfDay(new Date());
     const vencimentoDate =
-      typeof vencimento === 'string' ? new Date(vencimento) : vencimento;
-    const vencimentoSemHora = new Date(
-      vencimentoDate.getFullYear(),
-      vencimentoDate.getMonth(),
-      vencimentoDate.getDate()
-    );
+      vencimento instanceof Date ? vencimento : parseISO(vencimento);
+    const vencimentoSemHora = startOfDay(vencimentoDate);
 
     if (pago) {
       return { status: 'pago', tipo: TipoGasto.pago };
     }
 
-    if (vencimentoSemHora > hojeSemHora && !pago) {
+    if (isAfter(vencimentoSemHora, hojeSemHora)) {
       return { status: 'pendente', tipo: TipoGasto.pendente };
     }
 
-    if (vencimentoSemHora.getTime() === hojeSemHora.getTime() && !pago) {
+    if (isEqual(vencimentoSemHora, hojeSemHora)) {
       return { status: 'vencendo', tipo: TipoGasto.vencendo };
     }
 
@@ -170,7 +172,7 @@ export class AddDespesaComponent implements OnInit {
 
     // Limitar o número de caracteres a 30
     if (input.value.length > 17) {
-      input.value = input.value.slice(0, 17); // Corta a string para 30 caracteres
+      input.value = input.value.slice(0, 17);
     }
   }
 
@@ -179,18 +181,18 @@ export class AddDespesaComponent implements OnInit {
 
     // Verifica se o valor começa com mais de um 0
     if (valor === '0') {
-      event.target.value = '0'; // Se for apenas um 0, mantém o valor como 0
+      event.target.value = '0';
     } else if (valor.startsWith('00')) {
-      event.target.value = '0'; // Impede múltiplos zeros, mantendo apenas o primeiro
+      event.target.value = '0';
     }
   }
 
   verificarInput(event: KeyboardEvent): void {
-    const regex = /^[0-9.,]$/; // Permite apenas números, ponto e vírgula
+    const regex = /^[0-9.,]$/;
     const inputChar = event.key;
 
     if (!regex.test(inputChar)) {
-      event.preventDefault(); // Impede a entrada de caracteres inválidos
+      event.preventDefault();
       return;
     }
 
@@ -241,7 +243,7 @@ export class AddDespesaComponent implements OnInit {
     // Verificar se a tecla pressionada é um número
     const isNumber = event.key >= '0' && event.key <= '9';
     if (!isNumber) {
-      event.preventDefault(); // Impede a entrada de caracteres não numéricos
+      event.preventDefault();
     }
 
     // Verificar o valor atual do campo após a tecla pressionada
@@ -258,6 +260,8 @@ export class AddDespesaComponent implements OnInit {
    * A despesa é criada e enviada para o servidor.
    */
   onSubmit() {
+    this.formEnviado = true;
+
     if (this.despesaForm.valid) {
       let vencimento = this.despesaForm.value.vencimento;
       const pago = this.despesaForm.value.pago || false;
@@ -270,15 +274,20 @@ export class AddDespesaComponent implements OnInit {
       // Substituir vírgulas por pontos
       valor = valor.replace(',', '.');
 
-      const parsedDate = parseISO(vencimento);
-
-      if (isValid(parsedDate)) {
-        vencimento = format(parsedDate, 'yyyy-MM-dd');
+      if (vencimento instanceof Date && isValid(vencimento)) {
+        vencimento = format(vencimento, 'yyyy-MM-dd');
+      } else if (typeof vencimento === 'string') {
+        const parsedDate = parseISO(vencimento);
+        if (isValid(parsedDate)) {
+          vencimento = format(parsedDate, 'yyyy-MM-dd');
+        } else {
+          console.error('Data inválida (string):', vencimento);
+          return;
+        }
       } else {
-        console.error('Data inválida:', vencimento);
+        console.error('Tipo de vencimento inválido:', vencimento);
         return;
       }
-
       const repeticoes = (this.despesaForm.value.repeticoes as number) || 0;
 
       const despesa: Gasto = {
@@ -312,8 +321,8 @@ export class AddDespesaComponent implements OnInit {
 
           this.criarDespesasRecorrentes(despesa);
 
-          this.resetForm();
-          this.cdr.detectChanges();
+          // Recarrega a página após adicionar a despesa para limpar o estado do formulário
+          window.location.reload();
         },
         error: (error) => {
           console.error('Erro ao adicionar a despesa:', error);
@@ -392,5 +401,16 @@ export class AddDespesaComponent implements OnInit {
 
     // Atualize a validade do formulário
     this.despesaForm.updateValueAndValidity();
+
+    Object.keys(this.despesaForm.controls).forEach((campo) => {
+      const controle = this.despesaForm.get(campo);
+      controle?.markAsPristine();
+      controle?.markAsUntouched();
+      controle?.updateValueAndValidity();
+    });
+
+    // Forçar atualização do estado do formulário
+    this.despesaForm.markAsPristine();
+    this.despesaForm.markAsUntouched();
   }
 }

@@ -11,6 +11,8 @@ import com.br.financeiro.gastos.model.Gasto;
 import com.br.financeiro.gastos.model.TipoGasto;
 import com.br.financeiro.gastos.repository.GastoRepository;
 
+import jakarta.annotation.PostConstruct;
+
 @Service
 public class GastoService {
 
@@ -37,7 +39,7 @@ public class GastoService {
         gastoRepository.atualizarStatusVencido(hoje);
     }
 
-    @Scheduled(cron = "0 0 0 * * ?") // Executa todos os dias à meia-noite
+    @Scheduled(cron = "0 1 0 * * ?") // Executa todos os dias à meia-noite e 1 minuto
     public void atualizarStatusAutomatico() {
         atualizarStatusVencendo();
         atualizarStatusVencido();
@@ -62,5 +64,10 @@ public class GastoService {
 
         // Salvar o gasto no banco
         return gastoRepository.save(gasto);
+    }
+
+    @PostConstruct
+    public void executarAtualizacaoAoIniciar() {
+        gastoRepository.callAtualizarStatusDespesas();
     }
 }

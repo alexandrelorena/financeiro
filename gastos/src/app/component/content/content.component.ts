@@ -2,10 +2,10 @@ import { Component, ViewChild, AfterViewInit } from '@angular/core';
 import { MonthComponent } from '../mes/month.component';
 
 @Component({
-    selector: 'app-content',
-    templateUrl: './content.component.html',
-    styleUrls: ['./content.component.css'],
-    standalone: false
+  selector: 'app-content',
+  templateUrl: './content.component.html',
+  styleUrls: ['./content.component.css'],
+  standalone: false,
 })
 export class ContentComponent implements AfterViewInit {
   @ViewChild('monthComponent') monthComponent!: MonthComponent;
@@ -54,7 +54,7 @@ export class ContentComponent implements AfterViewInit {
 
     // Verifique se o monthComponent foi inicializado corretamente
     if (this.monthComponent) {
-      this.monthComponent.getDespesas(monthNumber); // Passando o mês como número
+      this.monthComponent.getDespesas(monthNumber);
     } else {
       // Atrasar a chamada até que o monthComponent seja inicializado
       setTimeout(() => {
@@ -63,7 +63,7 @@ export class ContentComponent implements AfterViewInit {
         } else {
           console.error('monthComponent não foi inicializado!');
         }
-      }, 100); // Ajuste o tempo se necessário
+      }, 100);
     }
   }
 }

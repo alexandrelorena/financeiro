@@ -1,74 +1,121 @@
-/* Container */
-.container__add-despesa {
-  height: 500px;
+/*==================== FORM GROUPS ====================*/
+.form-group {
   width: 100%;
-  max-width: 43.75rem;
-  margin: 0 auto;
-  display: block;
-  padding-top: 0;
+  margin-top: 0.7rem;
 }
 
-/* Form Controls */
-.form-control {
+/* Estilo para o container dos botões */
+.form-group-botoes {
   width: 100%;
-  margin-top: 1.25rem;
-  margin-bottom: 0.3125rem;
-  padding: 0.3rem;
-  font-size: 1rem;
-  font-family: Tahoma, Verdana, sans-serif, Arial;
-  border-radius: 0.5rem;
-  border: 0.0625rem solid grey;
-  color: gray;
-}
-
-/* Form Groups */
-.form-group,
-.form-group-botoes {
-  width: 90%;
-  margin: 0 auto;
-  box-sizing: border-box;
-}
-
-.form-group-botoes {
-  margin-top: 10px;
   display: flex;
   justify-content: space-between;
-  gap: 1.375rem;
-  width: 90%;
-  flex-wrap: wrap;
-}
-
-/* Buttons */
-button.btn-info {
-  background-color: transparent;
-  border: 0.0625rem solid grey;
-  border-style: double;
-  padding: 0.5rem;
-  color: var(--primary-bg-color);
-  font-size: 14px;
-  font-weight: bold;
-  cursor: pointer;
-  border-radius: 0.3125rem;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  gap: 1rem;
+  margin: 0 auto;
   box-sizing: border-box;
 }
 
-button.btn-info:hover {
-  color: var(--button-menu-hover);
-  font-weight: bold;
-  padding: 0.5rem;
-  border-radius: 0.3125rem;
-  background-clip: padding-box;
+/* Ajuste do tamanho da fonte dos campos do formulário */
+::ng-deep mat-label {
+  font-size: 0.9rem !important;
 }
 
-/* Title */
-.add-title {
-  background-color: #2290a1;
-  height: 7.5%;
-  border-radius: 0.2rem 0.2rem 0 0;
+/* -------------------- Estilização dos Botões -------------------- */
+
+:host {
+  --add-title-bg-light: #2290a1;
+  --add-title-text-light: #ffffff;
+
+  --add-title-bg-dark: #444444;
+  --add-title-text-dark: #ffffff;
+
+  --form-bg-light: #ffffff;
+  --form-text-light: #333333;
+
+  --form-bg-dark: #333333;
+  --form-text-dark: #ffffff;
+
+  --add-btn-cancel-bg-light: #686666;
+  --add-btn-cancel-text-light: #4b4a4a;
+  --add-btn-cancel-bg-hover-light: crimson;
+  --add-btn-cancel-text-hover-light: #e0e0e0;
+
+  --add-btn-confirm-bg-light: #686666;
+  --add-btn-confirm-text-light: #4b4a4a;
+  --add-btn-confirm-bg-hover-light: #2290a1;
+  --add-btn-confirm-text-hover-light: #e0e0e0;
+
+  --add-btn-cancel-bg-dark: #686666;
+  --add-btn-cancel-text-dark: #e0e0e0;
+  --add-btn-cancel-bg-hover-dark: crimson;
+  --add-btn-cancel-text-hover-dark: #e0e0e0;
+
+  --add-btn-confirm-bg-dark: #686666;
+  --add-btn-confirm-text-dark: #e0e0e0;
+  --add-btn-confirm-bg-hover-dark: #2290a1;
+  --add-btn-confirm-text-hover-dark: #e0e0e0;
 }
 
-/* Paragraph */
+/* Tema Claro */
+:host-context(body.light-theme) {
+  --btn-cancel-bg: var(--add-btn-cancel-bg-light);
+  --btn-cancel-text: var(--add-btn-cancel-text-light);
+  --btn-cancel-bg-hover: var(--add-btn-cancel-bg-hover-light);
+  --btn-cancel-text-hover: var(--add-btn-cancel-text-hover-light);
+
+  --btn-confirm-bg: var(--add-btn-confirm-bg-light);
+  --btn-confirm-text: var(--add-btn-confirm-text-light);
+  --btn-confirm-bg-hover: var(--add-btn-confirm-bg-hover-light);
+  --btn-confirm-text-hover: var(--add-btn-confirm-text-hover-light);
+}
+
+/* Tema Escuro */
+:host-context(body.dark-theme) {
+  --btn-cancel-bg: var(--add-btn-cancel-bg-dark);
+  --btn-cancel-text: var(--add-btn-cancel-text-dark);
+  --btn-cancel-bg-hover: var(--add-btn-cancel-bg-hover-dark);
+  --btn-cancel-text-hover: var(--add-btn-cancel-text-hover-dark);
+
+  --btn-confirm-bg: var(--add-btn-confirm-bg-dark);
+  --btn-confirm-text: var(--add-btn-confirm-text-dark);
+  --btn-confirm-bg-hover: var(--add-btn-confirm-bg-hover-dark);
+  --btn-confirm-text-hover: var(--add-btn-confirm-text-hover-dark);
+}
+
+/* Botão "Cancelar" */
+.form-group-botoes button[type="button"].mat-mdc-raised-button {
+  background-color: var(--btn-cancel-bg) !important;
+  color: var(--btn-cancel-text) !important;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.form-group-botoes button[type="button"].mat-mdc-raised-button:hover {
+  background-color: var(--btn-cancel-bg-hover) !important;
+  color: var(--btn-cancel-text-hover) !important;
+}
+
+/* Botão "Adicionar" */
+.form-group-botoes button[type="submit"].mat-mdc-raised-button {
+  background-color: var(--btn-confirm-bg) !important;
+  color: var(--btn-confirm-text) !important;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.form-group-botoes button[type="submit"].mat-mdc-raised-button:hover {
+  background-color: var(--btn-confirm-bg-hover) !important;
+  color: var(--btn-confirm-text-hover) !important;
+}
+
+/*==================== SELECT ====================*/
+.form-group > select {
+  color: gray;
+  padding: 0.7rem;
+  font-size: 1rem;
+  border: 1px solid grey;
+  border-radius: 0.5rem;
+  width: 100%;
+}
+
+/*==================== PARÁGRAFOS E TEXTOS ====================*/
 p {
   width: 100%;
   height: 7%;
@@ -81,15 +128,6 @@ p {
   justify-content: center;
 }
 
-/* Span */
-span {
-  width: 100%;
-  color: white;
-  font-family: Tahoma, Verdana, sans-serif, Arial;
-  font-size: 12px;
-}
-
-/* Text Danger */
 .text-danger {
   color: var(--bs-danger);
   font-size: 16px;
@@ -102,45 +140,110 @@ span {
   margin-bottom: 0;
 }
 
-/* Select */
-.form-group > select {
-  background-color: #fff;
-  color: gray;
+/*==================== TÍTULO ====================*/
+.add-title {
+  background-color: var(--add-title-bg-light);
+  color: var(--add-title-text-light);
+  height: 7.5%;
+  border-radius: 0.2rem 0.2rem 0 0;
+  text-align: center;
+  margin-bottom: 5px;
+  font-size: 1.5rem;
+  font-weight: 600;
 }
 
-/* Repeticoes */
-#repeticoes {
-  height: 32px;
-  margin-top: 10px;
-  margin-bottom: 5px;
+/*==================== CONTAINERS ====================*/
+.container__add-despesa {
+  height: 0px;
   width: 100%;
   max-width: 100%;
-  border-radius: 0.5rem;
-  border: 0.0625rem solid grey;
-  color: gray;
-  padding: 0.7rem;
-  font-size: 1rem;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  padding: 0 16px;
 }
 
-/* Inputs and Textareas */
-input.form-control,
-textarea.form-control {
-  box-sizing: border-box;
-  color: gray;
+/*==================== RESPONSIVO ====================*/
+@media (max-width: 600px) {
+  .adiciona-despesa {
+    padding: 16px;
+  }
+
+  .form-group-botoes {
+    flex-direction: column;
+    gap: 10px;
+  }
 }
 
-input.form-control:disabled {
-  background-color: #f0f0f0;
-  color: #999;
-  cursor: not-allowed;
-}
+/* =============================== */
+/*         Estilo do Calendário    */
+/* =============================== */
 
-input::placeholder {
-  color: gray;
-  opacity: 1;
-}
-
-/* Small Text */
-small {
+/* Botão de alternar do calendário */
+::ng-deep .mat-datepicker-toggle-default-icon {
   color: #2290a1;
+}
+
+::ng-deep .mat-datepicker-toggle:hover {
+  color: var(--calendar-hover-bg) !important;
+}
+
+/* Conteúdo do calendário */
+::ng-deep .mat-datepicker-content {
+  background-color: var(--calendar-bg, #e0e0e0) !important;
+  color: var(--calendar-text, #e0e0e0) !important;
+}
+
+/* Cabeçalho do calendário */
+::ng-deep .mat-calendar-header {
+  background-color: var(--calendar-header-bg, #2290a1) !important;
+  color: var(--calendar-header-text, #e0e0e0) !important;
+}
+
+::ng-deep .mdc-button__label {
+  color: white;
+}
+
+::ng-deep .mat-calendar-body-label {
+  background-color: #e0e0e0 !important;
+}
+
+::ng-deep .mat-calendar-table-header {
+  background-color: #2290a1 !important;
+}
+
+::ng-deep .mat-calendar-body-cell-container {
+  background-color: lightgrey;
+}
+
+/* Botões de navegação do calendário */
+::ng-deep .mat-calendar-previous-button,
+::ng-deep .mat-calendar-next-button {
+  color: var(--calendar-header-text, white) !important;
+}
+
+/* Dia selecionado */
+::ng-deep .mat-calendar-body-selected {
+  background-color: var(--calendar-selected-bg, #2290a1) !important;
+  color: var(--calendar-selected-text, #e0e0e0) !important;
+  border-radius: 50% !important;
+}
+
+/* Dias ao passar o mouse */
+::ng-deep .mat-calendar-body-cell:not(.mat-calendar-body-disabled):hover {
+  background-color: var(--calendar-hover-bg, #e0e0e0) !important;
+  color: var(--calendar-hover-text) !important;
+  border-radius: 50% !important;
+}
+
+/* Dias desabilitados */
+::ng-deep .mat-calendar-body-disabled {
+  color: #888888 !important;
+}
+
+/* Estilo para o erro */
+mat-error {
+  color: crimson;
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
 }

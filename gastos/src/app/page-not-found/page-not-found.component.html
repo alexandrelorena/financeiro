@@ -1,5 +1,23 @@
-<div class="page-not-found">
-  <h1>Página não encontrada</h1>
-  <!-- <p>Desculpe, a página que você procurou não existe.</p> -->
-  <a href="" routerLink="/content">Voltar para a página inicial</a>
+<div
+  class="page-not-found"
+  role="main"
+  aria-labelledby="pageNotFoundTitle"
+  aria-describedby="pageNotFoundDesc"
+>
+  <h1 id="pageNotFoundTitle">Página não encontrada!</h1>
+  <p id="pageNotFoundDesc">
+    Desculpe, a página que você está procurando não existe ou foi removida.
+  </p>
+  <img
+    src="assets/images/404-illustration.svg"
+    alt="Ilustração de página não encontrada"
+    class="not-found-image"
+  />
+  <a
+    href=""
+    routerLink="/content"
+    class="btn-home"
+    aria-label="Voltar para a página inicial"
+    >Voltar para a página inicial</a
+  >
 </div>

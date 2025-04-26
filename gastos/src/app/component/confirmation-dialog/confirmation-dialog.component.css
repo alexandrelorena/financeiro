@@ -1,121 +1,130 @@
-/* -------------------- Estilização do Modal -------------------- */
-
-/* Container do modal */
-:host {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  padding: 2rem;
-  width: 100%;
-  box-sizing: border-box;
-  border: 0.0625rem solid gray;
-  background-color: var(--modal-del-bg);
+/* Título */
+.custom-title {
+  color: crimson;
+  text-align: center;
+  font-size: 1.2rem;
+  padding: 0.5rem;
+  border-radius: 0.2rem 0.2rem 0 0;
+  margin-bottom: 0.5rem;
 }
 
-/* -------------------- Estilização do Título -------------------- */
+/* Informações da despesa */
+.expense-info {
+  margin-top: 15px;
+  margin-bottom: 1rem;
+  margin-left: 66px;
+  font-size: 1rem;
+  text-align: left;
+  color: var(--modal-text-color);
+  display: block;
+  justify-content: center;
+}
 
-.mat-dialog-title {
+/* Estilo para o conteúdo da mensagem */
+.message-content {
+  font-size: 1rem;
+  color: var(--modal-text-color);
   text-align: center;
-  font-size: 1.5rem;
-  font-weight: bold;
   margin-bottom: 1rem;
 }
 
-.custom-title {
-  text-align: center;
-  color: var(--modal-del-title-color);
-  font-size: 1.2rem;
-}
-
-/* Cor para o caso de não haver despesas */
-.custom-title-no-expenses {
-  text-align: center;
-  color: var(--primary-color);
-  font-size: 1.2rem;
-}
-
-.custom-message {
-  color: var(--primary-color);
-  font-size: 1rem;
-  margin-left: 1.5625rem;
-}
-
-/* -------------------- Estilização das Ações do Modal -------------------- */
-
-.mat-mdc-dialog-actions {
+/* Centralizar o botão apenas para a classe center-actions */
+.center-actions {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: center;
   align-items: center;
 }
 
-.mat-dialog-actions button.cancel {
-  margin-right: 1.5rem;
+/* =============================== */
+/*         Ajustes de Modal        */
+/* =============================== */
+:host {
+  /* Variáveis padrão (tema escuro) */
+  --confirmation-dialog-btn-cancel-bg: #4b4a4a;
+  --confirmation-dialog-btn-cancel-bg-hover: #2290a1;
+
+  --confirmation-dialog-btn-cancel-text: #e0e0e0;
+  --confirmation-dialog-btn-cancel-text-hover: white;
+
+  --confirmation-dialog-btn-confirm-bg: #4b4a4a;
+  --confirmation-dialog-btn-confirm-bg-hover: crimson;
+
+  --confirmation-dialog-btn-confirm-text: #e0e0e0;
+  --confirmation-dialog-btn-confirm-text-hover: white;
 }
 
-/* -------------------- Responsividade para Telas Pequenas -------------------- */
+/* Tema Claro */
+:host-context(body.light-theme) {
+  --confirmation-dialog-btn-cancel-bg: #686666;
+  --confirmation-dialog-btn-cancel-bg-hover: #2290a1;
 
-@media (max-width: 600px) {
-  .mat-dialog-actions {
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-  }
+  --confirmation-dialog-btn-cancel-text: #4b4a4a;
+  --confirmation-dialog-btn-cancel-text-hover: #e0e0e0;
 
-  .mat-dialog-actions button {
-    margin: auto;
-    width: 100%;
-  }
+  --confirmation-dialog-btn-confirm-bg: #686666;
+  --confirmation-dialog-btn-confirm-bg-hover: crimson;
+
+  --confirmation-dialog-btn-confirm-text: #4b4a4a;
+  --confirmation-dialog-btn-confirm-text-hover: #e0e0e0;
+}
+
+/* Tema Escuro */
+:host-context(body.dark-theme) {
+  --confirmation-dialog-btn-cancel-bg: #686666;
+  --confirmation-dialog-btn-cancel-bg-hover: #2290a1;
+
+  --confirmation-dialog-btn-cancel-text: #e0e0e0;
+  --confirmation-dialog-btn-cancel-text-hover: white;
+
+  --confirmation-dialog-btn-confirm-bg: #686666;
+  --confirmation-dialog-btn-confirm-bg-hover: crimson;
+
+  --confirmation-dialog-btn-confirm-text: #e0e0e0;
+  --confirmation-dialog-btn-confirm-text-hover: white;
 }
 
 /* -------------------- Estilização dos Botões -------------------- */
-
-button {
-  min-width: 8rem;
-  border-radius: 0.25rem;
-  transition: background-color 0.3s, color 0.3s;
-  font-size: 1rem;
-  border: none;
-  cursor: pointer;
-}
-
-button.cancel,
-button.confirm {
-  margin: 0.5rem;
-}
-
-/* Botão de cancelar */
-button.cancel {
-  background-color: var(--modal-btn-del-cancel-bg);
-  color: var(--modal-btn-del-cancel-text);
-}
-
-button.cancel:hover {
-  background-color: var(--modal-btn-del-cancel-bg-hover);
-  color: var(--modal-btn-del-cancel-text-hover);
-}
-
-/* Botão de confirmar */
-button.confirm {
-  background-color: var(--modal-btn-del-confirm-bg);
-  color: var(--modal-btn-del-confirm-text);
-}
-
-button.confirm:hover {
-  background-color: var(--modal-btn-del-confirm-bg-hover);
-  color: var(--modal-btn-del-confirm-text-hover);
-}
-
-button.close {
+.botoes {
   display: flex;
-  margin: auto;
-  background-color: #2290a1;
-  color: #fff;
+  justify-content: center;
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+  gap: 50px;
+  border-radius: 0.25rem;
+  transition: all 0.3s ease;
 }
 
-/* Botão desabilitado */
-button:disabled {
-  background-color: #cccccc;
-  color: #999999;
-  cursor: not-allowed;
+.botoes .cancel.mat-mdc-raised-button {
+  background-color: var(--confirmation-dialog-btn-cancel-bg) !important;
+  color: var(--confirmation-dialog-btn-cancel-text) !important;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.botoes .cancel.mat-mdc-raised-button:hover {
+  background-color: var(--confirmation-dialog-btn-cancel-bg-hover) !important;
+  color: var(--confirmation-dialog-btn-cancel-text-hover) !important;
+}
+
+.botoes .confirm.mat-mdc-raised-button {
+  background-color: var(--confirmation-dialog-btn-confirm-bg) !important;
+  color: var(--confirmation-dialog-btn-confirm-text) !important;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.botoes .confirm.mat-mdc-raised-button:hover {
+  background-color: var(--confirmation-dialog-btn-confirm-bg-hover) !important;
+  color: var(--confirmation-dialog-btn-confirm-text-hover) !important;
+}
+
+/* Estilo personalizado para o botão "Fechar" */
+.close {
+  background-color: #4b4a4a;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+}
+
+.close:hover {
+  background-color: #0094a1;
+  cursor: pointer;
 }
