@@ -64,7 +64,7 @@ Verifique se as variáveis de ambiente estão configuradas corretamente.
     ```bash
     unzip linux.zip
 
-    cd linux/gastos-launcher/opt/gastos
+    cd linux/financeiro/opt/financeiro
     ```
 
 - Execute a Aplicação
@@ -72,7 +72,7 @@ Verifique se as variáveis de ambiente estão configuradas corretamente.
   - Inicie a aplicação com um dos comandos:
 
     ```bash
-    ./gastos.sh  ou  java -jar gastos-0.0.1-SNAPSHOT.jar
+    ./financeiro.sh  ou  java -jar gastos-0.0.1-SNAPSHOT.jar
     ```
 
     A aplicação estará disponível em `http://localhost:8080`.
@@ -83,10 +83,10 @@ Verifique se as variáveis de ambiente estão configuradas corretamente.
 
 - **Instale o pacote**
 
-  - Instale o pacote gastos-launcher.deb e siga as orientações
+  - Instale o pacote financeiro.deb e siga as orientações
 
     ```bash
-     sudo dpkg -i gastos-launcher.deb
+     sudo dpkg -i financeiro.deb
     ```
 
     Após concluir a instalação digite gastos no terminal em qualquer local
