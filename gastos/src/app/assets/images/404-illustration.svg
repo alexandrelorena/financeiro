@@ -1,0 +1,6 @@
+<svg width="200" height="200" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+  <circle cx="32" cy="32" r="30" fill="var(--bg-color, #f0f0f0)" />
+  <text x="32" y="38" font-family="Arial, sans-serif" font-size="24" text-anchor="middle" font-weight="bold" fill="var(--text-color, #333333)">404</text>
+  <line x1="18" y1="45" x2="46" y2="45" stroke="var(--line-color, #333333)" stroke-width="2" />
+  <text x="32" y="52" font-family="Arial, sans-serif" font-size="4" text-anchor="middle" fill="var(--text-color, #333333)">page not found</text>
+</svg>
