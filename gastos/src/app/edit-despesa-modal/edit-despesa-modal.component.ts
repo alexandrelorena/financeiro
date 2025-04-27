@@ -35,7 +35,7 @@ export class EditDespesaModalComponent {
   ) {
     this.despesa = {
       ...data.despesa,
-      vencimento: data.despesa.vencimento || null, // Inclui o vencimento se existir
+      vencimento: data.despesa.vencimento || null,
     };
 
     this.categorias = new CategoriaService().getCategorias();
@@ -55,13 +55,10 @@ export class EditDespesaModalComponent {
   /**
    * Método para salvar a despesa editada e fechar o modal.
    */
-  // salvarEdicao() {
-  //   this.dialogRef.close(this.despesa);
-  // }
 
   salvarEdicao() {
-    this.edicaoSalva.emit(this.despesa); // Emite o evento com os dados editados
-    this.dialogRef.close(this.despesa); // Fecha o modal passando os dados
+    this.edicaoSalva.emit(this.despesa);
+    this.dialogRef.close(this.despesa);
   }
 
   /**
@@ -80,17 +77,17 @@ export class EditDespesaModalComponent {
     let valor = inputElement.value;
 
     // Remove caracteres não numéricos, permitindo apenas números e ponto
-    valor = valor.replace(/[^0-9.]/g, '');
+    valor = valor.replace(/[^0-9.,]/g, '');
 
     // Garante que o valor tenha no máximo um ponto
-    const partes = valor.split('.');
+    const partes = valor.split(/[.,]/);
     if (partes.length > 2) {
       valor = `${partes[0]}.${partes.slice(1).join('')}`;
     }
 
     // Limita o número de casas decimais para 2
-    if (valor.includes('.')) {
-      const [inteiro, decimal] = valor.split('.');
+    if (valor.includes('.') || valor.includes(',')) {
+      const [inteiro, decimal] = valor.split(/[.,]/);
       valor = `${inteiro}.${decimal.substring(0, 2)}`;
     }
 

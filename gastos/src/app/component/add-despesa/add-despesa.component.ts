@@ -18,6 +18,7 @@ import {
   isValid,
   format,
 } from 'date-fns';
+import { InputValidatorService } from '../../service/input-validator.service';
 
 /**
  * Componente para criar novas despesas no sistema.
@@ -70,8 +71,13 @@ export class AddDespesaComponent implements OnInit {
     private localService: LocalService,
     private categoriaService: CategoriaService,
     private cdr: ChangeDetectorRef,
-    private eventService: EventService
+    private eventService: EventService,
+    private inputValidatorService: InputValidatorService
   ) {}
+
+  verificarInput(event: KeyboardEvent): void {
+    this.inputValidatorService.verificarInput(event);
+  }
 
   /**
    * Inicializa o formulário e define o que é obrigatório em cada campo.
@@ -184,50 +190,6 @@ export class AddDespesaComponent implements OnInit {
       event.target.value = '0';
     } else if (valor.startsWith('00')) {
       event.target.value = '0';
-    }
-  }
-
-  verificarInput(event: KeyboardEvent): void {
-    const regex = /^[0-9.,]$/;
-    const inputChar = event.key;
-
-    if (!regex.test(inputChar)) {
-      event.preventDefault();
-      return;
-    }
-
-    const inputElement = event.target as HTMLInputElement;
-    const currentValue = inputElement.value;
-    const cursorPosition = inputElement.selectionStart || 0;
-
-    // Verifica se já existe um separador decimal no valor atual
-    const hasDot = currentValue.includes('.');
-    const hasComma = currentValue.includes(',');
-
-    // Permite apenas um separador decimal (ponto ou vírgula, mas não ambos)
-    if ((inputChar === '.' && hasDot) || (inputChar === ',' && hasComma)) {
-      event.preventDefault();
-      return;
-    }
-
-    // Impede a digitação de um separador adicional se já existir um diferente
-    if ((inputChar === '.' && hasComma) || (inputChar === ',' && hasDot)) {
-      event.preventDefault();
-      return;
-    }
-
-    // Se já existe um separador decimal, limita a parte decimal a dois dígitos
-    const separator = hasDot ? '.' : hasComma ? ',' : null;
-    if (separator) {
-      const [integerPart, decimalPart] = currentValue.split(separator);
-
-      // Verifica se o cursor está na parte decimal e impede mais de dois dígitos
-      if (
-        cursorPosition > currentValue.indexOf(separator) &&
-        decimalPart?.length >= 2
-      ) {
-        event.preventDefault();
-      }
     }
   }
 

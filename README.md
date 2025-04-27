@@ -48,7 +48,7 @@ Verifique se as variáveis de ambiente estão configuradas corretamente.
 >
 > #### Download (pacote compactado)
 >
-> - [Gastos - Linux](https://drive.google.com/file/d/1njSEitVp_gjIB4E-rV_MbUm7SQteJx_v/view?usp=drive_link)
+> - [Gastos - Linux](https://drive.google.com/file/d/1GAOjqS4nvcZ5t6Aapp0lyC53-H801zOz/view?usp=drive_link)
 > - [Gastos - Windows](https://drive.google.com/file/d/1kgzozoEx0XZ3OEjKxafz76r7IYBS6ft9/view?usp=drive_link)
 
 ---
