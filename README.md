@@ -40,7 +40,21 @@ Verifique se as variáveis de ambiente estão configuradas corretamente.
 ## <span style="color:yellow;">❗ Release</span>
 
 > [!NOTE]
-> **Versão**: 1.0.0
+> **Versão**: 1.1
+>
+> **Data de Lançamento**: 27/04/2025
+
+> [!IMPORTANT]
+>
+> #### Download (pacote compactado)
+>
+> - [Gastos - Linux](https://github.com/alexandrelorena/financeiro/releases/tag/v1.1)
+<!-- > - [Gastos - Windows](https://drive.google.com/file/d/1kgzozoEx0XZ3OEjKxafz76r7IYBS6ft9/view?usp=drive_link) -->
+
+---
+
+> [!NOTE]
+> **Versão**: 1.0
 >
 > **Data de Lançamento**: 26/01/2025
 
@@ -48,8 +62,8 @@ Verifique se as variáveis de ambiente estão configuradas corretamente.
 >
 > #### Download (pacote compactado)
 >
-> - [Gastos - Linux](https://drive.google.com/file/d/1GAOjqS4nvcZ5t6Aapp0lyC53-H801zOz/view?usp=drive_link)
-> - [Gastos - Windows](https://drive.google.com/file/d/1kgzozoEx0XZ3OEjKxafz76r7IYBS6ft9/view?usp=drive_link)
+> - [Gastos - Linux](https://github.com/alexandrelorena/financeiro/releases/tag/v1.0)
+> - [Gastos - Windows](https://github.com/alexandrelorena/financeiro/releases/tag/winv1.0)
 
 ---
 
