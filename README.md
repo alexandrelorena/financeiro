@@ -19,7 +19,7 @@
 
 - **Backend:** Java | Spring Boot | MySQL
 - **Frontend:** Angular 17+ | Typescript | Node.js
-- **Empacotamento:** Arquivo `.tar.gz` para distribuição
+- **Empacotamento:** Arquivo `.zip` para distribuição
 
 ---
 
@@ -71,7 +71,7 @@ Verifique se as variáveis de ambiente estão configuradas corretamente.
 
 > Opção 1: Usando o Script
 
-- Descompacte o ‘linux.zip’
+- ### Descompacte o **linux.zip**
 
   - No terminal, execute os seguintes comandos:
 
@@ -81,7 +81,7 @@ Verifique se as variáveis de ambiente estão configuradas corretamente.
     cd linux/financeiro/opt/financeiro
     ```
 
-- Execute a Aplicação
+- ### Execute a Aplicação
 
   - Inicie a aplicação com um dos comandos:
 
@@ -97,55 +97,48 @@ Verifique se as variáveis de ambiente estão configuradas corretamente.
 
 - **Instale o pacote**
 
-  - Instale o pacote financeiro.deb e siga as orientações
+  - Instale o pacote **financeiro.deb** e siga as orientações
 
     ```bash
      sudo dpkg -i financeiro.deb
     ```
 
-    Após concluir a instalação digite gastos no terminal em qualquer local
 
-    A aplicação estará disponível em `http://localhost:8080`.
+    A aplicação estará disponível em **http://localhost:8080**.
 
 &nbsp;
 
 ## 🖥️ <span style="color:yellow;">Instruções para o Usuário Final - Microsoft Windows <span>
 
-> Opção 1: Usando o Script
+> Usando o Script
 
-- Descompactar
+- ### Descompactar o arquivo <code style="color: brown;"><b>financas.zip</b></code>
+      
+    - Extraia o conteúdo do arquivo **financas.zip** em uma pasta de sua escolha, por exemplo, na área de trabalho.  
+  
+- ### Instalar o <code style="color: brown;"><b>MySQL</b></code>
 
-  - [Instale o 7zip](https://www.7-zip.org/)
-  - [Instale o git bash](https://git-scm.com/downloads/win)
+    - Vá até **c:\seu-usuario\Desktop\financas\setup\mysql** e instale o **mysql**:
 
-    Obs: Em variáveis de ambiente do sistema (path) adicionar o caminho do 7zip, geralmente ‘C:\Program Files (x86)\7-Zip’.
+    - Após a instalação, verique se o **mysql** está funcionando corretamente.
 
-  - Abra o git bash, na pasta onde está o arquivo .7z, execute o comando para:
+- ### Executar o script para criar o Banco de Dados
 
-    ```bash
-    7z x script-gastos.7z
-    ```
+    - Na pasta financas execute o arquivo **install.bat** como administrador (ele irá criar o banco de dados e executar as queries para criar as tabelas).
+    - Abra o prompt e comando **cmd** como administrador e execute o comando para rodar o script **init-db-advanced.sql** e criar as procedures, triggers e events:
 
-  - Execute a aplicação via git bash com o comando:
+      ```bash
+      mysql -u root -p < "seu-usuario\Desktop\financas\setup\scripts\init-db-advanced.sql"
+      ```
+    - Isso irá configurar a estrutura necessária para o funcionamento do sistema.
 
-    ```bash
-    ./gastos.sh
-    ```
+- ### Criar o atalho para execução da Aplicação 
 
-  A aplicação estará disponível em `http://localhost:8080`.
 
-&nbsp;
-
-> Opção 2: Usando o instalador
-
-- Arquivo executável
-
-  - Instale o pacote ‘GastosSetup.exe’
-  - Crie o atalho de ‘gastos.bat’
-  - Troque o ícone do atalho pelo ícone ‘pagamento’.
-  - Execute o atalho.
-
-  A aplicação estará disponível em `http://localhost:8080`.
+  - Em financas, clique com o botão direito em **financeiro.bat** e crie um atalho na Área de trabalho.
+  - Clique com o botão direito no atalho que acabou de criar, e vá em propriedades e depois em alterar ícone.
+  - Escolha o arquivo **financeiro.ico** para ícone do atalho.
+  - A aplicação estará disponível em `http://localhost:8080`.
 
 ---
 
