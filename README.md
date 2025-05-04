@@ -104,7 +104,7 @@ Verifique se as variáveis de ambiente estão configuradas corretamente.
     ```
 
 
-    A aplicação estará disponível em **http://localhost:8080**.
+    A aplicação estará disponível em `http://localhost:8080`.
 
 &nbsp;
 
