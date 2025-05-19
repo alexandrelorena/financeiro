@@ -180,8 +180,9 @@ Contribuições são bem-vindas!
 
 ### 🚀 Imagens da Aplicação
 
-![Gastos](/prints/controle-de-financas_light.png)
-![Gastos](/prints/controle-de-financas_dark.png)
+<span><img src="/prints/controle-de-financas_light.png" alt="Gastos"></span>
+<span><img src="/prints/controle-de-financas_dark.png" alt="Gastos"></span>
+
 
 
 <!DOCTYPE html>
