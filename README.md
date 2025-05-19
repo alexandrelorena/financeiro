@@ -204,21 +204,6 @@ Contribuições são bem-vindas!
 
 ![Alt text](https://spotify-recently-played-readme.vercel.app/api?user=22auh44sgodxcezzorqr3pmsy&width=840)
 
-<!-- <div>
-  <a href="mailto:alexandre.lorena@gmail.com" style="text-decoration: none;">
-    <img src="https://cdn.simpleicons.org/gmail" alt="Gmail" width="32" height="32"></a>&nbsp;&nbsp;
-  <a href="https://www.instagram.com/alexandre_lorena/" style="text-decoration: none;">
-    <img src="https://cdn.simpleicons.org/instagram" alt="Instagram" width="32" height="32"></a>&nbsp;&nbsp;
-  <a href="https://www.linkedin.com/in/alexandrelorena-developer/" style="text-decoration: none;">
-    <img src="https://cdn.simpleicons.org/linkedin" alt="LinkedIn" width="32" height="32"></a>&nbsp;&nbsp;
-  <a href="https://x.com/alefaith" style="text-decoration: none;">
-    <img src="https://cdn.simpleicons.org/x" alt="Twitter" width="32" height="32"></a>&nbsp;&nbsp;
-  <a href="https://www.youtube.com/@AleDevJavaPython" style="text-decoration: none;">
-    <img src="https://cdn.simpleicons.org/youtube" width="32" height="32"></a>&nbsp;&nbsp;
-  <a href="https://steamcommunity.com/id/alexandrelorena/" style="text-decoration: none;">
-    <img src="https://cdn.simpleicons.org/steam/gray" width="32" height="32"></a>&nbsp;&nbsp;
-  <a href="https://discord.com/channels/alelorena" style="text-decoration: none;">
-    <img src="https://cdn.simpleicons.org/discord" width="32" height="32"></a>
-</div> -->
+
 </body>
 </html>
