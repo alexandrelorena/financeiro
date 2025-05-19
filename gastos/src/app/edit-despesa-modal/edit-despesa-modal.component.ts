@@ -33,14 +33,18 @@ export class EditDespesaModalComponent {
     private dialogRef: MatDialogRef<EditDespesaModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
-    this.despesa = {
-      ...data.despesa,
-      vencimento: data.despesa.vencimento || null,
-    };
+    this.despesa = { ...data.despesa };
 
     this.categorias = new CategoriaService().getCategorias();
   }
+  parseDate(dateString: string): Date | null {
+    return dateString ? new Date(dateString + 'T00:00:00') : null;
+  }
 
+  onDateChange(event: any): void {
+    const date: Date = event.value;
+    this.despesa.vencimento = date.toISOString().split('T')[0]; // mantém só a parte YYYY-MM-DD
+  }
   /**
    * Método para salvar a edição da despesa e emitir os dados para o componente pai.
    */
@@ -56,7 +60,11 @@ export class EditDespesaModalComponent {
    * Método para salvar a despesa editada e fechar o modal.
    */
 
-  salvarEdicao() {
+  salvarEdicao(): void {
+    // Garante que o vencimento é um Date
+    if (typeof this.despesa.vencimento === 'string') {
+      this.despesa.vencimento = new Date(this.despesa.vencimento + 'T00:00:00');
+    }
     this.edicaoSalva.emit(this.despesa);
     this.dialogRef.close(this.despesa);
   }

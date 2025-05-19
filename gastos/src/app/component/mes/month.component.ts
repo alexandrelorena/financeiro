@@ -395,6 +395,12 @@ export class MonthComponent implements OnInit, OnDestroy {
           : new Date(despesa.vencimento).toISOString().split('T')[0],
     };
 
+    // editarDespesa(despesa: Gasto): void {
+    //   const despesaParaEdicao = {
+    //     ...despesa,
+    //     vencimento: this.formatarDataParaModal(despesa.vencimento), // Passa apenas a string
+    //   };
+
     const dialogRef = this.dialog.open(EditDespesaModalComponent, {
       width: '400px',
       data: { despesa: despesaParaEdicao },
@@ -436,6 +442,14 @@ export class MonthComponent implements OnInit, OnDestroy {
     this.monthService.setDespesas(this.despesas);
     this.monthService.calculateDespesas(this.despesas);
   }
+
+  // Passa a data já formatada para o modal, sem fazer ajustes de fuso horário
+  // formatarDataParaModal(data: string | Date): string {
+  //   if (data instanceof Date) {
+  //     return data.toISOString().split('T')[0]; // Caso seja objeto Date
+  //   }
+  //   return new Date(data).toISOString().split('T')[0]; // Caso seja string
+  // }
 
   salvarEdicao(): void {
     if (!this.despesaEditando) return;

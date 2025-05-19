@@ -69,42 +69,52 @@ Verifique se as variáveis de ambiente estão configuradas corretamente.
 
 ## 🐧 <span style="color:yellow;">Instruções para o Usuário Final - Linux</span>
 
-> Opção 1: Usando o Script
+## 1. Descompactar o arquivo
 
-- ### Descompacte o **linux.zip**
+   - No terminal, descompacte o arquivo **linux-vx.x.zip:**:
+     ```bash
+     unzip linux-vx.x.zip
+     ```
+      Isso criará a pasta **financeiro-linux/** com toda a estrutura necessária.
 
-  - No terminal, execute os seguintes comandos:
-
-    ```bash
-    unzip linux.zip
-
-    cd linux/financeiro/opt/financeiro
-    ```
-
-- ### Execute a Aplicação
-
-  - Inicie a aplicação com um dos comandos:
-
-    ```bash
-    ./financeiro.sh  ou  java -jar gastos-0.0.1-SNAPSHOT.jar
-    ```
-
-    A aplicação estará disponível em `http://localhost:8080`.
-
-  &nbsp;
-
-> Opção 2: Usando o instalador
-
-- **Instale o pacote**
-
-  - Instale o pacote **financeiro.deb** e siga as orientações
-
-    ```bash
-     sudo dpkg -i financeiro.deb
-    ```
+## 2. Executar o script de configuração do banco de dados
+   - Acesse a pasta **banco** e execute o script **setup_banco.sh**:
+    
+     ```bash
+     cd financeiro-linux/banco
+     ```
 
 
-    A aplicação estará disponível em `http://localhost:8080`.
+      ```bash
+      ./setup_banco.sh
+      ```
+      
+     Esse script:
+       - Cria o banco **financas**.
+       - Executa os scripts SQL.
+       - Dá permissão de execução automaticamente aos arquivos **.sh** da pasta. 
+  
+  ---
+
+## 3. Executar o script de criação do atalho da aplicação
+
+   - Volte para a raiz da pasta **financeiro-linux** e execute o script principal:
+     ```bash
+     cd ..
+     ```
+      ```bash
+      ./setup.sh
+      ```
+
+     Esse script:
+       - Copia o ícone do aplicativo.
+       - Cria o atalho no menu de aplicativos **(.desktop)**.
+       - Atualiza o cache de ícones e banco de dados do sistema. 
+       - Garante permissão de execução no launcher.
+  
+   - Busque por **Financeiro** no **menu de aplicativos** e clique para abrir o sistema. 
+  
+      A aplicação estará disponível em: **http://localhost:8080**
 
 &nbsp;
 
@@ -168,19 +178,11 @@ Contribuições são bem-vindas!
 
 🤔 Dúvidas? <a href="mailto:alexandre.lorena@gmail.com" style="text-decoration: none;">Entre em contato</a>
 
-### 🚀 Gastos - clique nas imagems
+### 🚀 Imagens da Aplicação
 
-[![Gastos](/prints/img-small/controle-de-financas_1.png)](/prints/controle-de-financas_1.png)
-[![Gastos](/prints/img-small/controle-de-financas_2.png)](/prints/controle-de-financas_2.png)
+![Gastos](/prints/controle-de-financas_light.png)
+![Gastos](/prints/controle-de-financas_dark.png)
 
-[![Gastos](/prints/img-small/controle-de-financas_3.png)](/prints/controle-de-financas_3.png)
-[![Gastos](/prints/img-small/controle-de-financas_4.png)](/prints/controle-de-financas_4.png)
-
-[![Gastos](/prints/img-small/controle-de-financas_5.png)](/prints/controle-de-financas_5.png)
-[![Gastos](/prints/img-small/controle-de-financas_6.png)](/prints/controle-de-financas_6.png)
-
-[![Gastos](/prints/img-small/controle-de-financas_7.png)](/prints/controle-de-financas_7.png)
-[![Gastos](/prints/img-small/controle-de-financas_8.png)](/prints/controle-de-financas_8.png)
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -194,9 +196,9 @@ Contribuições são bem-vindas!
 <img src="https://i.imgur.com/h1q7oo1.jpg" width="785" height="5">
 
 <div align="left">
-  <img src="https://github-readme-stats.vercel.app/api/wakatime?username=@alexandrelorena&v=2&theme=react" height="125" alt="languages graph"/>
-  <img src="https://github-readme-stats.vercel.app/api/top-langs?username=alexandrelorena&locale=en&hide_title=false&layout=compact&card_width=320&langs_count=5&theme=react&hide_border=false&order=2" height="125" alt="languages graph" />
-  <img src="https://github-readme-stats.vercel.app/api?username=alexandrelorena&hide_title=false&hide_rank=false&show_icons=true&include_all_commits=true&count_private=true&disable_animations=false&theme=react&locale=en&hide_border=false&order=1" height="125" alt="stats graph"/>
+  <!-- <img src="https://github-readme-stats.vercel.app/api/wakatime?username=@alexandrelorena&v=2&theme=react" height="125" alt="languages graph"/> -->
+  <img src="https://github-readme-stats.vercel.app/api/top-langs?username=alexandrelorena&locale=en&hide_title=false&layout=compact&card_width=320&langs_count=5&theme=react&hide_border=false&order=2" height="400" alt="languages graph" />
+  <!-- <img src="https://github-readme-stats.vercel.app/api?username=alexandrelorena&hide_title=false&hide_rank=false&show_icons=true&include_all_commits=true&count_private=true&disable_animations=false&theme=react&locale=en&hide_border=false&order=1" height="180" alt="stats graph"/> -->
 </div>
 <img src="https://i.imgur.com/h1q7oo1.jpg" width="785" height="5">
 
