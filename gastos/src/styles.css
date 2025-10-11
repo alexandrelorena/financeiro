@@ -1,5 +1,7 @@
 @import "@angular/material/prebuilt-themes/deeppurple-amber.css";
 
+
+
 /* =============================== */
 /*          Reset Geral            */
 /* =============================== */
@@ -286,3 +288,5 @@ body.light-mode .mat-calendar-body-selected {
 .mat-focus-indicator {
   background-color: transparent;
 }
+
+
